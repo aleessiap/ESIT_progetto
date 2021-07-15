@@ -1,23 +1,43 @@
 <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
   <div class="card card0 border-0">
-    <form [formGroup]="angForm" action="/login" method="post"><!-- user input-->
-      <div class="row px-3">
-        <label class="mb-1">
+    <form [formGroup]="angForm" (ngSubmit)="onSubmit()" >
+      <div class="row px-3 form-group">
+        <label for="username" class="mb-1">
           <h6 class="mb-0 text-sm">Username:</h6>
         </label>
-        <input type="text" name="username" class="form-control " placeholder="Choose a username" required>
+        <input type="text" id="username" name="username" formControlName="username" class="form-control" placeholder="Choose a username" required  [(ngModel)]="model.email" [ngClass]="{ 'is-invalid': submitted && angForm.controls.username.errors}" >
+        TODO: remove this: {{model.email}}
+        <div  *ngIf=" submitted && angForm.controls.username.errors?.required"
+             class="alert alert-danger">
+          Username is required
+        </div>
+        <div *ngIf="submitted && angForm.controls.username.errors?.minlength" class="alert alert-danger">
+          Username is too short
+        </div>
       </div>
-      <div class="row px-3">
-        <label class="mb-1">
+      <div class="row px-3 form-group">
+        <label for="password" class="mb-1">
           <h6 class="mb-0 text-sm">Password:</h6>
         </label>
-        <input type="password" name="password" class="form-control" placeholder="Choose a password" required>
+        <input type="password" id="password" name="password" formControlName="password" class="form-control" placeholder="Choose a password" required [(ngModel)]="model.password" [ngClass]="{ 'is-invalid': submitted && angForm.controls.password.errors}" >
+        TODO: remove this: {{model.password}}
+        <div *ngIf="submitted && angForm.controls.password.errors?.required" class="alert alert-danger">
+          Password is required
+        </div>
+        <div *ngIf="submitted && angForm.controls.password.errors?.minlength" class="alert alert-danger">
+          Password is too short
+        </div>
       </div>
-      <div class="row px-3 mb-4">
-        <a href="#" class="ml-auto mb-0 text-sm">Forgot password?</a>
-      </div>
-      <div class="row mb-3 px-3">
-        <button (click)=access() type="submit"  style="background-color: #3b5998;" class="btn btn-primary btn-rounded text-center" data-toggle="button" aria-pressed="false" autocomplete="off"> Login</button>
+
+      <div class="form-group">
+        <div class="row px-3 mb-4">
+          <a href="#" class="ml-auto mb-0 text-sm">Forgot password?</a>
+        </div>
+        <div class="row mb-3 px-3">
+          <button (click)="loginPressed()" type="submit"  style="background-color: #3b5998;" class="btn btn-primary btn-rounded text-center" >
+            Login
+          </button>
+        </div>
       </div>
 	  </form>
     <div class="row mb-4 px-3">
@@ -27,5 +47,19 @@
           </a>
       </small>
     </div>
+
+  </div>
+  <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Username: </div>
+      <div class="col-xs-9">{{ model.email }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Password :</div>
+      <div class="col-xs-9">{{ model.password }}</div>
+    </div>
+
+    <button class="btn btn-primary" (click)="onReset()">Edit</button>
   </div>
 </div>
