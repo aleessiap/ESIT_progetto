@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LoginService} from "../services/login.service";
 import { User } from '../user';
 
 @Component({
@@ -9,25 +8,22 @@ import { User } from '../user';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-  angForm: FormGroup;
+  loginForm: FormGroup;
   submitted = false;
 
   constructor(
     private fb: FormBuilder,
-    private login: LoginService,
   ){}
   model = new User(0,0,false,'','','','','');
   ngOnInit() {
-    this.angForm = this.fb.group({
+    this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    this.submitted = false;
-
   }
   onSubmit() {
     this.submitted = true;
-    if(this.angForm.invalid){
+    if(this.loginForm.invalid){
       return;
     }
     alert('SUCCESS');
@@ -35,8 +31,8 @@ export class LoginFormComponent implements OnInit {
 
   loginPressed() {
 
-    const username = this.angForm.controls.username.value;
-    const password = this.angForm.controls.password.value;
+    const username = this.loginForm.controls.username.value;
+    const password = this.loginForm.controls.password.value;
     console.log(username);
     console.log(password);
     this.model = new User(1,250,false,password,'name','surname',username,'birth');
@@ -45,6 +41,6 @@ export class LoginFormComponent implements OnInit {
 
   onReset(){
     this.submitted=false;
-    this.angForm.reset();
+    this.loginForm.reset();
   }
 }
