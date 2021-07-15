@@ -26,7 +26,6 @@ export class LoginFormComponent implements OnInit {
     if(this.loginForm.invalid){
       return;
     }
-    alert('SUCCESS');
   }
 
   loginPressed() {
@@ -39,8 +38,4 @@ export class LoginFormComponent implements OnInit {
     this.submitted = false;
   }
 
-  onReset(){
-    this.submitted=false;
-    this.loginForm.reset();
-  }
 }
