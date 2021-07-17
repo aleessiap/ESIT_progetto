@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.colorApp{
+  background-color: #3b5998;
+  color: white;
+}
+.pos{
+  position:relative;
+}
+
+.body_sep{
+  top: 5%;
+}
