@@ -2,40 +2,54 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { User } from '../user';
 
+import {Router} from "@angular/router";
+import {AuthenticationService} from "../services/authentication.service";
+
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
+
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
-
+  user : User;
   constructor(
     private fb: FormBuilder,
+    private api: AuthenticationService,
+    public router: Router
   ){}
-  model = new User(0,0,false,'','','','','');
+
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(6)]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      username: ['', [Validators.required]], //il campo username è necessario e inizializzato come stringa vuota
+      password: ['', [Validators.required]] //il campo password è necessario e inizializzato come stringa vuota
     });
   }
-  onSubmit() {
+
+
+  loginPressed() {
     this.submitted = true;
+
     if(this.loginForm.invalid){
       return;
     }
-  }
 
-  loginPressed() {
-
-    const username = this.loginForm.controls.username.value;
-    const password = this.loginForm.controls.password.value;
-    console.log(username);
-    console.log(password);
-    this.model = new User(1,250,false,password,'name','surname',username,'birth');
     this.submitted = false;
+
+    this.api.login(this.loginForm.value)
+      .subscribe(
+        res => {
+          this.user = res;
+          console.log('User logged in: ' +this.user.email + ' ' + this.user.password)
+          this.router.navigateByUrl('/home');
+        },
+        err => {
+          console.log("Error in login");
+        }
+      );
+
   }
 
 }

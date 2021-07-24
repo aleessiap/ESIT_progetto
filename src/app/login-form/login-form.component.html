@@ -3,32 +3,28 @@
     <div class="card">
       <h4 class="card-header">Login</h4>
       <div class="card-body  align-items-center">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+        <form [formGroup]="loginForm"  >
           <div class="row px-3 form-group input">
             <label for="username" class="mb-1">
              Username:
             </label>
-            <input type="text" formControlName="username" class="form-control" placeholder="Choose a username"  [(ngModel)]="model.email" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.username.errors}" />
+            <input type="text" formControlName="username" class="form-control" placeholder="Choose a username"   [ngClass]="{ 'is-invalid': submitted && loginForm.controls.username.errors}" />
             <div *ngIf="submitted && loginForm.controls.username.errors" class="invalid-feedback">
               <div  *ngIf="loginForm.controls.username.errors.required">
                 Username is required
               </div>
-              <div *ngIf="loginForm.controls.username.errors.minlength">
-                Username is too short
-              </div>
+
             </div>
           </div>
           <div class="row px-3 form-group input">
             <label for="password" class="mb-1">Password: </label>
-            <input type="password" formControlName="password" class="form-control" placeholder="Choose a password"  [(ngModel)]="model.password" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors}" />
+            <input type="password" formControlName="password" class="form-control" placeholder="Choose a password" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors}" />
 
             <div *ngIf="submitted && loginForm.controls.password.errors" class="invalid-feedback">
               <div *ngIf="loginForm.controls.password.errors.required" >
                 Password is required
               </div>
-              <div *ngIf="loginForm.controls.password.errors?.minlength" >
-                Password is too short
-              </div>
+
             </div>
             <div class="row px-3 mb-4">
               <a href="#" class=" small ml-auto mb-0 text-sm">Forgot password?</a>
@@ -37,7 +33,7 @@
 
           <div class="form-group input">
             <div class="row mx-sm-5">
-              <button (click)="loginPressed()" type="submit"  style="background-color: #3b5998;" class="btn btn-primary" >
+              <button (click)="loginPressed()" type="submit" style="background-color: #3b5998;" class="btn btn-primary" >
                 Login
               </button>
             </div>

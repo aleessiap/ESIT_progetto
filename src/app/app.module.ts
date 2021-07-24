@@ -8,6 +8,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {AuthenticationService} from "./services/authentication.service"
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ReactiveFormsModule
   ],
   providers: [
-    FormBuilder
+    FormBuilder,
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })
