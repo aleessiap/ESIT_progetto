@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
+
   {
-    numCell: {type: Number, required: true},
-    admin:{type:Boolean},
-    password:{type:String, required:true},
-    name: {type:String, required:true},
-    surname:{type:String, required:true},
-    email:{type:String, unique:true, required:true},
-    birthdate:{type:Date, required:true, default: Date.now }
+
+    name: { type: String, required: true },
+    surname: { type: String, required: true },
+    phone_num: { type: String, required: true },
+    birthdate: { type: Date, required: true, default: Date.now },
+
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    admin: { type: Boolean, required: true },
+
   }
+
 );
 
-module.exports = mongoose.model('Users', userSchema);
+module.exports = mongoose.model('User', userSchema, 'User');
