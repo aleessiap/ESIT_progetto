@@ -48,10 +48,10 @@ module.exports.register = function(req, res){
   //creo nuovo utente e popolo con i dati passati
   let newUser;
   newUser= new User();
-  newUser.name= req.body.firstName;
-  newUser.surname = req.body.lastName;
-  newUser.numCell= req.body.numCell;
-  newUser.birthdate=req.body.dateBirth;
+  newUser.name= req.body.name;
+  newUser.surname = req.body.surname;
+  newUser.phone_num= req.body.phone_num;
+  newUser.birthdate=req.body.birthdate;
   newUser.email=req.body.email;
   newUser.admin = false;
   newUser.password = 'password'; //per ora sto mettendo una password fissa poi sarà cambiata con una random

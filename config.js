@@ -1,4 +1,4 @@
 
 module.exports = {
-  DB : 'mongodb://localhost:27017/prova'
+  DB : 'mongodb://localhost:27017/ESIT'
 }
