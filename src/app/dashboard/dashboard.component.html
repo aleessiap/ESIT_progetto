@@ -1,0 +1,29 @@
+<h6> I miei dati:</h6>
+<div *ngIf="loggedIn ==false">
+  <h6> Nessuno è loggato</h6>
+</div>
+<table id="users">
+
+  <!--<tr>
+    <th *ngFor="let col of columns">
+      {{col}}
+    </th>
+  </tr>
+  <tr *ngFor="let user of users">
+    <td *ngFor="let col of index">
+      {{user[col]}}
+    </td>
+  </tr> -->
+  <div  *ngIf="loggedIn == true">
+    <tr >
+      <th *ngFor="let col of columns">
+        {{col}}
+      </th>
+    </tr>
+    <tr>
+      <td *ngFor="let col of index">
+        {{logged[col]}}
+      </td>
+    </tr>
+  </div>
+</table>

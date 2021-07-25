@@ -1,0 +1,87 @@
+<div class="row justify-content-center mx-auto ">
+  <div class="col-md-8">
+    <div class="card">
+      <h4 class="card-header">Register</h4>
+      <div class="card-body  align-items-center" >
+
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+          <div class="form-group  mx-sm-3 input">
+            <label for="name">Name</label>
+              <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.name.errors }" />
+              <div *ngIf="submitted && registrationForm.controls.name.errors" class="invalid-feedback">
+                <div *ngIf="registrationForm.controls.name.errors.required">Name is required</div>
+              </div>
+          </div>
+
+          <div class="form-group  mx-sm-3 input">
+            <label for="surname">Surname</label>
+              <input type="text" formControlName="surname" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.surname.errors }" />
+              <div *ngIf="submitted && registrationForm.controls.surname.errors" class="invalid-feedback">
+                <div *ngIf="registrationForm.controls.surname.errors.required">Last Name is required</div>
+              </div>
+          </div>
+
+          <div class="form-group  mx-sm-3 input">
+            <label for="email">Email </label>
+              <input type="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.email.errors }" />
+              <div *ngIf="submitted && registrationForm.controls.email.errors" class="invalid-feedback">
+                <div *ngIf="registrationForm.controls.email.errors.email">This is not an email</div>
+                <div *ngIf="registrationForm.controls.email.errors.required">Email is required</div>
+              </div>
+          </div>
+
+          <div class="form-group  mx-sm-3 input">
+            <label for="phone_num">Phone Number</label>
+              <input type="text" formControlName="phone_num" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.phone_num.errors }" />
+              <div *ngIf="submitted && registrationForm.controls.phone_num.errors" class="invalid-feedback">
+                <div *ngIf="registrationForm.controls.phone_num.errors.required">Phone number is required</div>
+                <div *ngIf="registrationForm.controls.phone_num.errors.pattern">Phone number is invalid</div>
+
+              </div>
+          </div>
+
+          <div class="form-group mx-sm-3 input">
+            <label for="birthdate">Date of Birth</label>
+              <input type="date" formControlName="birthdate" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.birthdate.errors }" />
+              <div *ngIf="submitted && registrationForm.controls.birthdate.errors" class="invalid-feedback">
+                <div *ngIf="registrationForm.controls.birthdate.errors.required">Date of birth is required</div>
+              </div>
+          </div>
+          <!--
+                    <div class="form-check  mx-sm-3 input">
+                      <input type="checkbox" class="form-check-input" formControlName="admin">
+                      <label class="form-check-label" for="admin">Are you an admin?</label>
+                    </div>
+
+                    <div class="form-group mx-sm-3 input">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control input-password" formControlName="password"  [ngClass]="{'is-invalid': submitted && registrationForm.controls.password.errors }" />
+                      <div *ngIf="submitted && registrationForm.controls.password.errors" class="invalid-feedback">
+                        <div *ngIf="registrationForm.controls.password.errors.required">Password is required</div>
+                        <div *ngIf="registrationForm.controls.password.errors.minlength">Password must be at least 6 characters</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group mx-sm-3 input">
+                      <label for="confirmPassword">Repeat the password</label>
+                      <input type="password" class="form-control input-password" formControlName="confirmPassword"  [ngClass]="{ 'is-invalid': submitted && registrationForm.controls.confirmPassword.errors }" />
+                      <div *ngIf="submitted && registrationForm.controls.confirmPassword.errors" class="invalid-feedback">
+                        <div *ngIf="registrationForm.controls.confirmPassword.errors.required">Password is required</div>
+                        <div *ngIf="registrationForm.controls.confirmPassword.errors.minlength">Password must be at least 6 characters</div>
+                        <div *ngIf="this.registrationForm.controls.password.value != this.registrationForm.controls.confirmPassword.value">Password and Confirm Password must be match.</div>
+                      </div>
+                    </div> -->
+          <div class = "align-content-center">
+            <div class="form-group mx-sm-3">
+              <button [disabled]="loading" class="btn btn-primary" style="background-color: #3b5998;">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Register
+              </button>
+              <a routerLink="../login" class="btn btn-link">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
