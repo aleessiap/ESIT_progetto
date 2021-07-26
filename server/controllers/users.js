@@ -3,18 +3,19 @@ const User = require('../models/user')
 
 //per login
 module.exports.login = function(req, res){
-  const userEmail = req.body.username;
+    const userEmail = req.body.username;
   const pass = req.body.password;
   User.findOne({email: userEmail}, function (err, foundUser) {
     if (foundUser) {
 
       if(pass == foundUser.password){
-        res.json(foundUser);
+        //res.json(foundUser);
         console.log("User found" );
 
         return foundUser;
       }else{
         console.log("Password errata");
+
       }
     } else {
       console.log("User not found" );
@@ -39,11 +40,14 @@ module.exports.getUsers = function(req, res){
 
 //per registrare un nuovo utente
 module.exports.register = function(req, res){
-  console.log("Register controller");
-  if (!req.body.email) {
-    res.status(400).send({ message: "Content must have email!" });
-    return;
-  }
+  User.count({email: req.body.email}, function (err, count){
+    if(count>0){
+      console.log('User already registered');
+      res.status(400).send({ message: "User already registered" });
+      return;
+    }
+  });
+
 
   //creo nuovo utente e popolo con i dati passati
   let newUser;
@@ -56,7 +60,6 @@ module.exports.register = function(req, res){
   newUser.admin = false;
   newUser.password = 'password'; //per ora sto mettendo una password fissa poi sarà cambiata con una random
   console.log(newUser.toString());
-
   newUser.save().then(r => console.log('Saved')); //salvo il nuovo utente nel db
   return newUser;
 }
