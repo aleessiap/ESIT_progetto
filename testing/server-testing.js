@@ -44,6 +44,7 @@ it ('cannot register a user with an email already registered', function(done) {
 
     .send({ name: 'user', surname: 'user', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user' })
     .expect(400)
+  //controllare errore 400
     done();
 
 });
@@ -54,11 +55,13 @@ it ('login user not registered', function(done) {
     .post('/api/access')
     .send({ username: 'bruce@wayne.inc', password: 'batman' })
     .expect(200)
+    //errore 200?
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
 
-      done();
     });
+  done();
+
 });
 
 it ('login user registered', function(done) {

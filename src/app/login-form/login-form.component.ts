@@ -47,6 +47,7 @@ export class LoginFormComponent implements OnInit {
         },
         err => {
           console.log("Error in login");
+          //pop up o form error
         }
       );
 

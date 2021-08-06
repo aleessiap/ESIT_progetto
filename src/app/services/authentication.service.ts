@@ -21,12 +21,12 @@ export class AuthenticationService {
   login(data): Observable<any> {
     console.log("getUser : " + data.value);
 
-    let API_URL = '/api/access';
+    let API_URL = '/api/login';
 
     return this.http.post<User>(API_URL, data)
       .pipe(map(user => {
 
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUser = user;
         this.loggedIn = true;
         console.log('User found in Rest service: '+ this.currentUser)
@@ -37,7 +37,8 @@ export class AuthenticationService {
 
   //Chiamata per leggere tutti gli utenti
   getUsers()  {
-    return this.http.get(`${this.endpoint}`);
+    let API_URL = '/api/get-users'
+    return this.http.get(API_URL);
   }
 
   //Chiamata per la registrazione di un nuovo utente

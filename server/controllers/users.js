@@ -3,11 +3,10 @@ const User = require('../models/user')
 
 //per login
 module.exports.login = function(req, res){
-    const userEmail = req.body.username;
+  const userEmail = req.body.username;
   const pass = req.body.password;
   User.findOne({email: userEmail}, function (err, foundUser) {
     if (foundUser) {
-
       if(pass == foundUser.password){
         //res.json(foundUser);
         console.log("User found" );
@@ -15,7 +14,7 @@ module.exports.login = function(req, res){
         return foundUser;
       }else{
         console.log("Password errata");
-
+        //mettere errore nel form
       }
     } else {
       console.log("User not found" );
