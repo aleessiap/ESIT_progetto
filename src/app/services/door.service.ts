@@ -35,7 +35,7 @@ export class DoorService {
 
   deleteDoor(name: string) {
 
-    return this.http.delete('http://localhost:8000/api/door/' + name)
+    return this.http.delete('http://localhost:8000/api/doors/' + name)
 
   }
 
