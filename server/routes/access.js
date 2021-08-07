@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const accessController = undefined
+const accessController = require('../controllers/access')
 
-router.get('/access', () => {});
-router.get('/access/:name', () => {});
-router.post('/access', () => {});
-router.put('/access/:name', () => {});
-router.delete('/access/:name', () => {});
+router.get('/access', accessController.getAllAccess);
+router.get('/access/:id', accessController.getAccess);
+router.post('/access', accessController.insertAccess);
+router.put('/access/:id', accessController.updateAccess);
+router.delete('/access/:id', accessController.deleteAccess);
 
 module.exports = router
