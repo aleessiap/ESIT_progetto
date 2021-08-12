@@ -1,0 +1,77 @@
+<div class="row justify-content-end">
+
+  <div class="col-md-6">
+    search bar
+  </div>
+
+  <div class="col-md-2">
+  <a href="/assignment" class=" small ml-auto mb-0 text-sm">Manage authorizations</a>
+  </div>
+
+  <div class="col-md-2">
+  <a href="/assignment" class=" small ml-auto mb-0 text-sm">Manage users</a>
+  </div>
+
+  <div class="col-md-2">
+  <a href="/assignment" class=" small ml-auto mb-0 text-sm">Manage doors</a>
+  </div>
+
+</div>
+<div class="row justify-content-evenly h-100">
+
+  <div class="col-md-2">
+
+    <div class="card">
+
+      <h4 class="card-header">Select door</h4>
+      <div class="card-body">
+
+        <select class="form-select" [(ngModel)]="selected" (change)="loadAuth(selected)">
+
+          <option *ngFor="let door of doors" [value]="door" [selected]="door == selected">{{door}}</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+  </div>
+  <div class="col-md-10">
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+
+          <h4 class="card-header">Authorized</h4>
+          <div class="card-body">
+
+            <dl class="row" *ngFor="let user of authorized">
+              <dt class="col-sm-9">{{user}}</dt>
+              <dd class="col-sm-3" (click)="removeAuth(user)">remove</dd>
+            </dl>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+
+          <h4 class="card-header">Unauthorized</h4>
+          <div class="card-body">
+
+            <dl class="row" *ngFor="let user of not_authorized">
+                <dt class="col-sm-9">{{user}}</dt>
+                <dd class="col-sm-3" (click)="addAuth(user)">add</dd>
+            </dl>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
