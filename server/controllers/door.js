@@ -1,12 +1,12 @@
 const Door = require('../models/door');
 
-module.exports.getAllDoor = function (req, res) {
+module.exports.getAllDoors = function (req, res) {
 
   Door.find({}, (err, docs) => {
 
     if (err) {
 
-      console.log(err.message);
+      res.send(err)
 
     }
     else {
@@ -21,16 +21,16 @@ module.exports.getAllDoor = function (req, res) {
 
 module.exports.getDoor = function (req, res) {
 
-  Door.find({_id: req.body._id}, (err, docs) => {
+  Door.findOne({name: req.param("name")}, (err, doc) => {
 
     if(err) {
 
-      console.log(err.message);
+      res.send(err);
 
     }
     else {
 
-      res.json(docs);
+      res.json(doc);
 
     }
 
@@ -41,23 +41,49 @@ module.exports.getDoor = function (req, res) {
 
 module.exports.insertDoor = function (req, res) {
 
-  Door.create(req.body)
+  Door.create(req.body, (err, doc) => {
+
+    if(err) {
+
+      res.send(err);
+
+    }
+    else{
+
+      res.json(doc);
+
+    }
+
+  })
 
 }
 
 module.exports.updateDoor = function (req, res) {
 
-  Door.findByIdAndUpdate(req.body._id, req.body)
+  Door.findByIdAndUpdate(req.body._id, req.body, (err, doc) => {
+
+    if(err) {
+
+      res.send(err)
+
+    }
+    else {
+
+      res.json(doc);
+
+    }
+
+  })
 
 }
 
 module.exports.deleteDoor = function (req, res) {
 
-  Door.findByIdAndDelete(req.body._id, function (err) {
+  Door.findByIdAndDelete(req.param("name"), function (err) {
 
     if (err) {
 
-      console.log(err.message);
+      res.send(err);
 
     }
     else {

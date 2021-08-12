@@ -17,26 +17,27 @@ export class AccessService {
 
   }
 
-  getAccess(id: string): Observable<Access> {
+  getAccess(_id: string): Observable<Access> {
 
-    return this.http.get<Access>('http://localhost:8000/api/access/' + id)
+    return this.http.get<Access>('http://localhost:8000/api/access/' + _id)
+
   }
 
   insertAccess(access: Access): Observable<Access> {
 
-    return this.http.post<Access>('http://localhost:8000/api/access/', access)
+    return this.http.post<Access>('http://localhost:8000/api/access', access)
 
   }
 
-  updateAccess(access: Access): Observable<void> {
+  updateAccess(access: Access): Observable<Access> {
 
-    return this.http.put<void>('http://localhost:8000/api/access/' + access.id, access)
+    return this.http.put<Access>('http://localhost:8000/api/access', access)
 
   }
 
-  deleteAccess(id: string) {
+  deleteAccess(_id: string) {
 
-    return this.http.delete('http://localhost:8000/api/access/' + id)
+    return this.http.delete('http://localhost:8000/api/access/' + _id)
 
   }
 

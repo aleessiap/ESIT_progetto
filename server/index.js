@@ -6,6 +6,7 @@ const conf = require('../config');
 const usersRoutes = require('./routes/users');
 const doorsRoutes = require('./routes/door');
 const accessRoutes = require('./routes/access');
+const authorizationRoutes = require('./routes/authorizations');
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use("/api", usersRoutes);
 app.use("/api", doorsRoutes);
 app.use("/api", accessRoutes);
+app.use("/api", authorizationRoutes);
 app.use(cors());
 
 app.get("/", (req, res) => {

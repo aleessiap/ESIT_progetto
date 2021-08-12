@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const authorizationSchema = require('authorization')
 
 const doorSchema = new Schema(
 
@@ -10,7 +11,7 @@ const doorSchema = new Schema(
     description: {type: String, required: true},
     state: { type: Boolean, required: true },
     online: { type: Boolean, required: true },
-    authorizations: { type: Object, required: true }
+    authorizations: { type: authorizationSchema, required: true }
 
   }
 

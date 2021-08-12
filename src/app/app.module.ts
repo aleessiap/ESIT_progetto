@@ -8,7 +8,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {AuthenticationService} from "./services/authentication.service"
+import {AuthenticationService} from "./services/authentication.service";
+import { AuthorizationAssignmentFormComponent } from './authorization-assignment-form/authorization-assignment-form.component'
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {AuthenticationService} from "./services/authentication.service"
     AppComponent,
     LoginFormComponent,
     RegistrationFormComponent,
-    DashboardComponent
+    DashboardComponent,
+    AuthorizationAssignmentFormComponent
   ],
   imports: [
     BrowserModule,

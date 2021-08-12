@@ -7,6 +7,7 @@ module.exports.getAllAccess = function (req, res) {
     if (err) {
 
       console.log(err.message);
+      res.json({});
 
     }
     else {
@@ -21,11 +22,11 @@ module.exports.getAllAccess = function (req, res) {
 
 module.exports.getAccess = function (req, res) {
 
-  Access.find({_id: req.body._id}, (err, docs) => {
+  Access.findById(req.param('_id'), (err, docs) => {
 
     if(err) {
 
-      console.log(err.message);
+      res.send(err);
 
     }
     else {
@@ -41,28 +42,54 @@ module.exports.getAccess = function (req, res) {
 
 module.exports.insertAccess = function (req, res) {
 
-  Access.create({user_id: req.body.user_id, door_id: req.body.door_id})
+  Access.create(req.body, (err, doc) => {
+
+    if(err) {
+
+      res.send(err);
+
+    }
+    else{
+
+      res.json(doc);
+
+    }
+
+  })
 
 }
 
 module.exports.updateAccess = function (req, res) {
 
-  Access.findByIdAndUpdate(req.body._id, req.body)
+  Access.findByIdAndUpdate(req.body._id, req.body, (err, doc) => {
+
+    if(err) {
+
+      res.send(err)
+
+    }
+    else {
+
+      res.json(doc);
+
+    }
+
+  })
 
 }
 
 module.exports.deleteAccess = function (req, res) {
 
-  Access.findByIdAndDelete(req.body._id, function (err) {
+  Access.findByIdAndDelete(req.param("_id"), function (err, doc) {
 
     if (err) {
 
-      console.log(err.message);
+      res.send(err)
 
     }
     else {
 
-      console.log('Document deleted');
+      res.send(doc);
 
     }
 
