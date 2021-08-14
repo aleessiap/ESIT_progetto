@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Authorization } from '../../../server/models/authorization'
+import { User } from "../../../server/models/user";
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
@@ -11,32 +12,31 @@ export class AuthorizationService {
 
   constructor(private http:HttpClient) { }
 
-  getAllAuthorizations(): Observable<Authorization[]>{
+  getAllAuthorizations(): Observable<User[]>{
 
-    return this.http.get<Authorization[]>('http://localhost:8000/api/authorizations')
+    return this.http.get<User[]>('http://localhost:8000/api/authorizations')
 
   }
 
-  getAllNotAuthorized(): Observable<Authorization[]>{
+  getAllNotAuthorized(): Observable<User[]>{
 
     return this.http.get<Authorization[]>('http://localhost:8000/api/authorizations/denied')
 
   }
 
-  getAuthorizations(name: string): Observable<Authorization> {
+  getAuthorizations(name: string): Observable<User[]> {
 
     return this.http.get<Authorization>('http://localhost:8000/api/authorizations/' + name)
 
   }
 
-  getNotAuthorized(name: string): Observable<Authorization> {
+  getNotAuthorized(name: string): Observable<User[]> {
 
     return this.http.get<Authorization>('http://localhost:8000/api/authorizations/denied/' + name)
 
   }
 
-
-  insertAuthorization(door_name: string, user_name: string): Observable<Authorization> {
+  insertAuthorization(door_name: string, user_name: string): Observable<User[]> {
 
     return this.http.post<Authorization>('http://localhost:8000/api/authorizations', {door_name: door_name, user_name: user_name});
 
@@ -53,6 +53,5 @@ export class AuthorizationService {
     return this.http.delete('http://localhost:8000/api/authorizations/' + name + '/' + pin)
 
   }
-
 
 }

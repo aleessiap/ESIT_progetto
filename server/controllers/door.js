@@ -21,7 +21,7 @@ module.exports.getAllDoors = function (req, res) {
 
 module.exports.getDoor = function (req, res) {
 
-  Door.findOne({name: req.param("name")}, (err, doc) => {
+  Door.findOne({name: req.param["name"]}, (err, doc) => {
 
     if(err) {
 
@@ -79,7 +79,7 @@ module.exports.updateDoor = function (req, res) {
 
 module.exports.deleteDoor = function (req, res) {
 
-  Door.findByIdAndDelete(req.param("name"), function (err) {
+  Door.findByIdAndDelete(req.param["name"], function (err) {
 
     if (err) {
 

@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const conf = require('../config');
-const usersRoutes = require('./routes/users');
+const usersRoutes = require('./routes/user');
 const doorsRoutes = require('./routes/door');
 const accessRoutes = require('./routes/access');
-const authorizationRoutes = require('./routes/authorizations');
+const authorizationRoutes = require('./routes/authorization');
 const app = express();
 const port = process.env.PORT || 8080;
 

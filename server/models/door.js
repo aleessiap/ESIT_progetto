@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const authorizationSchema = require('authorization')
+const authorizationSchema = require('./authorization');
 
 const doorSchema = new Schema(
 

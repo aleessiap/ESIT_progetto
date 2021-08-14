@@ -1,4 +1,5 @@
 const Door = require('../models/door');
+const User = require('../models/user')
 
 module.exports.getAllAuthorizations = function (req, res) {
 
@@ -19,9 +20,47 @@ module.exports.getAllAuthorizations = function (req, res) {
 
 }
 
+module.exports.getAllNotAuthorized = function (req, res) {
+
+  Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
+
+    if (err) {
+
+      res.send(err);
+
+    }
+    else {
+
+      res.json(docs);
+
+    }
+
+  })
+
+}
+
 module.exports.getAuthorizations = function (req, res) {
 
-  Door.findOne({name: req.param("name")}, {authorizations: 1, _id: 0}, (err, doc) => {
+  Door.findOne({name: req.param["name"]}, {authorizations: 1, _id: 0}, (err, doc) => {
+
+    if(err) {
+
+      res.send(err)
+
+    }
+    else {
+
+      res.json(doc);
+
+    }
+
+  })
+
+}
+
+module.exports.getNotAuthorized = function (req, res) {
+
+  Door.findOne({name: req.param["name"]}, {authorizations: 1, _id: 0}, (err, doc) => {
 
     if(err) {
 
@@ -87,7 +126,7 @@ module.exports.updateAuthorization = function (req, res) {
 
 module.exports.deleteAuthorization = function (req, res) {
 
-  Door.findOne({name: req.param("name")}, function (err, doc) {
+  Door.findOne({name: req.param["name"]}, function (err, doc) {
 
     if (err) {
 
@@ -96,7 +135,7 @@ module.exports.deleteAuthorization = function (req, res) {
     }
     else {
 
-      doc[req.param("pin")] = undefined;
+      doc[req.param["pin"]] = undefined;
       Door.findByIdAndUpdate(doc._id, doc);
       console.log('Authorization deleted');
 

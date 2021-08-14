@@ -13,7 +13,7 @@ export class DoorService {
 
   getAllDoors(): Observable<Door[]> {
 
-    return this.http.get<Door[]>('http://localhost:8000/api/doors')
+    return this.http.get<Door[]>('http://localhost:8080/api/doors')
 
   }
 

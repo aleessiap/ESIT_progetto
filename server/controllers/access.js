@@ -22,7 +22,7 @@ module.exports.getAllAccess = function (req, res) {
 
 module.exports.getAccess = function (req, res) {
 
-  Access.findById(req.param('_id'), (err, docs) => {
+  Access.findById(req.param["_id"], (err, docs) => {
 
     if(err) {
 
@@ -80,7 +80,7 @@ module.exports.updateAccess = function (req, res) {
 
 module.exports.deleteAccess = function (req, res) {
 
-  Access.findByIdAndDelete(req.param("_id"), function (err, doc) {
+  Access.findByIdAndDelete(req.params["_id"], function (err, doc) {
 
     if (err) {
 

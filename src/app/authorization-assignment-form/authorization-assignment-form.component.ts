@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from "../services/authorization.service";
 import { DoorService } from "../services/door.service";
 import { Door } from "../../../server/models/door";
+import { Observable } from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-authorization-assignment-form',
@@ -14,6 +16,10 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   authorized: string[] = []
   not_authorized: string[] = []
   selected: string = ''
+  data: Door[] =  []
+
+  unauthorized_filter: string = '';
+  authorized_filter: string = '';
 
   constructor(private api_door:DoorService, private api_auth:AuthorizationService ) { }
 
@@ -22,7 +28,9 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
     this.doors = ['door1', 'door2', 'door3']
     this.authorized = ['user1', 'user2']
     this.not_authorized = ['user3', 'user4']
-    this.selected = this.doors[2]
+    this.selected = this.doors[1]
+
+    this.api_door.getAllDoors().subscribe()
 
   }
 
@@ -45,6 +53,18 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
     let aux = this.authorized
     this.authorized = this.not_authorized
     this.not_authorized = aux
+
+  }
+
+  filterAuthorized(authorized_filter): void{
+
+
+
+  }
+
+  filterUnauthorized(authorized_filter): void{
+
+
 
   }
 

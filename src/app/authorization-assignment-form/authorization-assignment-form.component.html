@@ -32,6 +32,8 @@
 
         </select>
 
+        {{data}}
+
       </div>
 
     </div>
@@ -43,12 +45,17 @@
       <div class="col-md-6">
         <div class="card">
 
-          <h4 class="card-header">Authorized</h4>
+          <div class="card-header">
+
+            <h4>Authorized</h4>
+            <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="authorized_filter" (change)=filterAuthorized(authorized_filter)>
+
+          </div>
           <div class="card-body">
 
             <dl class="row" *ngFor="let user of authorized">
-              <dt class="col-sm-9">{{user}}</dt>
-              <dd class="col-sm-3" (click)="removeAuth(user)">remove</dd>
+              <dt class="col-sm-11">{{user}}</dt>
+              <dd class="col-sm-1" (click)="removeAuth(user)"><i class="fa fa-minus"></i></dd>
             </dl>
 
           </div>
@@ -58,12 +65,17 @@
       <div class="col-md-6">
         <div class="card">
 
-          <h4 class="card-header">Unauthorized</h4>
+          <div class="card-header">
+
+            <h4>Unauthorized</h4>
+            <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="unauthorized_filter" (change)=filterUnauthorized(unauthorized_filter)>
+
+          </div>
           <div class="card-body">
 
             <dl class="row" *ngFor="let user of not_authorized">
-                <dt class="col-sm-9">{{user}}</dt>
-                <dd class="col-sm-3" (click)="addAuth(user)">add</dd>
+                <dt class="col-sm-11">{{user}}</dt>
+                <dd class="col-sm-1" (click)="addAuth(user)"><i class="fa fa-plus"></i></dd>
             </dl>
 
           </div>
