@@ -2,11 +2,11 @@ const Door = require('../models/door');
 
 module.exports.getAllDoors = function (req, res) {
 
-  Door.find({}, (err, docs) => {
+  Door.find({}, {authorizations:0},(err, docs) => {
 
     if (err) {
 
-      res.send(err)
+      res.send(err);
 
     }
     else {
@@ -21,7 +21,7 @@ module.exports.getAllDoors = function (req, res) {
 
 module.exports.getDoor = function (req, res) {
 
-  Door.findOne({name: req.param["name"]}, (err, doc) => {
+  Door.findOne({name: req.params["_id"]}, (err, doc) => {
 
     if(err) {
 
@@ -79,7 +79,7 @@ module.exports.updateDoor = function (req, res) {
 
 module.exports.deleteDoor = function (req, res) {
 
-  Door.findByIdAndDelete(req.param["name"], function (err) {
+  Door.findByIdAndDelete(req.params["_id"], function (err) {
 
     if (err) {
 

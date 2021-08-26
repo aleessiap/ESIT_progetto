@@ -7,6 +7,12 @@ const authorizationSchema = new Schema(
 
   },
 
+  {
+
+    _id: false
+
+  }
+
 );
 
 module.exports = authorizationSchema

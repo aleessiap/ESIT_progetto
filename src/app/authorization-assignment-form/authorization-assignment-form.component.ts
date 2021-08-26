@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from "../services/authorization.service";
 import { DoorService } from "../services/door.service";
 import { Door } from "../../../server/models/door";
+import { User } from "../../../server/models/user"
 import { Observable } from "rxjs";
 import {map} from "rxjs/operators";
+import {waitForAsync} from "@angular/core/testing";
 
 @Component({
   selector: 'app-authorization-assignment-form',
@@ -12,57 +14,73 @@ import {map} from "rxjs/operators";
 })
 export class AuthorizationAssignmentFormComponent implements OnInit {
 
-  doors: string[] = []
-  authorized: string[] = []
-  not_authorized: string[] = []
+  pins = {}
+  doors: Door[] = []
+  authorized: User[] = []
+  not_authorized: User[] = []
   selected: string = ''
-  data: Door[] =  []
 
-  unauthorized_filter: string = '';
+  not_authorized_filter: string = '';
   authorized_filter: string = '';
 
   constructor(private api_door:DoorService, private api_auth:AuthorizationService ) { }
 
   ngOnInit(): void {
 
-    this.doors = ['door1', 'door2', 'door3']
-    this.authorized = ['user1', 'user2']
-    this.not_authorized = ['user3', 'user4']
-    this.selected = this.doors[1]
+    this.api_door.getAllDoors().subscribe((data: Door[]) => {
 
-    this.api_door.getAllDoors().subscribe()
+      this.doors = data
 
-  }
-
-  removeAuth(user:string): void {
-
-    user = this.authorized.splice(this.authorized.indexOf(user), 1)[0]
-    this.not_authorized.push(user);
+    })
 
   }
 
-  addAuth(user:string): void {
+  removeAuth(door_id:string, user_id:string, index:number): void {
 
-    user = this.not_authorized.splice(this.not_authorized.indexOf(user), 1)[0]
-    this.authorized.push(user);
+    this.api_auth.deleteAuthorizations(door_id, user_id).subscribe((data) => {
+
+      let user = this.authorized.splice(index, 1)[0]
+      this.not_authorized.push(user)
+
+    })
 
   }
 
-  loadAuth(selected:string): void {
+  addAuth(door_id:string, user_id:string, index:number): void {
 
-    let aux = this.authorized
-    this.authorized = this.not_authorized
-    this.not_authorized = aux
+    this.api_auth.insertAuthorization(door_id, user_id).subscribe((data) => {
+
+      let user = this.not_authorized.splice(index, 1)[0]
+      this.authorized.push(user)
+
+    })
+
+  }
+
+  loadAuth(door_id:string): void {
+
+    this.api_auth.getAuthorizations(door_id).subscribe((data => {
+
+      this.authorized = data
+
+    }))
+
+
+    this.api_auth.getNotAuthorized(door_id).subscribe((data => {
+
+      this.not_authorized = data
+
+    }))
 
   }
 
   filterAuthorized(authorized_filter): void{
 
-
+    console.log(this.authorized_filter)
 
   }
 
-  filterUnauthorized(authorized_filter): void{
+  filterUnauthorized(not_authorized_filter): void{
 
 
 

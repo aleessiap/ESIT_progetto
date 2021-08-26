@@ -13,25 +13,25 @@ export class DoorService {
 
   getAllDoors(): Observable<Door[]> {
 
-    return this.http.get<Door[]>('http://localhost:8080/api/doors')
+    return this.http.get<Door[]>(/*'http://localhost:8080*/'/api/doors')
 
   }
 
   getDoor(name: string): Observable<Door> {
 
-    return this.http.get<Door>('http://localhost:8000/api/doors/' + name)
+    return this.http.get<Door>(/*'http://localhost:8080*/'/api/doors/' + name)
 
   }
 
   insertDoor(door: Door): Observable<Door> {
 
-    return this.http.post<Door>('http://localhost:8000/api/doors/', door)
+    return this.http.post<Door>(/*'http://localhost:8080*/'/api/doors/', door)
 
   }
 
   updateDoor(door: Door): Observable<void> {
 
-    return this.http.put<void>('http://localhost:8000/api/doors', door)
+    return this.http.put<void>(/*'http://localhost:8000*/'/api/doors', door)
 
   }
 

@@ -1,5 +1,7 @@
 const Door = require('../models/door');
 const User = require('../models/user')
+const Authorization = require('../models/authorization')
+const mongoose = require("mongoose");
 
 module.exports.getAllAuthorizations = function (req, res) {
 
@@ -41,7 +43,7 @@ module.exports.getAllNotAuthorized = function (req, res) {
 
 module.exports.getAuthorizations = function (req, res) {
 
-  Door.findOne({name: req.param["name"]}, {authorizations: 1, _id: 0}, (err, doc) => {
+  Door.findById(mongoose.Types.ObjectId(req.params["_id"]), (err, doc) => {
 
     if(err) {
 
@@ -50,7 +52,29 @@ module.exports.getAuthorizations = function (req, res) {
     }
     else {
 
-      res.json(doc);
+      let auths = doc['authorizations']['_doc']
+      let users_id = []
+
+      for (const pin in auths) {
+
+        users_id.push(auths[pin])
+
+      }
+
+      User.find({_id: {$in: users_id}}, (err, docs) => {
+
+        if(err) {
+
+          res.send(err)
+
+        }
+        else {
+
+          res.json(docs)
+
+        }
+
+      })
 
     }
 
@@ -60,7 +84,7 @@ module.exports.getAuthorizations = function (req, res) {
 
 module.exports.getNotAuthorized = function (req, res) {
 
-  Door.findOne({name: req.param["name"]}, {authorizations: 1, _id: 0}, (err, doc) => {
+  Door.findById(mongoose.Types.ObjectId(req.params["_id"]), (err, doc) => {
 
     if(err) {
 
@@ -69,7 +93,29 @@ module.exports.getNotAuthorized = function (req, res) {
     }
     else {
 
-      res.json(doc);
+      let auths = doc['authorizations']['_doc']
+      let users_id = []
+
+      for (const pin in auths) {
+
+        users_id.push(auths[pin])
+
+      }
+
+      User.find({_id: {$nin: users_id}}, (err, docs) => {
+
+        if(err) {
+
+          res.send(err)
+
+        }
+        else {
+
+          res.json(docs)
+
+        }
+
+      })
 
     }
 
@@ -78,10 +124,9 @@ module.exports.getNotAuthorized = function (req, res) {
 }
 
 
-module.exports.insertAuthorizations = function (req, res) {
+module.exports.insertAuthorization = function (req, res) {
 
-
-  Door.findOne({name: req.body.door_name}, (err, doc) => {
+  Door.findById(mongoose.Types.ObjectId(req.body.door_id), (err, doc) => {
 
     if(err) {
 
@@ -90,10 +135,24 @@ module.exports.insertAuthorizations = function (req, res) {
     }
     else {
 
-      let pin = "1234"
-      doc.authorizations[pin] = req.body.user_name
-      Door.findByIdAndUpdate(doc._id, doc)
-      res.json(doc);
+      let update = {}
+      let value = {}
+      let pin = '1234'
+
+      Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pin)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
+
+        if(err1) {
+
+          res.send(err1)
+
+        }
+        else {
+
+          res.json(doc1)
+
+        }
+
+      })
 
     }
 
@@ -103,7 +162,7 @@ module.exports.insertAuthorizations = function (req, res) {
 
 module.exports.updateAuthorization = function (req, res) {
 
-  Door.findOne({name: req.body.name}, function (err, doc) {
+  Door.findById(mongoose.Types.ObjectId(req.body._id), function (err, doc) {
 
     if (err) {
 
@@ -126,7 +185,7 @@ module.exports.updateAuthorization = function (req, res) {
 
 module.exports.deleteAuthorization = function (req, res) {
 
-  Door.findOne({name: req.param["name"]}, function (err, doc) {
+  Door.findById(mongoose.Types.ObjectId(req.params["door_id"]), function (err, doc) {
 
     if (err) {
 
@@ -135,9 +194,24 @@ module.exports.deleteAuthorization = function (req, res) {
     }
     else {
 
-      doc[req.param["pin"]] = undefined;
-      Door.findByIdAndUpdate(doc._id, doc);
-      console.log('Authorization deleted');
+      let update = {}
+      let value = {}
+      let pin = '1234'
+
+      Door.collection.findOneAndUpdate({_id: doc._id}, {$unset:{['authorizations.'.concat(pin)]:1}}, {returnDocument: "after"}, (err1, doc1) => {
+
+        if(err1) {
+
+          res.send(err1)
+
+        }
+        else {
+
+          res.json(doc1)
+
+        }
+
+      })
 
     }
 

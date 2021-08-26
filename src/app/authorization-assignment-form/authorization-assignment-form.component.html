@@ -28,11 +28,9 @@
 
         <select class="form-select" [(ngModel)]="selected" (change)="loadAuth(selected)">
 
-          <option *ngFor="let door of doors" [value]="door" [selected]="door == selected">{{door}}</option>
+          <option *ngFor="let door of doors" [value]="door._id" [selected]="door._id == selected">{{door.name}}</option>
 
         </select>
-
-        {{data}}
 
       </div>
 
@@ -53,9 +51,9 @@
           </div>
           <div class="card-body">
 
-            <dl class="row" *ngFor="let user of authorized">
-              <dt class="col-sm-11">{{user}}</dt>
-              <dd class="col-sm-1" (click)="removeAuth(user)"><i class="fa fa-minus"></i></dd>
+            <dl class="row" *ngFor="let user of authorized; let i=index;">
+              <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
+              <dd class="col-sm-1"><i class="fa fa-minus" (click)="removeAuth(selected, user._id, i)"></i></dd>
             </dl>
 
           </div>
@@ -68,20 +66,24 @@
           <div class="card-header">
 
             <h4>Unauthorized</h4>
-            <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="unauthorized_filter" (change)=filterUnauthorized(unauthorized_filter)>
+            <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="not_authorized_filter" (change)=filterUnauthorized(not_authorized_filter)>
 
           </div>
           <div class="card-body">
 
-            <dl class="row" *ngFor="let user of not_authorized">
-                <dt class="col-sm-11">{{user}}</dt>
-                <dd class="col-sm-1" (click)="addAuth(user)"><i class="fa fa-plus"></i></dd>
+            <dl class="row" *ngFor="let user of not_authorized; let i=index;">
+
+                <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
+                <dd class="col-sm-1"><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
+
             </dl>
 
           </div>
 
         </div>
+
       </div>
+
     </div>
 
   </div>

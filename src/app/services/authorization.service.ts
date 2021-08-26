@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Authorization } from '../../../server/models/authorization'
 import { User } from "../../../server/models/user";
+import { Door } from "../../../server/models/door"
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
@@ -14,43 +14,43 @@ export class AuthorizationService {
 
   getAllAuthorizations(): Observable<User[]>{
 
-    return this.http.get<User[]>('http://localhost:8000/api/authorizations')
+    return this.http.get<User[]>('/api/auths')
 
   }
 
   getAllNotAuthorized(): Observable<User[]>{
 
-    return this.http.get<Authorization[]>('http://localhost:8000/api/authorizations/denied')
+    return this.http.get<User[]>('/api/auths/denied')
 
   }
 
-  getAuthorizations(name: string): Observable<User[]> {
+  getAuthorizations(_id: string): Observable<User[]> {
 
-    return this.http.get<Authorization>('http://localhost:8000/api/authorizations/' + name)
-
-  }
-
-  getNotAuthorized(name: string): Observable<User[]> {
-
-    return this.http.get<Authorization>('http://localhost:8000/api/authorizations/denied/' + name)
+    return this.http.get<User[]>('/api/auths/' + _id)
 
   }
 
-  insertAuthorization(door_name: string, user_name: string): Observable<User[]> {
+  getNotAuthorized(_id: string): Observable<User[]> {
 
-    return this.http.post<Authorization>('http://localhost:8000/api/authorizations', {door_name: door_name, user_name: user_name});
-
-  }
-
-  updateAuthorizations(name: string, old_pin:string, new_pin:string): Observable<void> {
-
-    return this.http.put<void>('http://localhost:8000/api/authorizations', {name: name, old_pin: old_pin, new_pin: new_pin})
+    return this.http.get<User[]>('/api/auths/denied/' + _id)
 
   }
 
-  deleteAuthorizations(name: string, pin: string) {
+  insertAuthorization(door_id: string, user_id: string) {
 
-    return this.http.delete('http://localhost:8000/api/authorizations/' + name + '/' + pin)
+    return this.http.post('/api/auths', {door_id: door_id, user_id: user_id});
+
+  }
+
+  updateAuthorizations(_id: string, old_pin:string, new_pin:string): Observable<void> {
+
+    return this.http.put<void>('/api/auths', {_id: _id, old_pin: old_pin, new_pin: new_pin})
+
+  }
+
+  deleteAuthorizations(door_id: string, user_id: string) {
+
+    return this.http.delete('/api/auths/' + door_id + '/' + user_id)
 
   }
 
