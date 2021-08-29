@@ -24,7 +24,9 @@
               <div *ngIf="loginForm.controls.password.errors.required" >
                 Password is required
               </div>
-
+            </div>
+            <div *ngIf="errorCredential" class="invalid-feedback">
+              Error in credentials
             </div>
             <div class="row px-3 mb-4">
               <a href="#" class=" small ml-auto mb-0 text-sm">Forgot password?</a>
@@ -39,13 +41,7 @@
             </div>
           </div>
         </form>
-        <div class="row mb-4 px-3">
-          <small class="font-weight-bold">Don't have an account?
-              <a routerLink="../registration" class="text-danger">
-                Register
-              </a>
-          </small>
-        </div>
+
 
       </div>
     </div>

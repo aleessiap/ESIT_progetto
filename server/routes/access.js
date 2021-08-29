@@ -8,4 +8,4 @@ router.post('/', accessController.insertAccess);
 router.put('/', accessController.updateAccess);
 router.delete('/:_id', accessController.deleteAccess);
 
-module.exports = router
+module.exports = router;

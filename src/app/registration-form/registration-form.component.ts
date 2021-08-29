@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute} from "@angular/router";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {first} from 'rxjs/operators';
+import {Router} from "@angular/router";
+import { FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../server/models/user";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthenticationService} from "../services/authentication.service";
 
 
@@ -31,9 +29,11 @@ export class RegistrationFormComponent implements OnInit {
       email:['', [Validators.required, Validators.email]],
       phone_num:['', [Validators.required, Validators.pattern("[0-9]{10}" )]],
       birthdate:['', [Validators.required]],
+      username:['', [Validators.required]]
     })
 
   }
+
 
   onSubmit() {
     this.submitted = true;
@@ -49,7 +49,8 @@ export class RegistrationFormComponent implements OnInit {
       surname : this.registrationForm.controls.surname.value,
       email : this.registrationForm.controls.email.value,
       phone_num : this.registrationForm.controls.phone_num.value,
-      birthdate : this.registrationForm.controls.birthdate.value
+      birthdate : this.registrationForm.controls.birthdate.value,
+      username: this.registrationForm.controls.username.value
     };
 
     //richiamo il servizio per poter collegare al server passandogli i dati del form

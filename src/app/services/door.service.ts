@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Door } from '../../../server/models/door'
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 
@@ -8,30 +8,43 @@ import { catchError, map } from "rxjs/operators";
   providedIn: 'root'
 })
 export class DoorService {
-
   constructor(private http: HttpClient) { }
 
   getAllDoors(): Observable<Door[]> {
 
-    return this.http.get<Door[]>(/*'http://localhost:8080*/'/api/doors')
+    return this.http.get<Door[]>('http://localhost:8000/api/doors')
 
   }
 
   getDoor(name: string): Observable<Door> {
-
-    return this.http.get<Door>(/*'http://localhost:8080*/'/api/doors/' + name)
+    let API_URL = '/api/doors/' +name;
+    console.log(API_URL)
+    return this.http.get<Door>(API_URL)
+      .pipe(
+        map(door => {
+          console.log(door.doorFound)
+        return door.doorFound;
+        })
+      )
 
   }
 
   insertDoor(door: Door): Observable<Door> {
-
-    return this.http.post<Door>(/*'http://localhost:8080*/'/api/doors/', door)
-
+    let API_URL = '/api/doors/add-door';
+    return this.http.post<Door>(API_URL, door)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
   }
 
   updateDoor(door: Door): Observable<void> {
-
-    return this.http.put<void>(/*'http://localhost:8000*/'/api/doors', door)
+    let API_URL = '/api/doors';
+    console.log('update Door controller');
+    return this.http.put<Door>(API_URL, door)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+    //return this.http.put<void>('http://localhost:8000/api/doors', door)
 
   }
 
@@ -41,4 +54,19 @@ export class DoorService {
 
   }
 
+  // Error handling
+  errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = '';
+
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    console.log(error.statusText);
+    return throwError(errorMessage);
+  }
 }
