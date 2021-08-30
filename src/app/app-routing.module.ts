@@ -16,7 +16,7 @@ const routes: Routes = [
   {path:'authorization', component: AuthorizationAssignmentFormComponent},
   {path: 'insert_door', component:AddDoorFormComponent},
   {path: 'modify_profile', component: ProfileDataFormComponent},
-  {path: 'modify_door/:name', component: ModifyDoorComponent}
+  {path: 'modify_door/:_id', component: ModifyDoorComponent}
 ];
 
 @NgModule({

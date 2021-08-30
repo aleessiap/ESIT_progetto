@@ -1,4 +1,5 @@
 const Door = require('../models/door');
+const mongoose = require("mongoose");
 
 module.exports.getAllDoors = function (req, res) {
 
@@ -20,9 +21,9 @@ module.exports.getAllDoors = function (req, res) {
 }
 
 module.exports.getDoor = function (req, res) {
-  console.log('Get door controller parameter ' + req.param("name"));
-
-  Door.findOne({name: req.param("name")}, (err, door) => {
+  console.log('Get door controller parameter ' + req.param("_id"));
+  let id = mongoose.Types.ObjectId(req.param("_id"));
+  Door.findOne({_id: id}, (err, door) => {
 
     if(err) {
       console.log('Error occurred');
@@ -30,8 +31,9 @@ module.exports.getDoor = function (req, res) {
 
     }
     if(!door) {
-      console.log("Door not found!");
       res.json(door);
+
+      console.log("Door not found!");
 
     }else{
       console.log("Door found");

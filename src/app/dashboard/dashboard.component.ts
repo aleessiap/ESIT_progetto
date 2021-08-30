@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
       console.log('------------')
       console.log('Dashboard: ');
       console.log("found user "+ this.logged);
-      this.logged = this.api.getCurrentUser();
+      this.logged = this.api.currentUser;
       this.loggedIn = true;
     }else{
       this.loggedIn = false;

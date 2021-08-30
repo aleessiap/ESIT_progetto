@@ -16,21 +16,25 @@ export class DoorService {
 
   }
 
-  getDoor(name: string): Observable<Door> {
-    let API_URL = '/api/doors/' +name;
+  getDoor(id : string): Observable<Door> {
+    let API_URL = '/api/doors/' +id;
     console.log(API_URL)
     return this.http.get<Door>(API_URL)
       .pipe(
         map(door => {
-          console.log(door.doorFound)
-        return door.doorFound;
+          if(door){
+            console.log(door.doorFound);
+            return door.doorFound;
+          }
+
+
         })
       )
 
   }
 
   insertDoor(door: Door): Observable<Door> {
-    let API_URL = '/api/doors/add-door';
+    let API_URL = '/api/doors/';
     return this.http.post<Door>(API_URL, door)
       .pipe(
         catchError(this.errorMgmt)

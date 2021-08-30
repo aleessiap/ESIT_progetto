@@ -1,0 +1,72 @@
+<div class="row justify-content-center mx-auto ">
+  <div class="col-md-8">
+    <div class="card">
+      <h4 class="card-header">Register</h4>
+      <div class="card-body  align-items-center" >
+
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+          <div class="form-group mx-sm-3 input">
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.name.errors }" />
+            <div *ngIf="submitted && profileForm.controls.name.errors" class="invalid-feedback">
+              <div *ngIf="profileForm.controls.name.errors.required">Name is required</div>
+            </div>
+          </div>
+
+          <div class="form-group mx-sm-3 input">
+            <label for="surname">Surname</label>
+            <input type="text" formControlName="surname" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.surname.errors }" />
+            <div *ngIf="submitted && profileForm.controls.surname.errors" class="invalid-feedback">
+              <div *ngIf="profileForm.controls.surname.errors.required">Last Name is required</div>
+            </div>
+          </div>
+
+          <div class="form-group mx-sm-3 input">
+            <label for="email">Email </label>
+            <input type="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.email.errors }" />
+            <div *ngIf="submitted && profileForm.controls.email.errors" class="invalid-feedback">
+              <div *ngIf="profileForm.controls.email.errors.email">This is not an email</div>
+              <div *ngIf="profileForm.controls.email.errors.required">Email is required</div>
+            </div>
+          </div>
+
+          <div class="form-group mx-sm-3 input">
+            <label for="username">Username</label>
+            <input type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.username.errors }" />
+            <div *ngIf="submitted && profileForm.controls.username.errors" class="invalid-feedback">
+              <div *ngIf="profileForm.controls.username.errors.required">Username is required</div>
+            </div>
+          </div>
+
+          <div class="form-group mx-sm-3 input">
+            <label for="phone_num">Phone Number</label>
+            <input type="text" formControlName="phone_num" class="form-control"  [ngClass]="{'is-invalid': submitted && profileForm.controls.phone_num.errors }" />
+            <div *ngIf="submitted && profileForm.controls.phone_num.errors" class="invalid-feedback">
+              <div *ngIf="profileForm.controls.phone_num.errors.required">Phone number is required</div>
+              <div *ngIf="profileForm.controls.phone_num.errors.pattern">Phone number is invalid</div>
+
+            </div>
+          </div>
+
+          <div class="form-group mx-sm-3 input">
+            <label for="birthdate">Date of Birth</label>
+            <input type="date" formControlName="birthdate" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.birthdate.errors }" />
+            <div *ngIf="submitted && profileForm.controls.birthdate.errors" class="invalid-feedback">
+              <div *ngIf="profileForm.controls.birthdate.errors.required">Date of birth is required</div>
+            </div>
+          </div>
+
+          <div class = "align-content-center input">
+            <div class="form-group mx-sm-3">
+              <button [disabled]="loading" class="btn btn-primary" style="background-color: #3b5998;">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Save changes
+              </button>
+              <a routerLink="../home" class="btn btn-link">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,8 +7,8 @@ const usersRoutes = require('./routes/user');
 const doorsRoutes = require('./routes/door');
 const accessRoutes = require('./routes/access');
 const authorizationRoutes = require('./routes/authorization');
-const bot = require('./bot-telegram')
-const device =  require('./aws-iot')
+//const bot = require('./bot-telegram')
+//const device =  require('./aws-iot')
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -37,4 +37,4 @@ app.listen(port, function(){
 })
 
 module.exports.server = app;
-module.exports.bot = bot;
+//module.exports.bot = bot;

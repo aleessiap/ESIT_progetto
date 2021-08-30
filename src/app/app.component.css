@@ -1,0 +1,10 @@
+.input { margin-bottom: 100px; }
+textarea { margin-bottom: 10px; }
+.button {margin-top: 10px; }
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}

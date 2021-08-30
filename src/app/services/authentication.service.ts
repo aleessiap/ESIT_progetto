@@ -19,11 +19,11 @@ export class AuthenticationService {
     this.admin = false;
   }
 
-  //
+
   login(data): Observable<any> {
     console.log("getUser : " + data.username);
 
-    let API_URL = '/api/login';
+    let API_URL = '/api/users/login';
 
     return this.http.post<User>(API_URL, data)
       .pipe(map(user => {
@@ -39,14 +39,6 @@ export class AuthenticationService {
       }));
   }
 
-  setCurrentUser(user: User){
-    this.currentUser = user;
-  }
-
-  getCurrentUser(): User{
-    return this.currentUser;
-  }
-
   logout() {
     console.log("logout");
     this.currentUser = '';
@@ -55,12 +47,12 @@ export class AuthenticationService {
 
   //Chiamata per leggere tutti gli utenti
   getUsers()  {
-    let API_URL = '/api/get-users'
+    let API_URL = '/api/users/get-users'
     return this.http.get(API_URL);
   }
 
   modifyUser(data: User): Observable<User>{
-    let API_URL = '/api/modify-user';
+    let API_URL = '/api/users/modify-user';
     return this.http.post<User>(API_URL, data)
       .pipe(
         catchError(this.errorMgmt)
@@ -69,7 +61,7 @@ export class AuthenticationService {
 
   //Chiamata per la registrazione di un nuovo utente
   addUser(data: User): Observable<User> {
-    let API_URL = '/api/add-user';
+    let API_URL = '/api/users/add-user';
     return this.http.post<User>(API_URL, data)
       .pipe(
         catchError(this.errorMgmt)
