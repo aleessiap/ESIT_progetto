@@ -1,5 +1,7 @@
 const AwsIot = require('aws-iot-device-sdk');
-const Door = require('./models/door')
+const Door = require('./models/door');
+const Access = require('./models/access')
+const mongoose = require("mongoose");
 
 THING_NAME = 'APP'
 
@@ -29,10 +31,6 @@ device.on('connect', function() {
           let thing_name = docs[doc]['aws_thing_name']
           device.subscribe('$aws/things/' + thing_name + '/shadow/update/accepted');
 
-          //device.subscribe('$aws/things/' + thing_name + '/shadow/update/rejected');
-          //device.subscribe('$aws/things/' + thing_name + '/shadow/update/delta');
-          //device.subscribe('$aws/things/' + thing_name + '/shadow/update/documents');
-
         }
 
       }
@@ -43,8 +41,6 @@ device.on('connect', function() {
   });
 
 device.on('message', function(topic, payload) {
-
-    console.log('message', topic, payload)
 
     payload = JSON.parse(payload)
     if (payload["state"]["reported"] === undefined) return;
@@ -57,8 +53,7 @@ device.on('message', function(topic, payload) {
 
         console.log(err)
 
-      }
-      else {
+      } else {
 
         if (payload["state"]["reported"]["last_password"] === undefined) {
 
@@ -67,16 +62,31 @@ device.on('message', function(topic, payload) {
         }
         else {
 
-          let user_id = doc['authorizations'][payload["state"]["reported"]["last_password"]]
-          let access = undefined
+          let last_password = payload["state"]["reported"]["last_password"]
+          let user_id = doc['authorizations']['_doc'][last_password]
+          let d_state = undefined;
 
           if (user_id === undefined) {
 
-            access = 0
+            d_state = 1
 
           } else {
 
-            access = 1
+            d_state = 2
+            Access.create({door_id:doc["_id"], user_id: user_id}, (err1, doc1) => {
+
+              if (err1) {
+
+                console.log(err1)
+
+              } else {
+
+                // console.log(doc1)
+
+              }
+
+
+            });
 
           }
 
@@ -86,7 +96,8 @@ device.on('message', function(topic, payload) {
 
               "desired": {
 
-                "access": access
+                "d_state": d_state
+
 
               }
 
@@ -95,6 +106,25 @@ device.on('message', function(topic, payload) {
           }
 
           device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update))
+
+          setTimeout(() => {
+            update = {
+
+              "state": {
+
+                "desired": {
+
+                  "d_state": 3
+
+                }
+
+              }
+
+            }
+
+            device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update))
+
+          }, 2000);
 
         }
 

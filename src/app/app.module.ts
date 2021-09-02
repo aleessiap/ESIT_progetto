@@ -15,7 +15,7 @@ import { AddDoorFormComponent } from './add-door-form/add-door-form.component';
 import { ProfileDataFormComponent } from './profile-data-form/profile-data-form.component';
 import { ModifyDoorComponent } from './modify-door/modify-door.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
-import { ManageDoorsComponent } from './manage-doors/manage-doors.component'
+import { ManageDoorsComponent } from './manage-doors/manage-doors.component';
 
 
 @NgModule({

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from 'server/models/user'
+import {Door} from 'server/models/door'
 import {AuthenticationService} from "../services/authentication.service";
+import {DoorService} from "../services/door.service";
+import {AccessService} from "../services/access.service";
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -9,23 +13,12 @@ import {AuthenticationService} from "../services/authentication.service";
 export class DashboardComponent implements OnInit {
   title = 'Fetch Employee';
   users : any = [];
+  doors: Door[] = [];
+  access = {}
+
   loggedIn: boolean;
   logged : User;
-  constructor(private api : AuthenticationService){
-    this.api.getUsers().subscribe(data => {
-      this.users = data;
-    })
-
-    if(this.api.loggedIn){
-      console.log('------------')
-      console.log('Dashboard: ');
-      console.log("found user "+ this.logged);
-      this.logged = this.api.currentUser;
-      this.loggedIn = true;
-    }else{
-      this.loggedIn = false;
-    }
-  }
+  constructor(private api_door: DoorService, private api_auth : AuthenticationService, private api_accs: AccessService) {}
 
   columns = [ "Name", "Surname", "Email", "Password"];
 
@@ -33,9 +26,36 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log("Dashboard ");
 
-    //this.rs.getUsers();
+    this.api_door.getAllDoors().subscribe((data: Door[]) => {
+
+      this.doors = data
+
+      for (const door of this.doors) {
+
+        this.access[door._id] = this.api_accs.getAccessByDoorId(door._id);
+
+      }
+
+    })
+
+    this.api_auth.getUsers().subscribe(data => {
+
+      this.users = data;
+      console.log(data);
+
+    })
+
+    if(this.api_auth.loggedIn){
+      console.log('------------')
+      console.log('Dashboard: ');
+      console.log("found user "+ this.logged);
+      this.logged = this.api_auth.currentUser;
+      this.loggedIn = true;
+    }else{
+      this.loggedIn = false;
+    }
+
   }
 
 }

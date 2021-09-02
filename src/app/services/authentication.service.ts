@@ -7,7 +7,6 @@ import {catchError, map} from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthenticationService {
   endpoint: string = '/api';
   headers = new HttpHeaders().set('Content-Type', 'application/json');

@@ -1,10 +1,10 @@
-<h6> I miei dati:</h6>
+<!--<h6> I miei dati:</h6>
 <div *ngIf="loggedIn ==false">
   <h6> Nessuno è loggato</h6>
 </div>
 <table id="users">
 
-  <!--<tr>
+  - Altro commento qui - <tr>
     <th *ngFor="let col of columns">
       {{col}}
     </th>
@@ -13,7 +13,7 @@
     <td *ngFor="let col of index">
       {{user[col]}}
     </td>
-  </tr> -->
+  </tr> - Fine altro commento qui -
   <div  *ngIf="loggedIn == true">
     <tr >
       <th *ngFor="let col of columns">
@@ -26,6 +26,50 @@
       </td>
     </tr>
   </div>
-</table>
+</table> -->
+
+
+<div class="row justify-content-end">
+
+  <div class="col-md-6">
+    search bar
+  </div>
+
+  <div class="col-md-2">
+    <a href="/dashboard" class=" small ml-auto mb-0 text-sm">Manage authorizations</a>
+  </div>
+
+  <div class="col-md-2">
+    <a href="/dashboard" class=" small ml-auto mb-0 text-sm">Manage users</a>
+  </div>
+
+  <div class="col-md-2">
+    <a href="/dashboard" class=" small ml-auto mb-0 text-sm">Manage doors</a>
+  </div>
+
+</div>
+<div class="row h-100">
+
+  <div class="col-md-3" *ngFor="let door of doors">
+
+    <div class="card">
+      <div class="card-header">
+
+        {{door.name}}
+
+      </div>
+
+      <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
+        <dt class="col-sm-6">{{acc.user_id}}</dt>
+        <dd class="col-sm-6">{{acc.createdAt}}</dd>
+      </dl>
+    </div>
+
+  </div>
+
+
+</div>
+
+
 
 <a class="nav-link active"  routerLink="../insert_door">Register a door</a>

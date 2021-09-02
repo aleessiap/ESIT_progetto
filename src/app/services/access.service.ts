@@ -13,31 +13,38 @@ export class AccessService {
 
   getAllAccess(): Observable<Access[]> {
 
-    return this.http.get<Access[]>('http://localhost:8000/api/access')
+    return this.http.get<Access[]>('/api/access')
 
   }
 
   getAccess(_id: string): Observable<Access> {
 
-    return this.http.get<Access>('http://localhost:8000/api/access/' + _id)
+    return this.http.get<Access>('/api/access/' + _id)
 
   }
 
+  getAccessByDoorId(_id: string): Observable<Access> {
+
+    return this.http.get<Access>('/api/access/door/' + _id)
+
+  }
+
+
   insertAccess(access: Access): Observable<Access> {
 
-    return this.http.post<Access>('http://localhost:8000/api/access', access)
+    return this.http.post<Access>('/api/access', access)
 
   }
 
   updateAccess(access: Access): Observable<Access> {
 
-    return this.http.put<Access>('http://localhost:8000/api/access', access)
+    return this.http.put<Access>('/api/access', access)
 
   }
 
   deleteAccess(_id: string) {
 
-    return this.http.delete('http://localhost:8000/api/access/' + _id)
+    return this.http.delete('/api/access/' + _id)
 
   }
 

@@ -20,6 +20,25 @@ module.exports.getAllAccess = function (req, res) {
 
 }
 
+module.exports.getAccessByDoor = function (req, res) {
+
+  Access.find({door_id: req.param["_id"]}, (err, docs) => {
+
+    if(err) {
+
+      res.send(err);
+
+    }
+    else {
+
+      res.json(docs);
+
+    }
+
+  })
+
+}
+
 module.exports.getAccess = function (req, res) {
 
   Access.findById(req.param["_id"], (err, docs) => {
