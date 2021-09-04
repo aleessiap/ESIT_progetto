@@ -16,6 +16,7 @@ export class RegistrationFormComponent implements OnInit {
   loading = false;
   submitted = false;
   newUser : User;
+
   constructor(
     private  fb : FormBuilder,
     public api: AuthenticationService,
@@ -23,6 +24,7 @@ export class RegistrationFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -38,7 +40,6 @@ export class RegistrationFormComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // Se il form non è valido si ferma qui
     if (this.registrationForm.invalid) {
       return;
     }
@@ -60,6 +61,6 @@ export class RegistrationFormComponent implements OnInit {
     this.loading = true;
     this.newUser = user;
     alert("Registration succed!");
-    this.router.navigateByUrl('/home')
+    this.router.navigateByUrl('/dashboard')
   }
 }

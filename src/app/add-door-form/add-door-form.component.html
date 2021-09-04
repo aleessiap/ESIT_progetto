@@ -23,11 +23,11 @@
 
           <div class="form-group  mx-sm-3 input">
             <label for="description">Description </label>
-            <textarea formControlName="description" class="form-control" [ngClass]="{'is-invalid': submitted && registerDoor.controls.description.errors }" >
+            <textarea formControlName="description" class="form-control" [ngClass]="{'is-invalid': submitted && registerDoor.controls.description.errors }" ></textarea>
             <div *ngIf="submitted && registerDoor.controls.description.errors" class="invalid-feedback">
               <div *ngIf="registerDoor.controls.description.errors.required">Description is required</div>
             </div>
-            </textarea>
+
           </div>
 
 

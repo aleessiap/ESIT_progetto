@@ -25,8 +25,11 @@
                 Password is required
               </div>
             </div>
-            <div *ngIf="errorCredential" class="invalid-feedback">
-              Error in credentials
+            <div [(ngModel)]="errorCredential"  class="invalid-feedback">
+              <div *ngIf="errorCredential">
+                Error in credentials
+              </div>
+
             </div>
             <div class="row px-3 mb-4">
               <a href="#" class=" small ml-auto mb-0 text-sm">Forgot password?</a>

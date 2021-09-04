@@ -11,7 +11,6 @@ import {AccessService} from "../services/access.service";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  title = 'Fetch Employee';
   users : any = [];
   doors: Door[] = [];
   access = {}

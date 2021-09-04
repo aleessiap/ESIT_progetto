@@ -41,14 +41,18 @@ export class ProfileDataFormComponent implements OnInit {
     if (this.profileForm.invalid) {
       return;
     }
-    const doc = { currentUser: this.api.currentUser, profile: this.profileForm.value}
+    const doc = {
+      currentUser: this.api.currentUser,
+      profile: this.profileForm.value
+    }
       //richiamo il servizio per poter collegare al server passandogli i dati del form
     this.api.modifyUser(doc)
       .subscribe(() => {});
+
     this.profileForm.reset();
     this.loading = true;
     alert("Modification succed!");
-    this.router.navigateByUrl('/home')
+    this.router.navigateByUrl('/dashboard')
   }
 
 }

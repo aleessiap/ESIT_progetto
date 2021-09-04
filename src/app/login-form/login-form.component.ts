@@ -17,6 +17,7 @@ export class LoginFormComponent implements OnInit {
   submitted = false;
   user : User;
   errorCredential : boolean;
+
   constructor(
     private fb: FormBuilder,
     private api: AuthenticationService,
@@ -24,6 +25,7 @@ export class LoginFormComponent implements OnInit {
   ){}
 
   ngOnInit() {
+
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]], //il campo username è necessario e inizializzato come stringa vuota
       password: ['', [Validators.required]] //il campo password è necessario e inizializzato come stringa vuota
@@ -33,13 +35,12 @@ export class LoginFormComponent implements OnInit {
 
   loginPressed() {
     this.submitted = true;
-    console.log('Login');
+
     if(this.loginForm.invalid){
       return;
     }
 
     this.submitted = false;
-    console.log(this.loginForm.value);
     this.api.login(this.loginForm.value)
       .subscribe(
         (data:any) => {
@@ -48,14 +49,12 @@ export class LoginFormComponent implements OnInit {
           this.api.currentUser = data.userFound;
           console.log('User logged in: ' +this.user.email + ' ' + this.user.password);
           console.log('Current user actual: ' + this.api.currentUser.email)
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/dashboard');
           this.errorCredential = false;
         },
         (err:HttpErrorResponse) => {
-
           console.log("Error in login");
           this.errorCredential = true;
-          //pop up o form error
         }
       );
 

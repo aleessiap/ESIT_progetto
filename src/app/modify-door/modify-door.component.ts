@@ -48,29 +48,21 @@ export class ModifyDoorComponent implements OnInit {
       description: ['', Validators.required]
     })
 
-
     this.api.getDoor(this.idDoor).subscribe(data => {
       this.currentDoor = data;
       this.gettingData();
     })
-    //this.gettingData();
-    //console.log(this.nameDoor);
-    //this.currentDoor = this.api.getDoor(this.nameDoor);
-    //console.log('found door : '  + this.currentDoor.name + ' ' +this.currentDoor.description);
-
-
 
   }
 
   onSubmit() {
     this.submitted = true;
-
-    // Se il form non è valido si ferma qui
     if (this.modifyDoor.invalid) {
       return;
     }
+
     const doc = { currentDoor: this.currentDoor, data: this.modifyDoor.value}
-    //richiamo il servizio per poter collegare al server passandogli i dati del form
+
     this.api.updateDoor(doc)
       .subscribe(() => {});
     this.loading = true;
