@@ -16,7 +16,6 @@ export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   user : User;
-  errorCredential : boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +29,6 @@ export class LoginFormComponent implements OnInit {
       username: ['', [Validators.required]], //il campo username è necessario e inizializzato come stringa vuota
       password: ['', [Validators.required]] //il campo password è necessario e inizializzato come stringa vuota
     });
-    this.errorCredential = false;
   }
 
   loginPressed() {
@@ -50,11 +48,9 @@ export class LoginFormComponent implements OnInit {
           console.log('User logged in: ' +this.user.email + ' ' + this.user.password);
           console.log('Current user actual: ' + this.api.currentUser.email)
           this.router.navigateByUrl('/dashboard');
-          this.errorCredential = false;
         },
         (err:HttpErrorResponse) => {
           console.log("Error in login");
-          this.errorCredential = true;
         }
       );
 

@@ -19,10 +19,6 @@ export class DashboardComponent implements OnInit {
   logged : User;
   constructor(private api_door: DoorService, private api_auth : AuthenticationService, private api_accs: AccessService) {}
 
-  columns = [ "Name", "Surname", "Email", "Password"];
-
-  index = [ "name", "surname", "email", "password"];
-
 
   ngOnInit(): void {
 
@@ -46,10 +42,12 @@ export class DashboardComponent implements OnInit {
     })
 
     if(this.api_auth.loggedIn){
+      this.logged = this.api_auth.currentUser;
+
       console.log('------------')
       console.log('Dashboard: ');
-      console.log("found user "+ this.logged);
-      this.logged = this.api_auth.currentUser;
+
+      console.log("found user "+ this.logged.name);
       this.loggedIn = true;
     }else{
       this.loggedIn = false;
