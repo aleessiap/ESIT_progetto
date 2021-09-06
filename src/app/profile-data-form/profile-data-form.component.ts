@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../server/models/user";
 
 @Component({
@@ -14,22 +14,44 @@ export class ProfileDataFormComponent implements OnInit {
   profileForm: FormGroup;
   loading = false;
   submitted = false;
-  currentUser = this.api.currentUser;
-  loggedIn = this.api.loggedIn;
+  user : User;
+  idUser: string;
+
   constructor(
     private  fb : FormBuilder,
     public api: AuthenticationService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.params.subscribe(params => {
+      this.idUser = params['_id'];
+    })
+  }
+
+  gettingData(){
+    this.profileForm.controls['name'].setValue(this.user.name);
+    this.profileForm.controls['surname'].setValue(this.user.surname);
+    this.profileForm.controls['email'].setValue(this.user.email);
+    this.profileForm.controls['phone_num'].setValue(this.user.phone_num);
+    this.profileForm.controls['birthdate'].setValue(this.user.birthdate);
+    this.profileForm.controls['username'].setValue(this.user.username);
+  }
+
 
   ngOnInit(): void {
+
     this.profileForm = this.fb.group({
-      name: [this.api.currentUser.name, Validators.required],
-      surname: [this.api.currentUser.surname, Validators.required],
-      email:[this.api.currentUser.email, [Validators.required, Validators.email]],
-      phone_num:[this.api.currentUser.phone_num, [Validators.required, Validators.pattern("[0-9]{10}" )]],
-      birthdate:[this.api.currentUser.birthdate, [Validators.required]],
-      username: [this.api.currentUser.username, Validators.required]
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      email:['', [Validators.required, Validators.email]],
+      phone_num:['', [Validators.required, Validators.pattern("[0-9]{10}" )]],
+      birthdate:['', [Validators.required]],
+      username: ['', Validators.required]
+    })
+
+    this.api.getUser(this.idUser).subscribe(data => {
+      this.user = data;
+      this.gettingData();
     })
 
   }
@@ -42,7 +64,7 @@ export class ProfileDataFormComponent implements OnInit {
       return;
     }
     const doc = {
-      currentUser: this.api.currentUser,
+      id: this.idUser,
       profile: this.profileForm.value
     }
       //richiamo il servizio per poter collegare al server passandogli i dati del form

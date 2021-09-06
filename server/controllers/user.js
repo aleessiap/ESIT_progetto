@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const mongoose = require("mongoose");
 
 
 //per login
@@ -68,7 +69,7 @@ module.exports.modifyProfile = function(req,res){
     username: req.body.profile.username,
     phone_num: req.body.profile.phone_num
   }
-  User.findOneAndUpdate({_id: req.body.currentUser._id}, update,function(err){
+  User.findOneAndUpdate({_id: req.body.id}, update,function(err){
     if(err){
       console.log(err.message);
     }else{
@@ -113,4 +114,57 @@ module.exports.register = function(req, res){
       error:err
     })
   }
+}
+
+module.exports.deleteUser = function (req, res) {
+  console.log('deleting user');
+  let id = mongoose.Types.ObjectId(req.param("_id"));
+
+  User.findByIdAndDelete(id, function (err) {
+
+    if (err) {
+
+      res.send(err);
+      console.log("Error in deleting door ")
+      console.log(req.param("_id"))
+      console.log(err)
+    }
+    else {
+
+      console.log('User deleted');
+      res.status(200).json({
+        msg: "User deleted"
+      })
+    }
+
+  })
+
+}
+
+module.exports.getUser = function (req, res) {
+  console.log('Get user controller parameter ' + req.param("_id"));
+  let id = mongoose.Types.ObjectId(req.param("_id"));
+  User.findOne({_id: id}, (err, user) => {
+
+    if(err) {
+      console.log('Error occurred');
+      res.send(err);
+
+    }
+    if(!user) {
+      res.json(user);
+
+      console.log("User not found!");
+
+    }else{
+      console.log("User found");
+      console.log(user);
+      res.status(200).json({
+        success: true,
+        userFound: user
+      })
+    }
+
+  })
+
 }

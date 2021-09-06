@@ -38,7 +38,7 @@
                       type="button"
                       class="btn btn-outline-dark btn-rounded"
                       data-mdb-ripple-color="dark"
-
+                      (click)="deleteUser(user)"
                     >
                       <i class="fa fa-trash-o"></i>
                     </button>
@@ -46,7 +46,7 @@
                       type="button"
                       class="btn btn-outline-dark btn-rounded"
                       data-mdb-ripple-color="dark"
-
+                      (click)="modifyUser(user)"
                     >
                       <i class="fa fa-pencil"></i>
                     </button>
@@ -58,14 +58,14 @@
 
             </ul>
 
-            <button
-              type="button"
+            <a
               class="btn btn-primary rounded-circle"
+              href="/registration"
               data-mdb-ripple-color="dark"
               style="margin-left: 10px;margin-bottom: 10px"
-            >
+              role="button">
               <i class="fa fa-plus"></i>
-            </button>
+            </a>
 
           </div>
         </div>

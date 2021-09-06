@@ -92,17 +92,20 @@ module.exports.updateDoor = function (req, res) {
 }
 
 module.exports.deleteDoor = function (req, res) {
+  console.log("Deleting door")
 
-  Door.findByIdAndDelete(req.param("name"), function (err) {
+  let id = mongoose.Types.ObjectId(req.param("_id"));
+  Door.findByIdAndDelete(id, function (err) {
 
     if (err) {
 
       res.send(err);
-
+      console.log("Error");
+      console.log(err)
     }
     else {
 
-      console.log('Document deleted');
+      console.log('Door deleted');
 
     }
 

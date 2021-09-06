@@ -17,7 +17,7 @@ const routes: Routes = [
   {path:'dashboard', component: DashboardComponent},
   {path:'authorization', component: AuthorizationAssignmentFormComponent},
   {path: 'insert_door', component:AddDoorFormComponent},
-  {path: 'modify_profile', component: ProfileDataFormComponent},
+  {path: 'modify_profile/:_id', component: ProfileDataFormComponent},
   {path: 'modify_door/:_id', component: ModifyDoorComponent},
   {path: 'manage_doors', component: ManageDoorsComponent},
   {path: 'manage_users', component:ManageUsersComponent}

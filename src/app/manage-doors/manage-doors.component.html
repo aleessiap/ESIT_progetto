@@ -38,15 +38,16 @@
                       type="button"
                       class="btn btn-outline-dark btn-rounded"
                       data-mdb-ripple-color="dark"
-
+                      (click)="deleteDoor(door)"
                     >
                       <i class="fa fa-trash-o"></i>
                     </button>
+
                     <button
                       type="button"
                       class="btn btn-outline-dark btn-rounded"
                       data-mdb-ripple-color="dark"
-
+                      (click)="modifyDoor(door)"
                     >
                       <i class="fa fa-pencil"></i>
                     </button>
@@ -57,15 +58,14 @@
               </div>
 
             </ul>
-
-            <button
-              type="button"
+            <a
               class="btn btn-primary rounded-circle"
+              href="/insert_door"
               data-mdb-ripple-color="dark"
               style="margin-left: 10px;margin-bottom: 10px"
-            >
+              role="button">
               <i class="fa fa-plus"></i>
-            </button>
+            </a>
 
           </div>
         </div>

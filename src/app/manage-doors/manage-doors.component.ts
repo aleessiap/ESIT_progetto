@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Door} from 'server/models/door';
 import {DoorService} from "../services/door.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-manage-doors',
@@ -10,7 +11,9 @@ import {DoorService} from "../services/door.service";
 export class ManageDoorsComponent implements OnInit {
   doors: Door[] = [];
 
-  constructor(private api:DoorService) { }
+  constructor(private api:DoorService,
+              private router:Router) { }
+
 
   ngOnInit(): void {
     this.api.getAllDoors().subscribe((data: Door[]) => {
@@ -18,6 +21,19 @@ export class ManageDoorsComponent implements OnInit {
       this.doors = data
 
     })
+  }
+  modifyDoor(door: Door){
+    console.log('Click on modify door');
+    console.log(door.name)
+    this.router.navigateByUrl('/modify_door/'+door._id)  }
+
+  deleteDoor(door: Door){
+    console.log('Click delete door');
+    console.log(door.name)
+    this.api.deleteDoor(door).subscribe(() => console.log("Door deleted"));
+
+    window.location.reload();
+
   }
 
 }

@@ -52,9 +52,14 @@ export class DoorService {
 
   }
 
-  deleteDoor(name: string) {
+  deleteDoor(door: Door) {
+    let API_URL = '/api/doors/' + door._id;
+    console.log(API_URL);
+    return this.http.delete(API_URL)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
 
-    return this.http.delete('/api/doors/' + name)
 
   }
 

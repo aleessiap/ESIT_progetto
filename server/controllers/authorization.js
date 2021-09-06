@@ -201,9 +201,7 @@ module.exports.deleteAuthorization = function (req, res) {
       Door.collection.findOneAndUpdate({_id: doc._id}, {$unset:{['authorizations.'.concat(pin)]:1}}, {returnDocument: "after"}, (err1, doc1) => {
 
         if(err1) {
-
           res.send(err1)
-
         }
         else {
 
