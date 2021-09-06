@@ -55,4 +55,14 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  search(door: string) {
+    this.api_door.searchDoor(door).subscribe((data: Door[]) => {
+      this.doors = data;
+    })
+    for (const door of this.doors) {
+
+      this.access[door._id] = this.api_accs.getAccessByDoorId(door._id);
+
+    }
+  }
 }

@@ -29,47 +29,55 @@
 </table> -->
 
 
-<div class="row justify-content-end">
-
-  <div class="col-md-6">
-    search bar
-  </div>
-
-  <div class="col-md-2">
-    <a href="/dashboard" class=" small ml-auto mb-0 text-sm">Manage authorizations</a>
-  </div>
-
-  <div class="col-md-2">
-    <a href="/manage_users" class=" small ml-auto mb-0 text-sm">Manage users</a>
-  </div>
-
-  <div class="col-md-2">
-    <a href="/manage_doors" class=" small ml-auto mb-0 text-sm">Manage doors</a>
-  </div>
-
-</div>
-<div class="row h-100">
-
-  <div class="col-md-3" *ngFor="let door of doors">
-
+<div class="row justify-content-center mx-auto ">
+  <div class="col-md-12">
     <div class="card">
-      <div class="card-header">
+      <!--<h4 class="card-header">Gestione porte</h4> -->
+      <div class="container-fluid">
+        <nav class="navbar-light bg-light" style="margin-top: 20px">
 
-        {{door.name}}
+          <div>
+            <div class="form-inline">
+              <form class="d-inline-block col-md-5" style="margin-left: 30px">
+                <input  #searchV  type="text"  placeholder="Search" name="q">
+                <button class="btn btn-default" (click)="search(searchV.value)" type="submit"><i class="fa fa-search"></i></button>
+              </form>
+              <div class="d-inline-block">
+                <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>
+                <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/manage_doors" role="button">Gestione porte</a>
+                <a  class="btn btn-outline-primary"  href="/manage_users" role="button">Gestione utenti</a>
 
+              </div>
+            </div>
+
+          </div>
+        </nav>
       </div>
 
-      <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
-        <dt class="col-sm-6">{{acc.user_id}}</dt>
-        <dd class="col-sm-6">{{acc.createdAt}}</dd>
-      </dl>
+      <div class="container-fluid">
+        <div class="card" style="margin-bottom: 20px">
+          <h3 class="card-header">Porte</h3>
+          <div class="panel-body">
+            <ul class="list-group list-group-horizontal">
+            <div class="d-flex align-self-center col-md-2" style="margin-left: 20px" *ngFor="let door of doors">
+              <li class="list-group-item">
+                  <h5>{{door.name}}</h5>
+                <div >
+                    <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
+                      <dt class="col-sm-6">{{acc.user_id}}</dt>
+                      <dd class="col-sm-6">{{acc.createdAt}}</dd>
+                    </dl>
+                </div>
+              </li>
+
+
+
+            </div>
+
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
-
-
 </div>
-
-
-
-<a class="nav-link active"  routerLink="../insert_door">Register a door</a>
