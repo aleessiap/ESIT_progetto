@@ -3,7 +3,7 @@
   align-content: center;
   margin-top: 20px;
   margin-bottom: 10px;
-  overflow:scroll;
+  overflow-x:auto;
   -webkit-overflow-scrolling: touch;
 }
 
