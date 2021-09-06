@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from 'server/models/user';
-import {AuthenticationService} from '../services/authentication.service'
+import {UserService} from '../services/user.service'
 import {Router} from "@angular/router";
 @Component({
   selector: 'app-manage-users',
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 export class ManageUsersComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private api:AuthenticationService,
+  constructor(private api:UserService,
               private router: Router
             )
   { }

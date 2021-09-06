@@ -12,33 +12,79 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUsers(): Observable<User[]> {
-
-    return this.http.get<User[]>('/api/users/get-users')
+  //Chiamata per leggere tutti gli utenti
+  getUsers()  {
+    let API_URL = '/api/users/get-users'
+    return this.http.get<User[]>(API_URL);
   }
 
-  getUser(name: string): Observable<User> {
-
-    return this.http.get<User>('http://localhost:8000/api/users/' + name)
+  modifyUser(data: User): Observable<User>{
+    let API_URL = '/api/users/modify-user';
+    return this.http.post<User>(API_URL, data)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
   }
-
-  insertUser(user: User): Observable<User> {
-
-    return this.http.post<User>('http://localhost:8000/api/users', user)
-
-  }
-
-  updateUser(user: User): Observable<void> {
-
-    return this.http.put<void>('http://localhost:8000/api/users', user)
-
-  }
-
-  deleteUser(name: string) {
-
-    return this.http.delete('http://localhost:8000/api/users/' + name)
+//Chiamata per la registrazione di un nuovo utente
+  addUser(data: User): Observable<User> {
+    let API_URL = '/api/users/add-user';
+    return this.http.post<User>(API_URL, data)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
 
   }
 
+  deleteUser(id : string) {
+    //let API_URL = '/api/users/613511db07b9cd05d4256bbc';
+    console.log('delete user service ' + id);
+    return this.http.delete('/api/users/'+id)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+
+  }
+
+
+  getUser(id : string): Observable<User> {
+    let API_URL = '/api/users/' +id;
+    console.log(API_URL)
+    return this.http.get<User>(API_URL)
+      .pipe(
+        map(user => {
+          if(user){
+            console.log(user.userFound);
+            return user.userFound;
+          }
+        })
+      )
+  }
+
+
+
+  searchUser(user: string){
+    let API_URL = '/api/users/search/'+user;
+    console.log(API_URL);
+
+    return this.http.get<User[]>(API_URL)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+
+// Error handling
+  errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = '';
+
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
+  }
 }
 

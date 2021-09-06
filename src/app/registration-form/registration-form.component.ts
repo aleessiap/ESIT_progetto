@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../server/models/user";
-import {AuthenticationService} from "../services/authentication.service";
+import {UserService} from "../services/user.service";
 
 
 
@@ -19,7 +19,7 @@ export class RegistrationFormComponent implements OnInit {
 
   constructor(
     private  fb : FormBuilder,
-    public api: AuthenticationService,
+    public api: UserService,
     private router: Router
   ) { }
 

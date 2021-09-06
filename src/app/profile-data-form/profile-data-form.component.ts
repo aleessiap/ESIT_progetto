@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationService} from "../services/authentication.service";
+import {UserService} from "../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../server/models/user";
 
@@ -19,7 +19,7 @@ export class ProfileDataFormComponent implements OnInit {
 
   constructor(
     private  fb : FormBuilder,
-    public api: AuthenticationService,
+    public api: UserService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
