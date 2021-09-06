@@ -34,7 +34,7 @@ export class DoorService {
   }
 
   insertDoor(door: Door): Observable<Door> {
-    let API_URL = '/api/doors/';
+    let API_URL = '/api/doors';
     return this.http.post<Door>(API_URL, door)
       .pipe(
         catchError(this.errorMgmt)
@@ -86,4 +86,5 @@ export class DoorService {
     console.log(error.statusText);
     return throwError(errorMessage);
   }
+
 }

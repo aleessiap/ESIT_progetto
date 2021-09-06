@@ -1,7 +1,6 @@
 const User = require('../models/user')
 const mongoose = require("mongoose");
 
-
 //per login
 module.exports.login = function(req, res){
   const credential = {

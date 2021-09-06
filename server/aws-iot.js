@@ -2,6 +2,8 @@ const AwsIot = require('aws-iot-device-sdk');
 const Door = require('./models/door');
 const Access = require('./models/access')
 const mongoose = require("mongoose");
+const server = require("index").server;
+const bot = require("index").bot;
 
 THING_NAME = 'APP'
 
@@ -17,37 +19,37 @@ device = AwsIot.device({
 
 device.on('connect', function() {
 
-    Door.find({}, {aws_thing_name:1, _id:0}, (err, docs) => {
+  Door.find({}, {aws_thing_name:1, _id:0}, (err, docs) => {
 
-      if(err) {
+    if(err) {
 
-        console.log(err)
+      console.log(err)
 
-      }
-      else {
+    }
+    else {
 
-        for(let doc in docs) {
+      for(let doc in docs) {
 
-          let thing_name = docs[doc]['aws_thing_name']
-          device.subscribe('$aws/things/' + thing_name + '/shadow/update/accepted');
-
-        }
+        let thing_name = docs[doc]['aws_thing_name']
+        device.subscribe('$aws/things/' + thing_name + '/shadow/update/accepted');
 
       }
 
+    }
 
-    })
 
-  });
+  })
+
+});
 
 device.on('message', function(topic, payload) {
 
-    payload = JSON.parse(payload)
-    if (payload["state"]["reported"] === undefined) return;
+  payload = JSON.parse(payload)
+  if (payload["state"]["reported"] === undefined) return;
 
-    let aws_thing_name = topic.split('/')[2];
+  let aws_thing_name = topic.split('/')[2];
 
-    Door.findOne({aws_thing_name: aws_thing_name}, ((err, doc) => {
+  Door.findOne({aws_thing_name: aws_thing_name}, ((err, doc) => {
 
       if (err) {
 
@@ -64,6 +66,7 @@ device.on('message', function(topic, payload) {
 
           let last_password = payload["state"]["reported"]["last_password"]
           let user_id = doc['authorizations']['_doc'][last_password]
+          let door_id = doc['_id']
           let d_state = undefined;
 
           if (user_id === undefined) {
@@ -72,8 +75,10 @@ device.on('message', function(topic, payload) {
 
           } else {
 
+            server.get('/verify/' + user_id + '/' + door_id + '/' + Date.now())
+
             d_state = 2
-            Access.create({door_id:doc["_id"], user_id: user_id}, (err1, doc1) => {
+            Access.create({door_id: door_id, user_id: user_id}, (err1, doc1) => {
 
               if (err1) {
 
@@ -132,8 +137,8 @@ device.on('message', function(topic, payload) {
 
     })
 
-    )
+  )
 
-  });
+});
 
 module.exports = device

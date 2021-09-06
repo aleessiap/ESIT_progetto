@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from 'server/models/user'
 import {Door} from 'server/models/door'
+import {Access} from 'server/models/access'
 import {AuthenticationService} from "../services/authentication.service";
 import {DoorService} from "../services/door.service";
 import {AccessService} from "../services/access.service";
@@ -11,7 +12,7 @@ import {AccessService} from "../services/access.service";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  users : any = [];
+
   doors: Door[] = [];
   access = {}
 
@@ -28,18 +29,24 @@ export class DashboardComponent implements OnInit {
 
       for (const door of this.doors) {
 
-        this.access[door._id] = this.api_accs.getAccessByDoorId(door._id);
+        this.access[door._id] = this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
+
+
+          data.forEach((value) => {
+
+            value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+            value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+          })
+
+          this.access[door._id] = data
+
+        });
 
       }
 
     })
 
-    this.api_auth.getUsers().subscribe(data => {
-
-      this.users = data;
-      console.log(data);
-
-    })
 
     if(this.api_auth.loggedIn){
       this.logged = this.api_auth.currentUser;

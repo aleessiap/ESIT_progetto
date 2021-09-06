@@ -1,4 +1,5 @@
 const Access = require('../models/access');
+const mongoose = require("mongoose");
 
 module.exports.getAllAccess = function (req, res) {
 
@@ -20,9 +21,9 @@ module.exports.getAllAccess = function (req, res) {
 
 }
 
-module.exports.getAccessByDoor = function (req, res) {
+module.exports.getAccessByDoorId = function (req, res) {
 
-  Access.find({door_id: req.param["_id"]}, (err, docs) => {
+  Access.find({door_id: mongoose.Types.ObjectId(req.params["_id"])}, (err, docs) => {
 
     if(err) {
 
