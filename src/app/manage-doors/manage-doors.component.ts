@@ -11,8 +11,9 @@ import {Router} from "@angular/router";
 export class ManageDoorsComponent implements OnInit {
   doors: Door[] = [];
 
-  constructor(private api:DoorService,
-              private router:Router) { }
+  constructor(private api: DoorService,
+              private router: Router) {
+  }
 
 
   ngOnInit(): void {
@@ -22,12 +23,14 @@ export class ManageDoorsComponent implements OnInit {
 
     })
   }
-  modifyDoor(door: Door){
+
+  modifyDoor(door: Door) {
     console.log('Click on modify door');
     console.log(door.name)
-    this.router.navigateByUrl('/modify_door/'+door._id)  }
+    this.router.navigateByUrl('/modify_door/' + door._id)
+  }
 
-  deleteDoor(door: Door){
+  deleteDoor(door: Door) {
     console.log('Click delete door');
     console.log(door.name)
     this.api.deleteDoor(door).subscribe(() => console.log("Door deleted"));
@@ -36,4 +39,9 @@ export class ManageDoorsComponent implements OnInit {
 
   }
 
+  search(door: string) {
+    this.api.searchDoor(door).subscribe((data: Door[]) => {
+      this.doors = data;
+    })
+  }
 }

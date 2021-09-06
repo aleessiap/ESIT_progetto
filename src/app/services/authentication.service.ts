@@ -88,12 +88,22 @@ export class AuthenticationService {
             console.log(user.userFound);
             return user.userFound;
           }
-
-
         })
       )
-
   }
+
+
+
+  searchUser(user: string){
+    let API_URL = '/api/users/search/'+user;
+    console.log(API_URL);
+
+    return this.http.get<User[]>(API_URL)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+
 // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';

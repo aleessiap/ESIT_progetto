@@ -8,5 +8,6 @@ router.post('/add-user', User.register);
 router.post('/modify-user', User.modifyProfile);
 router.delete('/:_id', User.deleteUser);
 router.get('/:_id', User.getUser);
+router.get('/search/:name', User.searchUser);
 
 module.exports=router;

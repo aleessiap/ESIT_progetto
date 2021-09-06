@@ -1,29 +1,36 @@
-<div class="row justify-content-end">
+<div class="row justify-content-center mx-auto ">
+<div class="col-md-12">
+  <div class="card">
+    <!--<h4 class="card-header">Gestione porte</h4> -->
+    <div class="container-fluid">
+      <nav class="navbar-light bg-light" style="margin-top: 20px">
 
-  <div class="col-md-6">
-    search bar
-  </div>
+        <div>
+          <div class="d-flex flex-row-reverse" >
+            <!--<form class="d-inline-block col-md-5" style="margin-left: 30px">
+              <input type="text"  placeholder="Search" name="q">
+              <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+            </form>-->
+            <a  class="btn btn-outline-primary"  href="/manage_users" role="button">Gestione utenti</a>
+            <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/manage_doors" role="button">Gestione porte</a>
+            <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>
 
-  <div class="col-md-2">
-  <a href="/authorization" class=" small ml-auto mb-0 text-sm">Manage authorizations</a>
-  </div>
 
-  <div class="col-md-2">
-  <a href="/manage_users" class=" small ml-auto mb-0 text-sm">Manage users</a>
-  </div>
 
-  <div class="col-md-2">
-  <a href="/manage_doors" class=" small ml-auto mb-0 text-sm">Manage doors</a>
-  </div>
 
-</div>
-<div class="row justify-content-evenly h-100">
+          </div>
 
-  <div class="col-md-2">
+        </div>
+      </nav>
 
-    <div class="card">
+    </div>
+<div class="row justify-content-evenly h-100" style="margin-top: 20px">
 
-      <h4 class="card-header">Select door</h4>
+  <div class="col-md-3">
+
+    <div class="card" style="margin-bottom: 20px">
+
+      <h4 class="card-header" >Select door</h4>
       <div class="card-body">
 
         <select class="form-select" [(ngModel)]="selected" (change)="loadAuth(selected)">
@@ -37,7 +44,7 @@
     </div>
 
   </div>
-  <div class="col-md-10">
+  <div class="col-md-8">
 
     <div class="row">
       <div class="col-md-6">

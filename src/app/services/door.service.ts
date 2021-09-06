@@ -62,7 +62,15 @@ export class DoorService {
 
 
   }
+  searchDoor(door: string){
+    let API_URL = '/api/doors/search/'+door;
+    console.log(API_URL);
 
+    return this.http.get<Door[]>(API_URL)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
   // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';

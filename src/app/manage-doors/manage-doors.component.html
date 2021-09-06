@@ -9,8 +9,8 @@
           <div>
             <div class="form-inline">
                 <form class="d-inline-block col-md-5" style="margin-left: 30px">
-                 <input type="text"  placeholder="Search" name="q">
-                 <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                 <input  #searchV  type="text"  placeholder="Search" name="q">
+                 <button class="btn btn-default" (click)="search(searchV.value)" type="submit"><i class="fa fa-search"></i></button>
                 </form>
               <div class="d-inline-block">
                 <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>

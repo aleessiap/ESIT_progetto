@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 })
 export class ManageUsersComponent implements OnInit {
   users: User[] = [];
+
   constructor(private api:AuthenticationService,
               private router: Router
             )
@@ -30,6 +31,13 @@ export class ManageUsersComponent implements OnInit {
     console.log(user.name)
     this.api.deleteUser(user._id).subscribe(() => console.log("User deleted"));
     window.location.reload();
-
   }
+
+  search(user: string) {
+    this.api.searchUser(user).subscribe((data: User[]) => {
+      this.users = data;
+    })
+  }
+
 }
+

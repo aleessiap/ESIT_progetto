@@ -110,5 +110,27 @@ module.exports.deleteDoor = function (req, res) {
     }
 
   })
+}
 
+module.exports.searchDoor = function (req, res) {
+  console.log("Search suggestion door " + req.param("name"))
+
+  Door.find( { name: new RegExp(req.param("name"), "i")  },
+    function (err, doors) {
+      if(err) {
+        console.log('Error occurred');
+        res.send(err);
+      }
+      if(!doors) {
+        res.json(doors);
+        console.log("doors not found!");
+
+      }else{
+        console.log("doors found in suggestion");
+        //users = users.map(function(item) { return item.doc; });
+        //res.status(200)
+        res.json(doors)
+        console.log(doors)
+      }
+    })
 }

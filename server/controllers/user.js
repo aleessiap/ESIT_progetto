@@ -168,3 +168,27 @@ module.exports.getUser = function (req, res) {
   })
 
 }
+
+
+module.exports.searchUser = function (req, res) {
+  console.log("Search suggestion user " + req.param("name"))
+
+  User.find( { name: new RegExp(req.param("name"), "i")  },
+    function (err, users) {
+      if(err) {
+        console.log('Error occurred');
+        res.send(err);
+      }
+      if(!users) {
+        res.json(users);
+        console.log("Users not found!");
+
+      }else{
+        console.log("Users found in suggestion");
+        //users = users.map(function(item) { return item.doc; });
+        //res.status(200)
+        res.json(users)
+        console.log(users)
+      }
+    })
+}
