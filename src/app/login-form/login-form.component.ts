@@ -15,7 +15,6 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
-  user : User;
 
   constructor(
     private fb: FormBuilder,
@@ -42,15 +41,15 @@ export class LoginFormComponent implements OnInit {
     this.api.login(this.loginForm.value)
       .subscribe(
         (data:any) => {
-          console.log("logged");
-          this.user = data.userFound;
+
           this.api.currentUser = data.userFound;
-          console.log('User logged in: ' +this.user.email + ' ' + this.user.password);
-          console.log('Current user actual: ' + this.api.currentUser.email)
-          this.router.navigateByUrl('/dashboard');
+          console.log('Data of user logged in: ' + data.userFound.email + ' ' + data.userFound.password);
+          console.log('Is it admin? ' + data.userFound.admin);
+
+          this.router.navigateByUrl('/dashboard').then();
         },
         (err:HttpErrorResponse) => {
-          console.log("Error in login");
+          console.log("Error in the login");
         }
       );
 

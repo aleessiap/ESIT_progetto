@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from 'server/models/user'
 import {Door} from 'server/models/door'
-import {Access} from 'server/models/access'
 import {AuthenticationService} from "../services/authentication.service";
 import {DoorService} from "../services/door.service";
 import {AccessService} from "../services/access.service";
+import {UserService} from "../services/user.service";
+import {ProfileMenuComponent} from "../profile-menu/profile-menu.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,13 +14,16 @@ import {AccessService} from "../services/access.service";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  users : any = [];
   doors: Door[] = [];
   access = {}
-
   loggedIn: boolean;
   logged : User;
-  constructor(private api_door: DoorService, private api_auth : AuthenticationService, private api_accs: AccessService) {}
+  constructor(private api_door: DoorService,
+              private api_auth : AuthenticationService,
+              private api_accs: AccessService,
+              private api_user: UserService){
+  }
 
 
   ngOnInit(): void {
@@ -29,24 +34,18 @@ export class DashboardComponent implements OnInit {
 
       for (const door of this.doors) {
 
-        this.access[door._id] = this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
-
-
-          data.forEach((value) => {
-
-            value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-            value['date'] = new Date(value['createdAt']).toLocaleDateString()
-
-          })
-
-          this.access[door._id] = data
-
-        });
+        this.access[door._id] = this.api_accs.getAccessByDoorId(door._id);
 
       }
 
     })
 
+    this.api_user.getUsers().subscribe(data => {
+
+      this.users = data;
+      console.log(data);
+
+    })
 
     if(this.api_auth.loggedIn){
       this.logged = this.api_auth.currentUser;
@@ -72,4 +71,5 @@ export class DashboardComponent implements OnInit {
 
     }
   }
+
 }

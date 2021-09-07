@@ -12,15 +12,18 @@
           <a class="nav-link active" routerLink="../dashboard">Home</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="../login">Login</a>
-        </li>
+        <div  *ngIf="!this.loggedIn">
 
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="../login">Login</a>
+          </li>
+        </div>
+        <div  *ngIf="this.isAdmin">
 
-        <li class="nav-item">
-          <a class="nav-link active"  routerLink="../registration">Register</a>
-        </li>
-
+          <li class="nav-item">
+            <a class="nav-link active"  routerLink="../registration">Register</a>
+          </li>
+        </div>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -28,7 +31,7 @@
             Profile
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item"  routerLink="../modify_profile" type="submit" >Modify</a></li>
+            <li><a class="dropdown-item"  (click)="modify()" type="submit" >Modify</a></li>
             <li><a class="dropdown-item" (click)="logout()" type="submit" >Logout</a></li>
           </ul>
         </li>
@@ -37,3 +40,7 @@
     </div>
   </div>
 </nav>
+Logged in:
+{{this.loggedIn}}
+Admin :
+{{isAdmin}}

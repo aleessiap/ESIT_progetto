@@ -8,10 +8,13 @@ import {catchError, map} from "rxjs/operators";
   providedIn: 'root'
 })
 export class AuthenticationService {
+
   headers = new HttpHeaders().set('Content-Type', 'application/json');
+
   public currentUser : User;
   public loggedIn : boolean;
   public admin: boolean;
+
   constructor(private http : HttpClient) {
     this.loggedIn = false;
     this.admin = false;
@@ -25,10 +28,9 @@ export class AuthenticationService {
 
     return this.http.post<User>(API_URL, data)
       .pipe(map(user => {
-        if(user.admin == true){
-          this.admin = true;
-        }
-        sessionStorage.setItem('currentUser', JSON.stringify(user));
+
+        this.admin = user.admin;
+        //sessionStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUser = user;
 
         this.loggedIn = true;
@@ -39,11 +41,19 @@ export class AuthenticationService {
 
   logout() {
     console.log("logout");
-    this.currentUser = '';
     this.loggedIn = false;
+    this.admin = false;
+    this.currentUser = '';
+
   }
-
-
-
+  getAdmin(){
+    return this.admin;
+  }
+  getCurrentUser(){
+    return this.currentUser;
+  }
+  isLogged(){
+    return this.loggedIn;
+  }
 
 }
