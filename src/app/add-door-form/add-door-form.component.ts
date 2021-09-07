@@ -17,8 +17,7 @@ export class AddDoorFormComponent implements OnInit {
 
   constructor(
     private  fb : FormBuilder,
-    public api: DoorService,
-    private router: Router
+    public api: DoorService
   ) { }
 
   ngOnInit(): void {

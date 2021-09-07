@@ -20,7 +20,9 @@ const routes: Routes = [
   {path: 'modify_profile/:_id', component: ProfileDataFormComponent},
   {path: 'modify_door/:_id', component: ModifyDoorComponent},
   {path: 'manage_doors', component: ManageDoorsComponent},
-  {path: 'manage_users', component:ManageUsersComponent}
+  {path: 'manage_users', component:ManageUsersComponent},
+  { path: '**', component: LoginFormComponent }
+
 ];
 
 @NgModule({

@@ -28,13 +28,19 @@ export class AuthenticationService {
 
     return this.http.post<User>(API_URL, data)
       .pipe(map(user => {
+        console.log(data);
+        this.admin = user.userFound.admin;
+        this.currentUser = user.userFound;
 
-        this.admin = user.admin;
+        console.log("Admin "+ String(this.admin.valueOf()));
+        console.log('User found in Rest service: '+ this.currentUser)
+
         //sessionStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUser = user;
+        localStorage.setItem('currentUser', this.currentUser);
+        localStorage.setItem('admin', String(this.admin.valueOf()));
+        localStorage.setItem('loggedIn','True');
 
         this.loggedIn = true;
-        console.log('User found in Rest service: '+ this.currentUser)
         return user;
       }));
   }
@@ -44,9 +50,14 @@ export class AuthenticationService {
     this.loggedIn = false;
     this.admin = false;
     this.currentUser = '';
+    localStorage.setItem('currentUser','None');
+    localStorage.setItem('admin', String(this.admin.valueOf()));
+    localStorage.setItem('loggedIn','False');
+
 
   }
   getAdmin(){
+
     return this.admin;
   }
   getCurrentUser(){

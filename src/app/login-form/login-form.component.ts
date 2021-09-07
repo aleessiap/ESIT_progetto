@@ -28,6 +28,7 @@ export class LoginFormComponent implements OnInit {
       username: ['', [Validators.required]], //il campo username è necessario e inizializzato come stringa vuota
       password: ['', [Validators.required]] //il campo password è necessario e inizializzato come stringa vuota
     });
+
   }
 
   loginPressed() {
@@ -46,7 +47,7 @@ export class LoginFormComponent implements OnInit {
           console.log('Data of user logged in: ' + data.userFound.email + ' ' + data.userFound.password);
           console.log('Is it admin? ' + data.userFound.admin);
 
-          this.router.navigateByUrl('/dashboard').then();
+          this.router.navigateByUrl('/dashboard').then(r => window.location.reload());
         },
         (err:HttpErrorResponse) => {
           console.log("Error in the login");

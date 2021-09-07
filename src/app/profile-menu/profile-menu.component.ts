@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
-import {User} from 'server/models/user'
+
 @Component({
   selector: 'app-profile-menu',
   templateUrl: './profile-menu.component.html',
@@ -17,12 +17,24 @@ export class ProfileMenuComponent implements OnInit {
   ) {
     this.loggedIn = this.auth_api.loggedIn;
     this.isAdmin = this.auth_api.admin;
-
   }
 
   ngOnInit(): void {
-    this.loggedIn = this.auth_api.isLogged();
-    this.isAdmin = this.auth_api.getAdmin();
+    console.log("Profile menu")
+    let loggedIn = localStorage.getItem('loggedIn');
+    if( loggedIn == 'True'){
+      this.loggedIn = true;
+    }else{
+      this.loggedIn = false;
+    }
+    let admin = localStorage.getItem('admin');
+    if( admin == 'True'){
+      this.isAdmin = true;
+    }else{
+      this.isAdmin = false;
+    }
+    //this.loggedIn = this.auth_api.isLogged();
+    //this.isAdmin = this.auth_api.getAdmin();
     console.log("logged: " + this.loggedIn);
     console.log("Admin " + this.isAdmin)
   }
@@ -30,8 +42,7 @@ export class ProfileMenuComponent implements OnInit {
   logout() {
     console.log('Logout');
     this.auth_api.logout();
-    console.log(this.auth_api.loggedIn)
-    window.location.reload();
+    this.router.navigateByUrl('login').then(r => window.location.reload());
   }
 
   modify() {
@@ -41,7 +52,6 @@ export class ProfileMenuComponent implements OnInit {
     } else {
       console.log("Can't modify my profile, not logged in");
     }
-
   }
 
 }

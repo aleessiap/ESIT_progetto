@@ -17,13 +17,16 @@
           <li class="nav-item">
             <a class="nav-link active" routerLink="../login">Login</a>
           </li>
+
         </div>
         <div  *ngIf="this.isAdmin">
 
           <li class="nav-item">
             <a class="nav-link active"  routerLink="../registration">Register</a>
           </li>
+
         </div>
+        <div  *ngIf="this.loggedIn">
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -35,7 +38,7 @@
             <li><a class="dropdown-item" (click)="logout()" type="submit" >Logout</a></li>
           </ul>
         </li>
-
+        </div>
       </ul>
     </div>
   </div>

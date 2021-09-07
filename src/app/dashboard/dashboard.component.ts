@@ -6,8 +6,7 @@ import {AuthenticationService} from "../services/authentication.service";
 import {DoorService} from "../services/door.service";
 import {AccessService} from "../services/access.service";
 import {UserService} from "../services/user.service";
-import {ProfileMenuComponent} from "../profile-menu/profile-menu.component";
-import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-dashboard',
