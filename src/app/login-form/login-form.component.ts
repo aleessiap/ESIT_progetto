@@ -15,6 +15,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
+  currentUser: string;
+  admin : string;
 
   constructor(
     private fb: FormBuilder,
@@ -28,7 +30,7 @@ export class LoginFormComponent implements OnInit {
       username: ['', [Validators.required]], //il campo username è necessario e inizializzato come stringa vuota
       password: ['', [Validators.required]] //il campo password è necessario e inizializzato come stringa vuota
     });
-
+    localStorage.clear();
   }
 
   loginPressed() {
@@ -42,7 +44,8 @@ export class LoginFormComponent implements OnInit {
     this.api.login(this.loginForm.value)
       .subscribe(
         (data:any) => {
-
+          this.currentUser = data.userFound._id;
+          this.admin = data.userFound.admin.valueOf();
           this.api.currentUser = data.userFound;
           console.log('Data of user logged in: ' + data.userFound.email + ' ' + data.userFound.password);
           console.log('Is it admin? ' + data.userFound.admin);
@@ -53,6 +56,9 @@ export class LoginFormComponent implements OnInit {
           console.log("Error in the login");
         }
       );
+    localStorage.setItem('currentUser', this.currentUser);
+    localStorage.setItem('admin', this.admin);
+    localStorage.setItem('loggedIn','True');
 
   }
 

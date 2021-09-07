@@ -10,13 +10,17 @@ import {Router} from "@angular/router";
 })
 export class ManageDoorsComponent implements OnInit {
   doors: Door[] = [];
-
+  loggedIn : string | null;
+  admin : string | null;
   constructor(private api: DoorService,
               private router: Router) {
   }
 
 
   ngOnInit(): void {
+    this.loggedIn = localStorage.getItem('loggedIn');
+    this.admin = localStorage.getItem('admin');
+
     this.api.getAllDoors().subscribe((data: Door[]) => {
 
       this.doors = data

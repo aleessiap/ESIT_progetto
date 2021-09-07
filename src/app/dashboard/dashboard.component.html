@@ -1,36 +1,9 @@
-<!--<h6> I miei dati:</h6>
-<div *ngIf="loggedIn ==false">
-  <h6> Nessuno è loggato</h6>
-</div>
-<table id="users">
-
-  - Altro commento qui - <tr>
-    <th *ngFor="let col of columns">
-      {{col}}
-    </th>
-  </tr>
-  <tr *ngFor="let user of users">
-    <td *ngFor="let col of index">
-      {{user[col]}}
-    </td>
-  </tr> - Fine altro commento qui -
-  <div  *ngIf="loggedIn == true">
-    <tr >
-      <th *ngFor="let col of columns">
-        {{col}}
-      </th>
-    </tr>
-    <tr>
-      <td *ngFor="let col of index">
-        {{logged[col]}}
-      </td>
-    </tr>
-  </div>
-</table> -->
-
-
 <div class="row justify-content-center mx-auto ">
   <div class="col-md-12">
+    {{loggedIn}}
+    {{loggedIn=='True'}}
+    <div *ngIf = "loggedIn=='True'">
+
     <div class="card">
       <!--<h4 class="card-header">Gestione porte</h4> -->
       <div class="container-fluid">
@@ -78,6 +51,10 @@
           </div>
         </div>
       </div>
+    </div>
+    </div>
+    <div *ngIf="loggedIn=='False'">
+      <h3>Can't open this page!</h3>
     </div>
   </div>
 </div>

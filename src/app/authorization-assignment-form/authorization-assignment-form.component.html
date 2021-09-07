@@ -1,98 +1,107 @@
 <div class="row justify-content-center mx-auto ">
-<div class="col-md-12">
-  <div class="card">
-    <!--<h4 class="card-header">Gestione porte</h4> -->
-    <div class="container-fluid">
-      <nav class="navbar-light bg-light" style="margin-top: 20px">
+  <div class="col-md-12">
+    <div *ngIf = "loggedIn == 'True' && admin == 'True'">
 
-        <div>
-          <div class="d-flex flex-row-reverse" >
-            <!--<form class="d-inline-block col-md-5" style="margin-left: 30px">
-              <input type="text"  placeholder="Search" name="q">
-              <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-            </form>-->
-            <a  class="btn btn-outline-primary"  href="/manage_users" role="button">Gestione utenti</a>
-            <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/manage_doors" role="button">Gestione porte</a>
-            <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>
+      <div class="card">
+      <!--<h4 class="card-header">Gestione porte</h4> -->
+      <div class="container-fluid">
+        <nav class="navbar-light bg-light" style="margin-top: 20px">
+
+          <div>
+            <div class="d-flex flex-row-reverse" >
+              <!--<form class="d-inline-block col-md-5" style="margin-left: 30px">
+                <input type="text"  placeholder="Search" name="q">
+                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+              </form>-->
+              <a  class="btn btn-outline-primary"  href="/manage_users" role="button">Gestione utenti</a>
+              <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/manage_doors" role="button">Gestione porte</a>
+              <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>
 
 
 
+
+            </div>
+
+          </div>
+        </nav>
+
+      </div>
+        <div class="row justify-content-evenly h-100" style="margin-top: 20px">
+
+          <div class="col-md-3">
+
+            <div class="card" style="margin-bottom: 20px">
+
+              <h4 class="card-header" >Select door</h4>
+              <div class="card-body">
+
+                <select class="form-select" [(ngModel)]="selected" (change)="loadAuth(selected)">
+
+                  <option *ngFor="let door of doors" [value]="door._id" [selected]="door._id == selected">{{door.name}}</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-md-8">
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+
+                  <div class="card-header">
+
+                    <h4>Authorized</h4>
+                    <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="authorized_filter" (change)=filterAuthorized(authorized_filter)>
+
+                  </div>
+                  <div class="card-body">
+
+                    <dl class="row" *ngFor="let user of authorized; let i=index;">
+                      <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
+                      <dd class="col-sm-1"><i class="fa fa-minus" (click)="removeAuth(selected, user._id, i)"></i></dd>
+                    </dl>
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+
+                  <div class="card-header">
+
+                    <h4>Unauthorized</h4>
+                    <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="not_authorized_filter" (change)=filterUnauthorized(not_authorized_filter)>
+
+                  </div>
+                  <div class="card-body">
+
+                    <dl class="row" *ngFor="let user of not_authorized; let i=index;">
+
+                        <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
+                        <dd class="col-sm-1"><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
+
+                    </dl>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
 
           </div>
 
         </div>
-      </nav>
-
     </div>
-<div class="row justify-content-evenly h-100" style="margin-top: 20px">
-
-  <div class="col-md-3">
-
-    <div class="card" style="margin-bottom: 20px">
-
-      <h4 class="card-header" >Select door</h4>
-      <div class="card-body">
-
-        <select class="form-select" [(ngModel)]="selected" (change)="loadAuth(selected)">
-
-          <option *ngFor="let door of doors" [value]="door._id" [selected]="door._id == selected">{{door.name}}</option>
-
-        </select>
-
-      </div>
-
     </div>
-
+    <div *ngIf="!loggedIn || ( loggedIn == 'False' && (admin =='False' || !admin))">
+      <h3>Can't open this page!</h3>
+    </div>
   </div>
-  <div class="col-md-8">
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-
-          <div class="card-header">
-
-            <h4>Authorized</h4>
-            <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="authorized_filter" (change)=filterAuthorized(authorized_filter)>
-
-          </div>
-          <div class="card-body">
-
-            <dl class="row" *ngFor="let user of authorized; let i=index;">
-              <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
-              <dd class="col-sm-1"><i class="fa fa-minus" (click)="removeAuth(selected, user._id, i)"></i></dd>
-            </dl>
-
-          </div>
-
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-
-          <div class="card-header">
-
-            <h4>Unauthorized</h4>
-            <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="not_authorized_filter" (change)=filterUnauthorized(not_authorized_filter)>
-
-          </div>
-          <div class="card-body">
-
-            <dl class="row" *ngFor="let user of not_authorized; let i=index;">
-
-                <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
-                <dd class="col-sm-1"><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
-
-            </dl>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
 </div>

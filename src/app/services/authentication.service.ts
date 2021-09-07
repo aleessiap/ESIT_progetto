@@ -36,9 +36,6 @@ export class AuthenticationService {
         console.log('User found in Rest service: '+ this.currentUser)
 
         //sessionStorage.setItem('currentUser', JSON.stringify(user));
-        localStorage.setItem('currentUser', this.currentUser);
-        localStorage.setItem('admin', String(this.admin.valueOf()));
-        localStorage.setItem('loggedIn','True');
 
         this.loggedIn = true;
         return user;

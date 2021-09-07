@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
+import { User } from '../../../server/models/user';
 
 @Component({
   selector: 'app-profile-menu',
@@ -10,7 +11,7 @@ import {Router} from "@angular/router";
 export class ProfileMenuComponent implements OnInit {
   public loggedIn: boolean;
   public isAdmin: boolean;
-
+  public logged: string | null;
   constructor(
     public auth_api: AuthenticationService,
     public router: Router
@@ -33,9 +34,12 @@ export class ProfileMenuComponent implements OnInit {
     }else{
       this.isAdmin = false;
     }
+    this.logged = localStorage.getItem('currentUser');
     //this.loggedIn = this.auth_api.isLogged();
     //this.isAdmin = this.auth_api.getAdmin();
     console.log("logged: " + this.loggedIn);
+    console.log("id user: " + this.logged);
+
     console.log("Admin " + this.isAdmin)
   }
 
@@ -43,12 +47,16 @@ export class ProfileMenuComponent implements OnInit {
     console.log('Logout');
     this.auth_api.logout();
     this.router.navigateByUrl('login').then(r => window.location.reload());
-  }
 
+  }
+  name(){
+    localStorage.clear();
+    this.router.navigateByUrl('login').then(r => window.location.reload());
+  }
   modify() {
     console.log('Open profile to modify it');
-    if (this.auth_api.loggedIn) {
-      this.router.navigateByUrl('modify_profile/' + this.auth_api.currentUser._id)
+    if (this.loggedIn) {
+      this.router.navigateByUrl('modify_profile/' + this.logged).then( );
     } else {
       console.log("Can't modify my profile, not logged in");
     }

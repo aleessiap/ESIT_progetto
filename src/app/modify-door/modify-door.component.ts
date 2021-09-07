@@ -16,7 +16,8 @@ export class ModifyDoorComponent implements OnInit {
   submitted = false;
   currentDoor: Door;
   idDoor : string;
-
+  loggedIn : string | null;
+  admin : string | null;
    constructor(
     private fb: FormBuilder,
     public api: DoorService,
@@ -41,7 +42,8 @@ export class ModifyDoorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.loggedIn = localStorage.getItem('loggedIn');
+    this.admin = localStorage.getItem('admin');
     this.modifyDoor = this.fb.group({
       name: ['', Validators.required],
       aws_thing_name: ['', Validators.required],

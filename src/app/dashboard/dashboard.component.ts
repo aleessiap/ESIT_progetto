@@ -17,7 +17,8 @@ export class DashboardComponent implements OnInit {
   users : any = [];
   doors: Door[] = [];
   access = {}
-  loggedIn: boolean;
+  loggedIn : string | null;
+  admin : string | null;
   logged : User;
   constructor(private api_door: DoorService,
               private api_auth : AuthenticationService,
@@ -27,6 +28,9 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.loggedIn = localStorage.getItem('loggedIn');
+    console.log("loggedin : " + this.loggedIn)
+    this.admin = localStorage.getItem('admin');
 
     this.api_door.getAllDoors().subscribe((data: Door[]) => {
 
@@ -58,16 +62,16 @@ export class DashboardComponent implements OnInit {
 
     })
 
-    if(this.api_auth.loggedIn){
+    if(this.loggedIn){
       this.logged = this.api_auth.currentUser;
 
       console.log('------------')
       console.log('Dashboard: ');
 
       console.log("found user "+ this.logged.name);
-      this.loggedIn = true;
+      this.loggedIn = 'True';
     }else{
-      this.loggedIn = false;
+      this.loggedIn = 'False';
     }
 
   }

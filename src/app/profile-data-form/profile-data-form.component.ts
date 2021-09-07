@@ -16,6 +16,7 @@ export class ProfileDataFormComponent implements OnInit {
   submitted = false;
   user : User;
   idUser: string;
+  loggedIn : string | null;
 
   constructor(
     private  fb : FormBuilder,
@@ -26,6 +27,7 @@ export class ProfileDataFormComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.idUser = params['_id'];
     })
+
   }
 
   gettingData(){
@@ -39,7 +41,8 @@ export class ProfileDataFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.loggedIn = localStorage.getItem('loggedIn');
+    console.log('Logged IN : '+ this.loggedIn);
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],

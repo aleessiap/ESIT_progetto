@@ -14,13 +14,17 @@ export class AddDoorFormComponent implements OnInit {
   newDoor : Door;
   loading = false;
   submitted = false;
-
+  loggedIn : string | null;
+  admin : string | null;
   constructor(
     private  fb : FormBuilder,
     public api: DoorService
   ) { }
 
   ngOnInit(): void {
+    this.loggedIn = localStorage.getItem('loggedIn');
+    this.admin = localStorage.getItem('admin');
+
     this.registerDoor = this.fb.group({
       name: ['', Validators.required],
       aws_thing_name: ['', Validators.required],

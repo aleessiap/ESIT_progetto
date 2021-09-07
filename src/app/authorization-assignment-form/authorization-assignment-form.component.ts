@@ -22,10 +22,13 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
 
   not_authorized_filter: string = '';
   authorized_filter: string = '';
-
+  loggedIn : string | null;
+  admin : string | null;
   constructor(private api_door:DoorService, private api_auth:AuthorizationService ) { }
 
   ngOnInit(): void {
+    this.loggedIn = localStorage.getItem('loggedIn');
+    this.admin = localStorage.getItem('admin');
 
     this.api_door.getAllDoors().subscribe((data: Door[]) => {
 

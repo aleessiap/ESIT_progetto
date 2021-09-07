@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Esit Project';
+  loggedIn = localStorage.getItem('loggedIn');
+  admin = localStorage.getItem('admin');
+
 }

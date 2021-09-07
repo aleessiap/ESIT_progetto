@@ -9,6 +9,8 @@ import {Router} from "@angular/router";
 })
 export class ManageUsersComponent implements OnInit {
   users: User[] = [];
+  loggedIn : string | null;
+  admin : string | null;
 
   constructor(private api:UserService,
               private router: Router
@@ -16,6 +18,9 @@ export class ManageUsersComponent implements OnInit {
   { }
 
   ngOnInit(): void {
+    this.loggedIn = localStorage.getItem('loggedIn');
+    this.admin = localStorage.getItem('admin');
+
     this.api.getUsers().subscribe((data:User[]) =>{
       this.users = data
     })
