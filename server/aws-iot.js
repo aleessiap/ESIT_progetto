@@ -2,8 +2,8 @@ const AwsIot = require('aws-iot-device-sdk');
 const Door = require('./models/door');
 const Access = require('./models/access')
 const mongoose = require("mongoose");
-const server = require("index").server;
-const bot = require("index").bot;
+const server = require("./index").server;
+const bot = require("./index").bot;
 
 THING_NAME = 'APP'
 

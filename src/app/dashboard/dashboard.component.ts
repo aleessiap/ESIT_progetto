@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from 'server/models/user'
 import {Door} from 'server/models/door'
+import {Access} from 'server/models/door'
 import {AuthenticationService} from "../services/authentication.service";
 import {DoorService} from "../services/door.service";
 import {AccessService} from "../services/access.service";
@@ -34,7 +35,18 @@ export class DashboardComponent implements OnInit {
 
       for (const door of this.doors) {
 
-        this.access[door._id] = this.api_accs.getAccessByDoorId(door._id);
+        this.api_accs.getAccessByDoorId(door._id).subscribe((data:Access[]) => {
+
+          data.forEach((value) => {
+
+            value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+            value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+          })
+
+          this.access[door._id] = data
+
+        });
 
       }
 
@@ -65,9 +77,21 @@ export class DashboardComponent implements OnInit {
     this.api_door.searchDoor(door).subscribe((data: Door[]) => {
       this.doors = data;
     })
+
     for (const door of this.doors) {
 
-      this.access[door._id] = this.api_accs.getAccessByDoorId(door._id);
+      this.api_accs.getAccessByDoorId(door._id).subscribe((data:Access[]) => {
+
+        data.forEach((value) => {
+
+          value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+          value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+        })
+
+        this.access[door._id] = data
+
+      });
 
     }
   }
