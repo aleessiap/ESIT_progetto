@@ -110,7 +110,8 @@ module.exports.insertAuthorization = function (req, res) {
       res.send(err)
     } else {
 
-      if(!user.chat_id){
+      if(!doc.chat_id){
+
         res.status(400).json({
           type: "Not Found",
           msg: "The user need to perform the first access procedure."
@@ -194,10 +195,11 @@ module.exports.deleteAuthorization = function (req, res) {
 
       for (let x of pins) {
 
-        if(mongoose.Types.ObjectId(pins[x]) === mongoose.Types.ObjectId(req.params["user_id"])) {
+        if(mongoose.Types.ObjectId(req.params["user_id"]).equals(doc['authorizations']['_doc'][x])) {
+
             pin = x
-            console.log
             break
+
         }
 
       }
@@ -205,6 +207,7 @@ module.exports.deleteAuthorization = function (req, res) {
       Door.collection.findOneAndUpdate({_id: doc._id}, {$unset:{['authorizations.'.concat(pin)]:1}}, {returnDocument: "after"}, (err1, doc1) => {
 
         if(err1) {
+
           res.send(err1)
         }
         else {
