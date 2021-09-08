@@ -20,7 +20,8 @@ export class ManageDoorsComponent implements OnInit {
   ngOnInit(): void {
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
-
+    console.log("Admin: " + this.admin);
+    console.log("LoggedIn: "+ this.loggedIn);
     this.api.getAllDoors().subscribe((data: Door[]) => {
 
       this.doors = data

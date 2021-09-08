@@ -24,7 +24,8 @@ export class AddDoorFormComponent implements OnInit {
   ngOnInit(): void {
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
-
+    console.log("Admin: " + this.admin);
+    console.log("LoggedIn: "+ this.loggedIn);
     this.registerDoor = this.fb.group({
       name: ['', Validators.required],
       aws_thing_name: ['', Validators.required],

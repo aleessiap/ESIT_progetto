@@ -20,7 +20,8 @@ export class ManageUsersComponent implements OnInit {
   ngOnInit(): void {
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
-
+    console.log("Admin: " + this.admin);
+    console.log("LoggedIn: "+ this.loggedIn);
     this.api.getUsers().subscribe((data:User[]) =>{
       this.users = data
     })

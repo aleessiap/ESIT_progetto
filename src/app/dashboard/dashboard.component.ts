@@ -29,9 +29,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedIn = localStorage.getItem('loggedIn');
-    console.log("loggedin : " + this.loggedIn)
     this.admin = localStorage.getItem('admin');
-
+    console.log("Admin: " + this.admin);
+    console.log("LoggedIn: "+ this.loggedIn);
     this.api_door.getAllDoors().subscribe((data: Door[]) => {
 
       this.doors = data

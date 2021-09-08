@@ -30,7 +30,7 @@ export class LoginFormComponent implements OnInit {
       username: ['', [Validators.required]], //il campo username è necessario e inizializzato come stringa vuota
       password: ['', [Validators.required]] //il campo password è necessario e inizializzato come stringa vuota
     });
-    localStorage.clear();
+
   }
 
   loginPressed() {
@@ -45,20 +45,20 @@ export class LoginFormComponent implements OnInit {
       .subscribe(
         (data:any) => {
           this.currentUser = data.userFound._id;
-          this.admin = data.userFound.admin.valueOf();
+          this.admin = data.userFound.admin;
           this.api.currentUser = data.userFound;
           console.log('Data of user logged in: ' + data.userFound.email + ' ' + data.userFound.password);
           console.log('Is it admin? ' + data.userFound.admin);
-
+          localStorage.setItem('currentUser', this.currentUser);
+          localStorage.setItem('admin', this.admin);
+          localStorage.setItem('loggedIn','True');
+          console.log("Admin: " + this.admin);
           this.router.navigateByUrl('/dashboard').then(r => window.location.reload());
         },
         (err:HttpErrorResponse) => {
           console.log("Error in the login");
         }
       );
-    localStorage.setItem('currentUser', this.currentUser);
-    localStorage.setItem('admin', this.admin);
-    localStorage.setItem('loggedIn','True');
 
   }
 
