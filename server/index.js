@@ -26,6 +26,7 @@ app.use("/api/users", usersRoutes);
 app.use("/api/doors", doorsRoutes);
 app.use("/api/access", accessRoutes);
 app.use("/api/auths", authorizationRoutes);
+
 app.use(cors());
 
 app.get("/", (req, res) => {

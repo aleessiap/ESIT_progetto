@@ -22,7 +22,7 @@ export class AuthenticationService {
 
 
   login(data): Observable<any> {
-    console.log("getUser : " + data.username);
+    console.log("username inserted : " + data.username + " password: " + data.password);
 
     let API_URL = '/api/users/login';
 

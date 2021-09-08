@@ -47,12 +47,11 @@ export class LoginFormComponent implements OnInit {
           this.currentUser = data.userFound._id;
           this.admin = data.userFound.admin;
           this.api.currentUser = data.userFound;
-          console.log('Data of user logged in: ' + data.userFound.email + ' ' + data.userFound.password);
-          console.log('Is it admin? ' + data.userFound.admin);
+
           localStorage.setItem('currentUser', this.currentUser);
           localStorage.setItem('admin', this.admin);
           localStorage.setItem('loggedIn','True');
-          console.log("Admin: " + this.admin);
+
           this.router.navigateByUrl('/dashboard').then(r => window.location.reload());
         },
         (err:HttpErrorResponse) => {

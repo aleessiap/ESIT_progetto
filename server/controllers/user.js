@@ -68,11 +68,30 @@ module.exports.modifyProfile = function(req,res){
     username: req.body.profile.username,
     phone_num: req.body.profile.phone_num
   }
-  User.findOneAndUpdate({_id: req.body.id}, update,function(err){
+  User.findOneAndUpdate({_id: req.body.id}, update,function(err, user){
     if(err){
       console.log(err.message);
+      res.send(err)
+
     }else{
       console.log('Ok');
+      res.send(user);
+    }
+  })
+}
+
+module.exports.modifyPassword = function(req,res){
+  console.log(req);
+  const update = { password: req.password };
+
+  User.findOneAndUpdate({_id: req.body.id}, update ,function(err, user){
+    if(err){
+      console.log(err.message);
+      res.send(err)
+
+    }else{
+      console.log('Password changed');
+      res.send(user);
     }
   })
 }

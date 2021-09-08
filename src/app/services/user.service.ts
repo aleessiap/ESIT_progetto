@@ -18,13 +18,25 @@ export class UserService {
     return this.http.get<User[]>(API_URL);
   }
 
-  modifyUser(data: User): Observable<User>{
-    let API_URL = '/api/users/modify-user';
-    return this.http.post<User>(API_URL, data)
+
+  modifyUser(data: User): Observable<User> {
+    let API_URL = '/api/users/';
+    console.log('Update User controller');
+    return this.http.put<User>(API_URL, data)
       .pipe(
         catchError(this.errorMgmt)
       )
   }
+
+  modifyPassword(data: any): Observable<User> {
+    let API_URL = '/api/users/modify-password/' + data.id;
+    console.log('Update User controller ' + API_URL);
+    return this.http.put<User>(API_URL, data)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+
 //Chiamata per la registrazione di un nuovo utente
   addUser(data: User): Observable<User> {
     let API_URL = '/api/users/add-user';

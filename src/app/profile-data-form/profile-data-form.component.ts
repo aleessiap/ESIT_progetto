@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -17,6 +18,7 @@ export class ProfileDataFormComponent implements OnInit {
   user : User;
   idUser: string;
   loggedIn : string | null;
+  currentUser : string | null;
 
   constructor(
     private  fb : FormBuilder,
@@ -42,6 +44,7 @@ export class ProfileDataFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedIn = localStorage.getItem('loggedIn');
+    this.currentUser = localStorage.getItem('currentUser');
     console.log('Logged IN : '+ this.loggedIn);
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
@@ -79,5 +82,7 @@ export class ProfileDataFormComponent implements OnInit {
     alert("Modification succed!");
     this.router.navigateByUrl('/dashboard')
   }
-
+  changePassword(){
+    this.router.navigateByUrl('change_password/'+ this.currentUser)
+  }
 }

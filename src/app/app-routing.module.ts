@@ -9,6 +9,7 @@ import {ProfileDataFormComponent} from "./profile-data-form/profile-data-form.co
 import {ModifyDoorComponent} from "./modify-door/modify-door.component";
 import {ManageDoorsComponent} from "./manage-doors/manage-doors.component";
 import {ManageUsersComponent} from "./manage-users/manage-users.component";
+import {ChangePasswordFormComponent} from "./change-password-form/change-password-form.component";
 
 const routes: Routes = [
   {path:'',  redirectTo: '/login', pathMatch:'full'},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'modify_door/:_id', component: ModifyDoorComponent},
   {path: 'manage_doors', component: ManageDoorsComponent},
   {path: 'manage_users', component:ManageUsersComponent},
+  {path: 'change_password/:_id', component:ChangePasswordFormComponent},
   { path: '**', component: LoginFormComponent }
 
 ];

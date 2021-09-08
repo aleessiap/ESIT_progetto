@@ -16,6 +16,7 @@ import { ProfileDataFormComponent } from './profile-data-form/profile-data-form.
 import { ModifyDoorComponent } from './modify-door/modify-door.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageDoorsComponent } from './manage-doors/manage-doors.component';
+import { ChangePasswordFormComponent } from './change-password-form/change-password-form.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ManageDoorsComponent } from './manage-doors/manage-doors.component';
     ProfileDataFormComponent,
     ModifyDoorComponent,
     ManageUsersComponent,
-    ManageDoorsComponent
+    ManageDoorsComponent,
+    ChangePasswordFormComponent
   ],
   imports: [
     BrowserModule,
