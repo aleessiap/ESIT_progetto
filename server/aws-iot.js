@@ -84,7 +84,7 @@ device.on('message', function(topic, payload) {
 
                 console.log(err1)
                 sendUpdate(aws_thing_name, 1, 2)
-                return
+                return undefined
 
               } else {
 
