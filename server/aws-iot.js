@@ -166,7 +166,6 @@ function sendUpdate(aws_thing_name, update, relisten_after = -1) {
 
   device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
 
-
   if(relisten_after >= 0) {
 
       setTimeout(() => {
