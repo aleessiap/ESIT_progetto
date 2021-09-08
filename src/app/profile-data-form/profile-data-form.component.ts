@@ -40,7 +40,9 @@ export class ProfileDataFormComponent implements OnInit {
     this.profileForm.controls['surname'].setValue(this.user.surname);
     this.profileForm.controls['email'].setValue(this.user.email);
     this.profileForm.controls['phone_num'].setValue(this.user.phone_num);
-    this.profileForm.controls['birthdate'].setValue(this.user.birthdate);
+    let bd = this.user.birthdate;
+    this.profileForm.controls['birthdate'].setValue(bd.substring(0,10));
+    console.log(this.user.birthdate)
     this.profileForm.controls['username'].setValue(this.user.username);
 
   }

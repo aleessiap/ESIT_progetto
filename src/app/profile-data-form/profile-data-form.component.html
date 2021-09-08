@@ -3,7 +3,7 @@
 
     <div *ngIf = "loggedIn == 'True'">
       <div class="card">
-        <h4 class="card-header">Register</h4>
+        <h4 class="card-header">Modify profile</h4>
         <div class="card-body  align-items-center" >
 
             <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -60,18 +60,28 @@
 
               <div class = "align-content-center input" style="margin-top: 20px">
                 <div class="form-group mx-sm-3">
-                  <button [disabled]="loading" class="btn btn-primary" style="background-color: #3b5998;">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Save changes
-                  </button>
-                  <a role="button" href="/dashboard" class="btn btn-link">
-                    Cancel
-                  </a>
+
+                  <div *ngIf="idUser == currentUser">
+                    <button class="btn btn-primary" style="background-color: #3b5998;">
+                      Save changes
+                    </button>
+                    <a role="button" href="/dashboard" class="btn btn-link">
+                      Cancel
+                    </a>
+                  </div>
+                  <div *ngIf="idUser != currentUser">
+                    <button class="btn btn-primary" style="background-color: #3b5998;">
+                      Save changes
+                    </button>
+                    <a role="button" href="/manage_users" class="btn btn-link">
+                      Cancel
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <a role="button" (click)="changePassword()" class="btn btn-link">
+              <div *ngIf ="currentUser == idUser">
+                <a role="button" class="btn btn-outline-primary" (click)="changePassword()" class="btn btn-link">
                   Change password
                 </a>
               </div>
