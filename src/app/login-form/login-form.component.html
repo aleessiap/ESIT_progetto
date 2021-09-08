@@ -3,11 +3,10 @@
     <div class="card">
       <h4 class="card-header">Login</h4>
       <div class="card-body  align-items-center">
-        <form [formGroup]="loginForm"  >
+        <form [formGroup]="loginForm">
+
           <div class="row px-3 form-group input">
-            <label for="username" class="mb-1">
-             Username:
-            </label>
+            <label for="username" class="mb-1">Username:</label>
             <input type="text" formControlName="username" class="form-control" placeholder="Choose a username"   [ngClass]="{ 'is-invalid': submitted && loginForm.controls.username.errors}" />
             <div *ngIf="submitted && loginForm.controls.username.errors" class="invalid-feedback">
               <div  *ngIf="loginForm.controls.username.errors.required">
@@ -16,16 +15,15 @@
 
             </div>
           </div>
+
           <div class="row px-3 form-group input">
             <label for="password" class="mb-1">Password: </label>
             <input type="password" formControlName="password" class="form-control" placeholder="Choose a password" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors}" />
-
             <div *ngIf="submitted && loginForm.controls.password.errors" class="invalid-feedback">
               <div *ngIf="loginForm.controls.password.errors.required" >
                 Password is required
               </div>
             </div>
-
             <div class="row px-3 mb-4">
               <a href="#" class=" small ml-auto mb-0 text-sm">Forgot password?</a>
             </div>
@@ -38,9 +36,8 @@
               </button>
             </div>
           </div>
+
         </form>
-
-
       </div>
     </div>
   </div>

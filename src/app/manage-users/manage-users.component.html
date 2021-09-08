@@ -1,81 +1,82 @@
 
 <div class="row justify-content-center mx-auto ">
   <div class="col-md-12">
-    <div *ngIf = "loggedIn == 'True' && admin == 'true'">
 
+    <div *ngIf = "loggedIn == 'True' && admin == 'true'">
       <div class="card">
       <!--<h4 class="card-header">Gestione utenti</h4> -->
-      <div class="container-fluid">
-        <nav class="navbar-light bg-light" style="margin-top: 20px">
+        <div class="container-fluid">
+          <nav class="navbar-light bg-light" style="margin-top: 20px">
 
-          <div>
-            <div class="form-inline">
-              <form class="d-inline-block col-md-5" style="margin-left: 30px">
-                <input #searchV type="text"  placeholder="Search"  name="searchUserBar" id="searchUserBar" >
-                <button class="btn btn-default" (click)="search(searchV.value)" type="submit"><i class="fa fa-search"></i></button>
-              </form>
-              <div class="d-inline-block">
-                <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>
-                <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/manage_doors" role="button">Gestione porte</a>
-                <a  class="btn btn-outline-primary"  href="/manage_users" role="button">Gestione utenti</a>
-
+            <div>
+              <div class="form-inline">
+                <form class="d-inline-block col-md-5" style="margin-left: 30px">
+                  <input #searchV type="text"  placeholder="Search"  name="searchUserBar" id="searchUserBar" >
+                  <button class="btn btn-default" (click)="search(searchV.value)" type="submit"><i class="fa fa-search"></i></button>
+                </form>
+                <div class="d-inline-block">
+                  <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>
+                  <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/manage_doors" role="button">Gestione porte</a>
+                  <a  class="btn btn-outline-primary"  href="/manage_users" role="button">Gestione utenti</a>
+                </div>
               </div>
             </div>
 
-          </div>
-        </nav>
+          </nav>
+        </div>
 
-      </div>
-      <div class="container-fluid min-vh-100">
-        <div class="card">
-          <h3 class="card-header">Utenti</h3>
-          <div class="panel-body ">
-            <ul class="list-group">
-              <div class="col align-self-center col-md-11" *ngFor="let user of users">
-                <li class="list-group-item">
-                  {{user.name}} {{user.surname}}
-                  <div class="d-flex flex-row-reverse">
+        <div class="container-fluid min-vh-100">
+          <div class="card">
+            <h3 class="card-header">Utenti</h3>
+            <div class="panel-body ">
+              <ul class="list-group">
+                <div class="col align-self-center col-md-11" *ngFor="let user of users">
+                  <li class="list-group-item">
+                    {{user.name}} {{user.surname}}
+                    <div class="d-flex flex-row-reverse">
 
-                    <button
-                      type="button"
-                      class="btn btn-outline-dark btn-rounded"
-                      data-mdb-ripple-color="dark"
-                      (click)="deleteUser(user)"
-                    >
-                      <i class="fa fa-trash-o"></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-dark btn-rounded"
-                      data-mdb-ripple-color="dark"
-                      (click)="modifyUser(user)"
-                    >
-                      <i class="fa fa-pencil"></i>
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        class="btn btn-outline-dark btn-rounded"
+                        data-mdb-ripple-color="dark"
+                        (click)="deleteUser(user)"
+                      >
+                        <i class="fa fa-trash-o"></i>
+                      </button>
 
-                </li>
+                      <button
+                        type="button"
+                        class="btn btn-outline-dark btn-rounded"
+                        data-mdb-ripple-color="dark"
+                        (click)="modifyUser(user)"
+                      >
+                        <i class="fa fa-pencil"></i>
+                      </button>
 
-              </div>
+                    </div>
+                  </li>
+                </div>
+              </ul>
 
-            </ul>
+              <a
+                class="btn btn-primary rounded-circle"
+                href="/registration"
+                data-mdb-ripple-color="dark"
+                style="margin-left: 10px;margin-bottom: 10px"
+                role="button">
+                <i class="fa fa-plus"></i>
+              </a>
 
-            <a
-              class="btn btn-primary rounded-circle"
-              href="/registration"
-              data-mdb-ripple-color="dark"
-              style="margin-left: 10px;margin-bottom: 10px"
-              role="button">
-              <i class="fa fa-plus"></i>
-            </a>
-
+            </div>
           </div>
         </div>
+
       </div>
     </div>
-    </div>
+
     <div *ngIf="!loggedIn ||  loggedIn == 'False' || admin =='false' || !admin">
       <h3>Can't open this page!</h3>
     </div>
+
   </div>
 </div>

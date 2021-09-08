@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DoorService} from "../services/door.service";
 import {Door} from "../../../server/models/door";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-modify-door',
@@ -18,7 +19,8 @@ export class ModifyDoorComponent implements OnInit {
   idDoor : string;
   loggedIn : string | null;
   admin : string | null;
-   constructor(
+
+  constructor(
     private fb: FormBuilder,
     public api: DoorService,
     private router: Router,
@@ -28,17 +30,15 @@ export class ModifyDoorComponent implements OnInit {
       this.idDoor = params['_id'];
     })
   }
-  gettingData(){
-    this.modifyDoor.controls['name'].setValue(this.currentDoor.name);
-    this.modifyDoor.controls['aws_thing_name'].setValue(this.currentDoor.aws_thing_name);
-    this.modifyDoor.controls['description'].setValue(this.currentDoor.description);
-  }
+
   initForm(){
+
     this.modifyDoor = this.fb.group({
       name: [this.currentDoor.name, Validators.required],
       aws_thing_name: [this.currentDoor.aws_thing_name, Validators.required],
       description: [this.currentDoor.description, Validators.required]
     })
+
   }
 
   ngOnInit(): void {
@@ -53,7 +53,11 @@ export class ModifyDoorComponent implements OnInit {
     this.api.getDoor(this.idDoor).subscribe(data => {
       this.currentDoor = data;
       this.gettingData();
-    })
+    }),
+      (err: HttpErrorResponse) => {
+        console.log("Error in getting the door");
+        alert("Error in getting the door");
+      };
 
   }
 
@@ -66,9 +70,21 @@ export class ModifyDoorComponent implements OnInit {
     const doc = { currentDoor: this.currentDoor, data: this.modifyDoor.value}
 
     this.api.updateDoor(doc)
-      .subscribe(() => {});
+      .subscribe(() => {}),
+      (err: HttpErrorResponse) => {
+        console.log("Error in updating the door");
+        alert("Error in updating the door");
+      };
+
     this.loading = true;
-    alert("Modification succed!");
+    alert("Modification of the door succeeded!");
 
   }
+
+  gettingData(){
+    this.modifyDoor.controls['name'].setValue(this.currentDoor.name);
+    this.modifyDoor.controls['aws_thing_name'].setValue(this.currentDoor.aws_thing_name);
+    this.modifyDoor.controls['description'].setValue(this.currentDoor.description);
+  }
+
 }

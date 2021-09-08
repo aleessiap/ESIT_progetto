@@ -1,56 +1,60 @@
 <div class="row justify-content-center mx-auto ">
-  <div class="col-md-8">
+  <div class="col-md-12">
+
     <div *ngIf = "loggedIn == 'True' && admin == 'true'">
+      <div class="card">
+        <h4 class="card-header">Modify data</h4>
+        <div class="card-body  align-items-center" >
 
-    <div class="card">
-      <h4 class="card-header">Modify data</h4>
-      <div class="card-body  align-items-center" >
+          <form [formGroup]="modifyDoor" (ngSubmit)="onSubmit()">
 
-        <form [formGroup]="modifyDoor" (ngSubmit)="onSubmit()">
-          <div class="form-group mx-sm-3 input">
-            <label for="name">Name</label>
-            <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted &&  modifyDoor.controls.name.errors }" />
-            <div *ngIf="submitted &&  modifyDoor.controls.name.errors" class="invalid-feedback">
-              <div *ngIf="modifyDoor.controls.name.errors.required">Name is required</div>
-            </div>
-          </div>
-
-          <div class="form-group mx-sm-3 input">
-            <label for="aws_thing_name">Aws thing name</label>
-            <input type="text" formControlName="aws_thing_name" class="form-control" [ngClass]="{'is-invalid': submitted  && modifyDoor.controls.aws_thing_name.errors }" />
-            <div *ngIf="submitted &&  modifyDoor.controls.aws_thing_name.errors" class="invalid-feedback">
-              <div *ngIf="modifyDoor.controls.aws_thing_name.errors.required">Aws thing Name is required</div>
-            </div>
-          </div>
-
-          <div class="form-group mx-sm-3 input">
-            <label for="description">Description </label>
-            <textarea formControlName="description" class="form-control" [ngClass]="{'is-invalid': submitted && modifyDoor.controls.description.errors }" >
-
-            </textarea>
-            <div *ngIf="submitted && modifyDoor.controls.description.errors" class="invalid-feedback">
-              <div *ngIf="modifyDoor.controls.description.errors.required">Description is required</div>
-            </div>
-          </div>
-
-
-          <div class = "align-content-center">
             <div class="form-group mx-sm-3 input">
-              <button class="btn btn-primary" style="background-color: #3b5998;">
-                Save
-              </button>
-              <a role="button" href="/manage_doors" class="btn btn-link">Cancel</a>
-
+              <label for="name">Name</label>
+              <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted &&  modifyDoor.controls.name.errors }" />
+              <div *ngIf="submitted &&  modifyDoor.controls.name.errors" class="invalid-feedback">
+                <div *ngIf="modifyDoor.controls.name.errors.required">Name is required</div>
+              </div>
             </div>
-          </div>
 
-        </form>
+            <div class="form-group mx-sm-3 input">
+              <label for="aws_thing_name">Aws thing name</label>
+              <input type="text" formControlName="aws_thing_name" class="form-control" [ngClass]="{'is-invalid': submitted  && modifyDoor.controls.aws_thing_name.errors }" />
+              <div *ngIf="submitted &&  modifyDoor.controls.aws_thing_name.errors" class="invalid-feedback">
+                <div *ngIf="modifyDoor.controls.aws_thing_name.errors.required">Aws thing Name is required</div>
+              </div>
+            </div>
+
+            <div class="form-group mx-sm-3 input">
+              <label for="description">Description </label>
+              <textarea formControlName="description" class="form-control" [ngClass]="{'is-invalid': submitted && modifyDoor.controls.description.errors }" >
+
+              </textarea>
+              <div *ngIf="submitted && modifyDoor.controls.description.errors" class="invalid-feedback">
+                <div *ngIf="modifyDoor.controls.description.errors.required">Description is required</div>
+              </div>
+            </div>
+
+
+            <div class = "align-content-center">
+              <div class="form-group mx-sm-3 input">
+                <button class="btn btn-primary" style="background-color: #3b5998;">
+                  Save
+                </button>
+                <a role="button" href="/manage_doors" class="btn btn-link">
+                  Cancel
+                </a>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
       </div>
     </div>
-    </div>
-    </div>
-  <div *ngIf="!loggedIn ||  loggedIn == 'False' || admin =='false' || !admin">
+
+    <div *ngIf="!loggedIn ||  loggedIn == 'False' || admin =='false' || !admin">
       <h3>Can't open this page!</h3>
     </div>
-</div>
 
+  </div>
+</div>

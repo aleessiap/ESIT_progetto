@@ -11,9 +11,7 @@ export class DoorService {
   constructor(private http: HttpClient) { }
 
   getAllDoors(): Observable<Door[]> {
-
     return this.http.get<Door[]>('/api/doors')
-
   }
 
   getDoor(id : string): Observable<Door> {
@@ -26,11 +24,8 @@ export class DoorService {
             console.log(door.doorFound);
             return door.doorFound;
           }
-
-
         })
       )
-
   }
 
   insertDoor(door: Door): Observable<Door> {
@@ -48,8 +43,6 @@ export class DoorService {
       .pipe(
         catchError(this.errorMgmt)
       )
-    //return this.http.put<void>('http://localhost:8000/api/doors', door)
-
   }
 
   deleteDoor(door: Door) {
@@ -59,19 +52,17 @@ export class DoorService {
       .pipe(
         catchError(this.errorMgmt)
       )
-
-
   }
+
   searchDoor(door: string){
     let API_URL = '/api/doors/search/'+door;
     console.log(API_URL);
-
     return this.http.get<Door[]>(API_URL)
       .pipe(
         catchError(this.errorMgmt)
       )
   }
-  // Error handling
+
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
 

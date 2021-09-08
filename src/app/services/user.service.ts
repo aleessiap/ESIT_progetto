@@ -12,7 +12,6 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  //Chiamata per leggere tutti gli utenti
   getUsers()  {
     let API_URL = '/api/users/get-users'
     return this.http.get<User[]>(API_URL);
@@ -37,7 +36,6 @@ export class UserService {
       )
   }
 
-//Chiamata per la registrazione di un nuovo utente
   addUser(data: User): Observable<User> {
     let API_URL = '/api/users/add-user';
     return this.http.post<User>(API_URL, data)
@@ -48,15 +46,12 @@ export class UserService {
   }
 
   deleteUser(id : string) {
-    //let API_URL = '/api/users/613511db07b9cd05d4256bbc';
     console.log('delete user service ' + id);
     return this.http.delete('/api/users/'+id)
       .pipe(
         catchError(this.errorMgmt)
       )
-
   }
-
 
   getUser(id : string): Observable<User> {
     let API_URL = '/api/users/' +id;
@@ -72,8 +67,6 @@ export class UserService {
       )
   }
 
-
-
   searchUser(user: string){
     let API_URL = '/api/users/search/'+user;
     console.log(API_URL);
@@ -84,7 +77,6 @@ export class UserService {
       )
   }
 
-// Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
 

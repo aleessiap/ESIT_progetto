@@ -1,9 +1,7 @@
 const User = require('../models/user')
 const mongoose = require("mongoose");
 
-//per login
 module.exports.login = function(req, res){
-
 
   const credential = {
     email: req.body.username,
@@ -49,7 +47,6 @@ module.exports.login = function(req, res){
 
 }
 
-//Per trovare tutti gli utenti
 module.exports.getUsers = function(req, res){
   User.find((error, data) => {
     if (error) {
@@ -83,8 +80,7 @@ module.exports.modifyProfile = function(req,res){
 }
 
 module.exports.modifyPassword = function(req,res){
-  console.log(req);
-  const update = { password: req.password };
+  const update = { password: req.body.password };
 
   User.findOneAndUpdate({_id: req.body.id}, update ,function(err, user){
     if(err){
@@ -98,7 +94,6 @@ module.exports.modifyPassword = function(req,res){
   })
 }
 
-//per registrare un nuovo utente
 module.exports.register = function(req, res){
   try {
     User.count({email: req.body.email}, function (err, count) {
@@ -108,7 +103,6 @@ module.exports.register = function(req, res){
         return;
       }
     });
-
 
     //creo nuovo utente e popolo con i dati passati
     let newUser;
@@ -143,7 +137,6 @@ module.exports.deleteUser = function (req, res) {
   User.findByIdAndDelete(id, function (err) {
 
     if (err) {
-
       res.send(err);
       console.log("Error in deleting door ")
       console.log(req.param("_id"))
@@ -184,7 +177,6 @@ module.exports.getUser = function (req, res) {
         userFound: user
       })
     }
-
   })
 
 }
@@ -205,8 +197,6 @@ module.exports.searchUser = function (req, res) {
 
       }else{
         console.log("Users found in suggestion");
-        //users = users.map(function(item) { return item.doc; });
-        //res.status(200)
         res.json(users)
         console.log(users)
       }

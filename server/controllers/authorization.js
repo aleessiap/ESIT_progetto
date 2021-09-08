@@ -10,14 +10,10 @@ module.exports.getAllAuthorizations = function (req, res) {
   Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
 
     if (err) {
-
       res.send(err);
-
     }
     else {
-
       res.json(docs);
-
     }
 
   })
@@ -29,14 +25,10 @@ module.exports.getAllNotAuthorized = function (req, res) {
   Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
 
     if (err) {
-
       res.send(err);
-
     }
     else {
-
       res.json(docs);
-
     }
 
   })
@@ -48,34 +40,24 @@ module.exports.getAuthorizations = function (req, res) {
   Door.findById(mongoose.Types.ObjectId(req.params["_id"]), (err, doc) => {
 
     if(err) {
-
       res.send(err)
-
     }
     else {
-
       let auths = doc['authorizations']['_doc']
       let users_id = []
 
       for (const pin in auths) {
-
         users_id.push(auths[pin])
-
       }
 
       User.find({_id: {$in: users_id}}, (err, docs) => {
 
         if(err) {
-
           res.send(err)
-
         }
         else {
-
           res.json(docs)
-
         }
-
       })
 
     }
@@ -89,9 +71,7 @@ module.exports.getNotAuthorized = function (req, res) {
   Door.findById(mongoose.Types.ObjectId(req.params["_id"]), (err, doc) => {
 
     if(err) {
-
       res.send(err)
-
     }
     else {
 
@@ -99,22 +79,16 @@ module.exports.getNotAuthorized = function (req, res) {
       let users_id = []
 
       for (const pin in auths) {
-
         users_id.push(auths[pin])
-
       }
 
       User.find({_id: {$nin: users_id}}, (err, docs) => {
 
         if(err) {
-
           res.send(err)
-
         }
         else {
-
           res.json(docs)
-
         }
 
       })
@@ -133,22 +107,16 @@ module.exports.insertAuthorization = function (req, res) {
   User.findById(mongoose.Types.ObjectId(req.body.user_id), (err, doc) => {
 
     if(err) {
-
       res.send(err)
-
     } else {
 
       if(!user.chat_id){
-
         res.status(400).json({
           type: "Not Found",
           msg: "The user need to perform the first access procedure."
         })
-
       } else {
-
         user = doc
-
       }
 
     }
@@ -158,9 +126,7 @@ module.exports.insertAuthorization = function (req, res) {
   Door.findById(mongoose.Types.ObjectId(req.body.door_id), (err, doc) => {
 
     if(err) {
-
       res.send(err)
-
     }
     else {
 
@@ -169,24 +135,18 @@ module.exports.insertAuthorization = function (req, res) {
       let pin = ''
 
       do {
-
         pin = randomInt(100000, 1000000)
         pin = '' + pin
-
       } while (pin in  Object.keys(doc['authorizations']['_doc']))
 
       Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pin)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
 
         if(err1) {
-
           res.send(err1)
-
         }
         else {
-
           bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
           res.json(doc1)
-
         }
 
       })
@@ -202,9 +162,7 @@ module.exports.updateAuthorization = function (req, res) {
   Door.findById(mongoose.Types.ObjectId(req.body._id), function (err, doc) {
 
     if (err) {
-
       res.send(err);
-
     }
     else {
 
@@ -225,9 +183,7 @@ module.exports.deleteAuthorization = function (req, res) {
   Door.findById(mongoose.Types.ObjectId(req.params["door_id"]), function (err, doc) {
 
     if (err) {
-
       res.send(err)
-
     }
     else {
 
@@ -239,7 +195,6 @@ module.exports.deleteAuthorization = function (req, res) {
       for (let x of pins) {
 
         if(mongoose.Types.ObjectId(pins[x]) === mongoose.Types.ObjectId(req.params["user_id"])) {
-
             pin = x
             console.log
             break
@@ -253,9 +208,7 @@ module.exports.deleteAuthorization = function (req, res) {
           res.send(err1)
         }
         else {
-
           res.json(doc1)
-
         }
 
       })

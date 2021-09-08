@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Door} from "../../../server/models/door";
 import {DoorService} from "../services/door.service";
 import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-add-door-form',
@@ -16,32 +17,35 @@ export class AddDoorFormComponent implements OnInit {
   submitted = false;
   loggedIn : string | null;
   admin : string | null;
+
   constructor(
     private  fb : FormBuilder,
     public api: DoorService
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
-    console.log("Admin: " + this.admin);
-    console.log("LoggedIn: "+ this.loggedIn);
+
     this.registerDoor = this.fb.group({
       name: ['', Validators.required],
       aws_thing_name: ['', Validators.required],
       description:['', Validators.required],
     })
+
   }
 
   create(){
     this.submitted = true;
 
-    // Se il form non è valido si ferma qui
     if (this.registerDoor.invalid) {
       return;
     }else{
       this.loading = true;
     }
+
     const body = {};
     const newDoor : Door = {
       name: this.registerDoor.controls.name.value,
@@ -53,13 +57,18 @@ export class AddDoorFormComponent implements OnInit {
     };
 
     this.api.insertDoor(newDoor)
-      .subscribe(() => {});
+      .subscribe(() => {}),
+      (err: HttpErrorResponse) => {
+        console.log("Error inserting the door");
+        alert("Error inserting the door");
+      };
+
     this.submitted = false;
-    this.registerDoor.reset();
     this.registerDoor.clearValidators();
+    this.registerDoor.reset();
     this.loading = false;
 
-    alert("Registration succeed!");
+    alert("Door registered!");
 
   }
 }

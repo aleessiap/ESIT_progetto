@@ -4,7 +4,6 @@ const doorController = require('../controllers/door')
 
 
 router.delete('/:_id', doorController.deleteDoor);
-
 router.get('/', doorController.getAllDoors);
 router.get('/:_id', doorController.getDoor);
 router.post('/', doorController.insertDoor);

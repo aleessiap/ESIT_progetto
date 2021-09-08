@@ -46,7 +46,6 @@ export class LoginFormComponent implements OnInit {
         (data:any) => {
           this.currentUser = data.userFound._id;
           this.admin = data.userFound.admin;
-          this.api.currentUser = data.userFound;
 
           localStorage.setItem('currentUser', this.currentUser);
           localStorage.setItem('admin', this.admin);
@@ -56,6 +55,7 @@ export class LoginFormComponent implements OnInit {
         },
         (err:HttpErrorResponse) => {
           console.log("Error in the login");
+          alert("Error in the login");
         }
       );
 

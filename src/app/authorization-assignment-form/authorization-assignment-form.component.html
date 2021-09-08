@@ -1,31 +1,21 @@
 <div class="row justify-content-center mx-auto ">
   <div class="col-md-12">
+
     <div *ngIf = "loggedIn == 'True' && admin == 'true'">
-
       <div class="card">
-      <!--<h4 class="card-header">Gestione porte</h4> -->
-      <div class="container-fluid">
-        <nav class="navbar-light bg-light" style="margin-top: 20px">
-
-          <div>
-            <div class="d-flex flex-row-reverse" >
-              <!--<form class="d-inline-block col-md-5" style="margin-left: 30px">
-                <input type="text"  placeholder="Search" name="q">
-                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-              </form>-->
-              <a  class="btn btn-outline-primary"  href="/manage_users" role="button">Gestione utenti</a>
-              <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/manage_doors" role="button">Gestione porte</a>
-              <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>
-
-
-
+        <div class="container-fluid">
+          <nav class="navbar-light bg-light" style="margin-top: 20px">
+            <div>
+              <div class="d-flex flex-row-reverse" >
+                <a  class="btn btn-outline-primary"  href="/manage_users" role="button">Gestione utenti</a>
+                <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/manage_doors" role="button">Gestione porte</a>
+                <a  class="btn btn-outline-primary" style="margin-right: 10px" href="/authorization" role="button">Gestione permessi</a>
+              </div>
 
             </div>
+          </nav>
 
-          </div>
-        </nav>
-
-      </div>
+        </div>
         <div class="row justify-content-evenly h-100" style="margin-top: 20px">
 
           <div class="col-md-3">
@@ -46,6 +36,7 @@
             </div>
 
           </div>
+
           <div class="col-md-8">
 
             <div class="row">
@@ -70,26 +61,26 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="card">
+              <div class="card">
 
-                  <div class="card-header">
+                <div class="card-header">
 
-                    <h4>Unauthorized</h4>
-                    <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="not_authorized_filter" (change)=filterUnauthorized(not_authorized_filter)>
-
-                  </div>
-                  <div class="card-body">
-
-                    <dl class="row" *ngFor="let user of not_authorized; let i=index;">
-
-                        <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
-                        <dd class="col-sm-1"><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
-
-                    </dl>
-
-                  </div>
+                  <h4>Unauthorized</h4>
+                  <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="not_authorized_filter" (change)=filterUnauthorized(not_authorized_filter)>
 
                 </div>
+                <div class="card-body">
+
+                  <dl class="row" *ngFor="let user of not_authorized; let i=index;">
+
+                      <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
+                      <dd class="col-sm-1"><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
+
+                  </dl>
+
+                </div>
+
+              </div>
 
               </div>
 
@@ -98,10 +89,12 @@
           </div>
 
         </div>
+      </div>
     </div>
-    </div>
+
     <div *ngIf="!loggedIn ||  loggedIn == 'False' || admin =='false' || !admin">
       <h3>Can't open this page!</h3>
     </div>
+
   </div>
 </div>

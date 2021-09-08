@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../server/models/user";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-profile-data-form',
@@ -26,6 +27,7 @@ export class ProfileDataFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
+
     this.activatedRoute.params.subscribe(params => {
       this.idUser = params['_id'];
     })
@@ -33,19 +35,21 @@ export class ProfileDataFormComponent implements OnInit {
   }
 
   gettingData(){
+
     this.profileForm.controls['name'].setValue(this.user.name);
     this.profileForm.controls['surname'].setValue(this.user.surname);
     this.profileForm.controls['email'].setValue(this.user.email);
     this.profileForm.controls['phone_num'].setValue(this.user.phone_num);
     this.profileForm.controls['birthdate'].setValue(this.user.birthdate);
     this.profileForm.controls['username'].setValue(this.user.username);
+
   }
 
 
   ngOnInit(): void {
     this.loggedIn = localStorage.getItem('loggedIn');
     this.currentUser = localStorage.getItem('currentUser');
-    console.log('Logged IN : '+ this.loggedIn);
+
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -65,7 +69,6 @@ export class ProfileDataFormComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // Se il form non è valido si ferma qui
     if (this.profileForm.invalid) {
       return;
     }
@@ -73,16 +76,21 @@ export class ProfileDataFormComponent implements OnInit {
       id: this.idUser,
       profile: this.profileForm.value
     }
-      //richiamo il servizio per poter collegare al server passandogli i dati del form
+
     this.api.modifyUser(doc)
-      .subscribe(() => {});
+      .subscribe(() => {}),
+      (err: HttpErrorResponse) => {
+        console.log("Error in updating the user");
+        alert("Error in updating the user");
+      };
 
     this.profileForm.reset();
     this.loading = true;
     alert("Modification succed!");
-    this.router.navigateByUrl('/dashboard')
+    this.router.navigateByUrl('/dashboard').then();
+
   }
   changePassword(){
-    this.router.navigateByUrl('change_password/'+ this.currentUser)
+    this.router.navigateByUrl('change_password/'+ this.currentUser).then();
   }
 }
