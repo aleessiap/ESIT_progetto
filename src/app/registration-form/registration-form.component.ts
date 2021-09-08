@@ -16,7 +16,8 @@ export class RegistrationFormComponent implements OnInit {
   loading = false;
   submitted = false;
   newUser : User;
-
+  loggedIn : string | null;
+  admin : string | null;
   constructor(
     private  fb : FormBuilder,
     public api: UserService,
@@ -24,7 +25,8 @@ export class RegistrationFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.loggedIn = localStorage.getItem('loggedIn');
+    this.admin = localStorage.getItem('admin');
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
