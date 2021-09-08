@@ -67,7 +67,6 @@ export class DashboardComponent implements OnInit {
 
       console.log('------------')
       console.log('Dashboard: ');
-
       console.log("found user "+ this.logged.name);
       this.loggedIn = 'True';
     }else{
