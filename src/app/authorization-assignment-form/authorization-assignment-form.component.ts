@@ -27,6 +27,7 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   constructor(private api_door:DoorService, private api_auth:AuthorizationService ) { }
 
   ngOnInit(): void {
+
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
     console.log("Admin: " + this.admin);
