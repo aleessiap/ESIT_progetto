@@ -22,6 +22,7 @@ db = mongoose.connect(conf.DB, {useNewUrlParser:true , useUnifiedTopology: true}
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
+
 app.use("/api/users", usersRoutes);
 app.use("/api/doors", doorsRoutes);
 app.use("/api/access", accessRoutes);
