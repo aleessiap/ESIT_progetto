@@ -4,6 +4,7 @@ const Authorization = require('../models/authorization')
 const mongoose = require("mongoose");
 const {randomInt} = require("crypto");
 const bot = require('./../bot-telegram')
+const {createHash} = require("crypto");
 
 module.exports.getAllAuthorizations = function (req, res) {
 
@@ -134,13 +135,15 @@ module.exports.insertAuthorization = function (req, res) {
       let update = {}
       let value = {}
       let pin = ''
+      let pinHash = ''
 
       do {
         pin = randomInt(100000, 1000000)
         pin = '' + pin
-      } while (pin in  Object.keys(doc['authorizations']['_doc']))
+        pinHash = createHash('sha256').update(pin).digest('base64')
+      } while (pinHash in  Object.keys(doc['authorizations']['_doc']))
 
-      Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pin)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
+      Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pinHash)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
 
         if(err1) {
           res.send(err1)
@@ -167,9 +170,9 @@ module.exports.updateAuthorization = function (req, res) {
     }
     else {
 
-      let user = doc[req.body.old_pin];
-      doc[req.body.old_pin] = undefined;
-      doc[req.body.new_pin] = user;
+      let user = doc['authorization']['_doc'][req.body.old_pin];
+      doc['authorization']['_doc'][req.body.old_pin] = undefined;
+      doc['authorization']['_doc'][req.body.new_pin] = user;
       Door.findByIdAndUpdate(doc._id, doc);
       res.send(doc);
 

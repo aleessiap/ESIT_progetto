@@ -41,7 +41,7 @@ device.on('connect', function() {
 
 });
 
-function listen_device(server, bot) {
+function listen_devices(server, bot) {
 
   device.on('message', function (topic, payload) {
 
@@ -63,7 +63,7 @@ function listen_device(server, bot) {
 
           } else {
 
-            let last_password = payload["state"]["reported"]["last_password"]
+            let last_password = createHash('sha256').update(payload["state"]["reported"]["last_password"]).digest('base64')
             let user_id = doc['authorizations']['_doc'][last_password]
             let door_id = doc['_id']
             let d_state = undefined;
@@ -87,10 +87,8 @@ function listen_device(server, bot) {
                   let expired = false
                   let user = doc1
 
-                  link_string = createHash('sha256', user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
-
-                  bot.sendMessage(user.chat_id, 'Click this link to unlock the door:').then()
-                  bot.sendMessage(user.chat_id, 'http://192.168.1.26:8080/verify/' + link_string).then()
+                  link_string = createHash('sha256').update(user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
+                  bot.sendMessage(user.chat_id, 'Click this link to unlock:\n[' + aws_thing_name + ']\nhttp://192.168.1.26:8080/verify/' + link_string).then()
 
                   server.get("/verify/" + link_string, ((req, res) => {
 
@@ -123,8 +121,12 @@ function listen_device(server, bot) {
 
                   setTimeout(() => {
 
-                    sendUpdate(aws_thing_name, 1, 2)
-                    expired = true
+                    if(!expired) {
+
+                      sendUpdate(aws_thing_name, 1, 2)
+                      expired = true
+
+                    }
 
                   }, 5 * 1000)
 
@@ -177,4 +179,4 @@ function listen_device(server, bot) {
 
 }
 module.exports.device = device
-module.exports.listen_device = listen_device
+module.exports.listen_device = listen_devices
