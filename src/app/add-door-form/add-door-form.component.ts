@@ -17,6 +17,7 @@ export class AddDoorFormComponent implements OnInit {
   submitted = false;
   loggedIn : string | null;
   admin : string | null;
+  created : boolean;
 
   constructor(
     private  fb : FormBuilder,
@@ -26,6 +27,7 @@ export class AddDoorFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.created = false;
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
 
@@ -67,8 +69,7 @@ export class AddDoorFormComponent implements OnInit {
     this.registerDoor.clearValidators();
     this.registerDoor.reset();
     this.loading = false;
-
-    alert("Door registered!");
+    this.created = true;
 
   }
 }

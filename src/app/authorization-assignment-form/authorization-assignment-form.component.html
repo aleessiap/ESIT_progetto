@@ -19,7 +19,7 @@
           </nav>
 
         </div>
-        <div class="row justify-content-evenly h-100" style="margin-top: 20px">
+        <div class="row h-100" style="margin: 20px">
 
           <div class="col-md-3">
 
@@ -40,17 +40,17 @@
 
           </div>
 
-          <div class="col-md-8">
+          <div class="col-md-9">
 
             <div class="row" style="margin-bottom: 20px">
               <div class="col-md-6">
                 <div class="card">
 
-                  <div class="card-header form-inline ">
+                  <div class="card-header form-inline justify-content-evenly ">
 
-                    <h4>Authorized</h4>
-                    <form class=" d-inline-block button" >
-                      <input  #searchAuthorized  type="text"  placeholder="Search users...">
+                    <h4 class="col-md-6  d-inline-block" >Authorized</h4>
+                    <form class="col-md-6 d-inline-block " style="float: right" (change)="filterAuthorized(searchAuthorized.value)">
+                      <input  #searchAuthorized  type="text" size="10" placeholder="Search users...">
                       <button class="btn btn-default" (click)="filterAuthorized(searchAuthorized.value)" type="submit"><i class="fa fa-search"></i></button>
                     </form>
 
@@ -71,9 +71,9 @@
 
                 <div class="card-header">
 
-                  <h4>Unauthorized</h4>
-                  <form class="d-inline-block button" >
-                    <input  #searchUnauthorized  type="text"  placeholder="Search users..." class="d-inline-block">
+                  <h4 class="col-md-6 d-inline-block">Unauthorized</h4>
+                  <form class="col-md-6 d-inline-block " style="float: right"  (change)="filterUnauthorized(searchUnauthorized.value)">
+                    <input  #searchUnauthorized  type="text" size="10" placeholder="Search users..." class="d-inline-block">
                     <button class="btn btn-default d-inline-block" (click)="filterUnauthorized(searchUnauthorized.value)" type="submit"><i class="fa fa-search"></i></button>
                   </form>
                 </div>
