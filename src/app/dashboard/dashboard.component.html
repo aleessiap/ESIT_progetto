@@ -1,5 +1,5 @@
 <div class="row justify-content-center mx-auto ">
-  <div class="col-md-12">
+  <div class="row-cols-md-12">
 
     <div *ngIf = "loggedIn=='True'">
       <div class="card">
@@ -25,15 +25,15 @@
         <div class="container-fluid">
           <div class="card row-cols-md-12" style="margin-bottom: 20px">
             <h3 class="card-header">Porte</h3>
-            <div class="panel-body">
+            <div class="card-body">
               <ul class="list-group-x list-group-horizontal">
-                <div class="d-flex align-self-center col-sm-3" style="margin-left: 20px" *ngFor="let door of doors">
+                <div class="d-flex align-self-center col-sm-5" style="margin-left: 20px" *ngFor="let door of doors">
                 <li class="list-group-item">
                   <h5>{{door.name}}</h5>
                   <div class="list-group-y">
                       <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
-                        <dt class="col-sm-4">{{acc.username}}</dt>
-                        <dd class="col-sm-8">Date:{{acc.date}}<br>Time:{{acc.time}}</dd>
+                        <dt class="col-sm-5">{{acc.username}}</dt>
+                        <dd class="col-sm-7">Date:{{acc.date}}<br>Time:{{acc.time}}</dd>
                       </dl>
                   </div>
                 </li>

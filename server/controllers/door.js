@@ -50,7 +50,7 @@ module.exports.insertDoor = function (req, res) {
       res.json(door);
     }
 
-  }).then();
+  });
 
 }
 
