@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const mongoose = require("mongoose");
+const {createHash} = require("crypto")
 
 module.exports.login = function(req, res){
 
@@ -19,8 +20,8 @@ module.exports.login = function(req, res){
         })
       }
       else{
-        console.log("USER: " + user);
-        if(credential.password == user.password){
+
+        if(createHash('sha256').update(credential.password).digest('base64') === user.password){
           console.log("User found");
           res.status(200).json({
             success: true,
