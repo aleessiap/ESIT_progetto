@@ -26,14 +26,14 @@
           <div class="card row-cols-md-12" style="margin-bottom: 20px">
             <h3 class="card-header">Porte</h3>
             <div class="panel-body">
-              <ul class="list-group-x list-group-horizontal">
+              <ul class="list-group list-group-horizontal">
                 <div class="d-flex align-self-center col-sm-3" style="margin-left: 20px" *ngFor="let door of doors">
                 <li class="list-group-item">
-                  <h5>{{door.name}}</h5>
-                  <div class="list-group-y">
+                    <h5>{{door.name}}</h5>
+                  <div>
                       <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
-                        <dt class="col-sm-4">{{acc.username}}</dt>
-                        <dd class="col-sm-8">Date:{{acc.date}}<br>Time:{{acc.time}}</dd>
+                        <dt class="col-sm-6">{{acc.user_id}}</dt>
+                        <dd class="col-sm-6">Date:{{acc.date}}<br>Time:{{acc.time}}</dd>
                       </dl>
                   </div>
                 </li>
