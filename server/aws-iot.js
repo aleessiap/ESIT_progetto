@@ -13,7 +13,8 @@ device = AwsIot.device({
   certPath: './certs/1fe372aea6dd66fc84e58e27c45f8c255c555868aa0fc51f1867d86c1b7dc98b-certificate.pem.crt',
   caPath: './certs/AmazonRootCA1.pem',
   clientId: THING_NAME,
-  host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com'
+  host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com',
+  keepalive: 0
 
 });
 
@@ -88,7 +89,7 @@ function listen_devices(server, bot) {
                   let user = doc1
 
                   link_string = createHash('sha256').update(user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
-                  bot.sendMessage(user.chat_id, 'Click this link to unlock:\n[' + aws_thing_name + ']\nhttp://192.168.1.26:8080/verify/' + link_string).then()
+                  bot.sendMessage(user.chat_id, 'Click this link to unlock:\n' + doc['name'] + '\nhttp://192.168.1.26:8080/verify/' + link_string).then()
 
                   server.get("/verify/" + link_string, ((req, res) => {
 
@@ -109,7 +110,7 @@ function listen_devices(server, bot) {
                         } else {
 
                           sendUpdate(aws_thing_name, 2, 2)
-                          res.send("Door " + aws_thing_name + " unlocked!");
+                          res.send("Door " + doc['name'] + " unlocked!");
 
                         }
 
@@ -128,7 +129,7 @@ function listen_devices(server, bot) {
 
                     }
 
-                  }, 5 * 1000)
+                  }, 10 * 1000)
 
                 }
 

@@ -5,6 +5,7 @@ import {Access} from 'server/models/door'
 import {AuthenticationService} from "../services/authentication.service";
 import {DoorService} from "../services/door.service";
 import {AccessService} from "../services/access.service";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,14 +13,17 @@ import {AccessService} from "../services/access.service";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
   doors: Door[] = [];
   access = {}
+
   loggedIn : string | null;
   admin : string | null;
 
   constructor(private api_door: DoorService,
-              private api_auth : AuthenticationService,
-              private api_accs: AccessService
+              private api_auth: AuthenticationService,
+              private api_accs: AccessService,
+              private api_user: UserService
   ){
   }
 
@@ -38,6 +42,13 @@ export class DashboardComponent implements OnInit {
           data.forEach((value) => {
             value['time'] = new Date(value['createdAt']).toLocaleTimeString()
             value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+            this.api_user.getUser(value['user_id']).subscribe((data:User) => {
+
+              value['username'] = data.username
+
+            })
+
           })
           this.access[door._id] = data
         });

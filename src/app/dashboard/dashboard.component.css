@@ -1,9 +1,18 @@
-.list-group{
+.list-group-x{
   max-height: 300px;
   align-content: center;
   margin-top: 20px;
   margin-bottom: 10px;
   overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.list-group-y{
+  max-height: 300px;
+  align-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  overflow-y:auto;
   -webkit-overflow-scrolling: touch;
 }
 
