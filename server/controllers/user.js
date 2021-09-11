@@ -15,7 +15,7 @@ module.exports.login = function(req, res){
       if (!user){
         console.log("User not found");
         res.status(400).json({
-          type: "Not Found",
+          success: false,
           msg: "Wrong Login Credentials"
         })
       }
@@ -25,12 +25,13 @@ module.exports.login = function(req, res){
           console.log("User found");
           res.status(200).json({
             success: true,
+            msg: "User found",
             userFound: user
           })
         }else{
           console.log("Wrong password");
           res.status(400).json({
-            type: "Not Found",
+            success: false,
             msg: "Wrong Password"
           })
         }

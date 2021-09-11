@@ -17,8 +17,7 @@ export class LoginFormComponent implements OnInit {
   submitted = false;
   currentUser: string;
   admin : string;
-  errorCredentials: boolean;
-
+  wrongCredentials: boolean;
   constructor(
     private fb: FormBuilder,
     private api: AuthenticationService,
@@ -26,7 +25,7 @@ export class LoginFormComponent implements OnInit {
   ){}
 
   ngOnInit() {
-
+    this.wrongCredentials = false;
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]], //il campo username è necessario e inizializzato come stringa vuota
       password: ['', [Validators.required]] //il campo password è necessario e inizializzato come stringa vuota
@@ -45,17 +44,23 @@ export class LoginFormComponent implements OnInit {
     this.api.login(this.loginForm.value)
       .subscribe(
         (data:any) => {
-          this.currentUser = data.userFound._id;
-          this.admin = data.userFound.admin;
 
-          localStorage.setItem('currentUser', this.currentUser);
-          localStorage.setItem('admin', this.admin);
-          localStorage.setItem('loggedIn','True');
+            console.log("success true")
+            this.currentUser = data.userFound._id;
+            this.admin = data.userFound.admin;
 
-          this.router.navigateByUrl('/dashboard').then(r => window.location.reload());
+            localStorage.setItem('currentUser', this.currentUser);
+            localStorage.setItem('admin', this.admin);
+            localStorage.setItem('loggedIn','True');
+
+            this.router.navigateByUrl('/dashboard').then(r => window.location.reload());
+            this.wrongCredentials = false;
+
         },
-        (err:HttpErrorResponse) => {
+        (err) => {
           console.log("Error in the login");
+          this.wrongCredentials= true;
+          this.loginForm.invalid;
           //alert("Error in the login");
         }
       );

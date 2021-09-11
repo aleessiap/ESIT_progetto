@@ -26,11 +26,11 @@
             <div class="card" style="margin-bottom: 20px">
 
               <h4 class="card-header">Select door</h4>
-              <div class="card-body">
+              <div class="card-body bootstrap-select-wrapper">
 
                 <select class="form-select" [(ngModel)]="selected" (change)="loadAuth(selected)">
 
-                  <option *ngFor="let door of doors" [value]="door._id" [selected]="door._id == selected">{{door.name}}</option>
+                  <option *ngFor="let door of doors" [value]="door._id" [selected]="door._id == selected" >{{door.name}}</option>
 
                 </select>
 
