@@ -14,7 +14,7 @@ device = AwsIot.device({
   caPath: './certs/AmazonRootCA1.pem',
   clientId: THING_NAME,
   host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com',
-  keepalive: 0
+  keepalive: 60
 
 });
 
