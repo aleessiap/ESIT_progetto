@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
 
   doors: Door[] = [];
   access = {};
-  lista = [1,2,3,4,5,6.7,8,9];
+
   loggedIn : string | null;
   admin : string | null;
 
@@ -24,9 +24,7 @@ export class DashboardComponent implements OnInit {
               private api_auth: AuthenticationService,
               private api_accs: AccessService,
               private api_user: UserService
-  ){
-  }
-
+  ){}
 
   ngOnInit(): void {
     this.loggedIn = localStorage.getItem('loggedIn');

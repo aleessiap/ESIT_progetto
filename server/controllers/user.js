@@ -5,12 +5,12 @@ const {createHash} = require("crypto")
 module.exports.login = function(req, res){
 
   const credential = {
-    email: req.body.username,
+    username: req.body.username,
     password: req.body.password
   }
 
   try{
-    User.findOne({email: credential.email},function (err, user)  {
+    User.findOne({$or:[{email: credential.username}, {username: credential.username}]},function (err, user)  {
 
       if (!user){
         console.log("User not found");
