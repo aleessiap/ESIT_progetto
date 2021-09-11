@@ -15,8 +15,8 @@ import {UserService} from "../services/user.service";
 export class DashboardComponent implements OnInit {
 
   doors: Door[] = [];
-  access = {}
-
+  access = {};
+  lista = [1,2,3,4,5,6.7,8,9];
   loggedIn : string | null;
   admin : string | null;
 

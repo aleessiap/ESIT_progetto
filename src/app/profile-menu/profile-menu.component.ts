@@ -30,7 +30,7 @@ export class ProfileMenuComponent implements OnInit {
       this.loggedIn = false;
     }
     let admin = localStorage.getItem('admin');
-    if( admin == 'True'){
+    if( admin == 'true'){
       this.isAdmin = true;
     }else{
       this.isAdmin = false;

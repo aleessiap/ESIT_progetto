@@ -26,19 +26,30 @@
           <div class="card row-cols-md-12" style="margin-bottom: 20px">
             <h3 class="card-header">Porte</h3>
             <div class="panel-body">
-              <ul class="list-group list-group-horizontal">
-                <div class="d-flex align-self-center col-sm-3" style="margin-left: 20px" *ngFor="let door of doors">
-                <li class="list-group-item">
-                    <h5>{{door.name}}</h5>
-                  <div>
-                      <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
-                        <dt class="col-sm-6">{{acc.user_id}}</dt>
-                        <dd class="col-sm-6">Date:{{acc.date}}<br>Time:{{acc.time}}</dd>
-                      </dl>
-                  </div>
-                </li>
+              <ul class="list-group list-group-horizontal" style="margin: 20px;">
+                <div class=" card align-self-center col-sm-4" style="margin: 10px" *ngFor="let door of doors">
 
-              </div>
+                  <li class="list-group-item">
+                    <h3  >{{door.name}}</h3>
+                    <hr>
+
+                    <div class="scroll">
+                        <!--<dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
+                          <dt class="col-sm-6">{{acc.user_id}}</dt>
+                          <dd class="col-sm-6">Date:{{acc.date}}<br>Time:{{acc.time}}</dd>
+                        </dl>--->
+
+
+                        <dl *ngFor="let d of lista" class="row " style="margin-top: 10px;">
+                            <dt class="col-sm-5">{{d}} username</dt>
+                            <dd class="col-sm-6">Data: 2020-12-11<br>Time: 21:12:13:00.00</dd>
+
+                        </dl>
+
+                    </div>
+                  </li>
+
+                </div>
 
               </ul>
             </div>
