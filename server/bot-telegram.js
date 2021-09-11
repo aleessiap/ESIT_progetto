@@ -1,32 +1,9 @@
 const TELEGRAM_TOKEN = '1843846040:AAFzUIY65WOfHObppTFAfBz4gaNVQ1MyOC8';
 const TelegramBot = require('node-telegram-bot-api');
-const User = require('./models/user')
-const {createHash} = require("crypto");
-const {randomBytes} = require("crypto");
-
-const PASSWORD_LENGTH = 6;
-const LOWERCASE_ALPHABET = 'abcdefghijklmnopqrstuvwxyz'; // 26 chars
-const UPPERCASE_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // 26 chars
-const NUMBERS = '0123456789'; // 10 chars
-const SYMBOLS = ',./<>?;\'":[]\\|}{=-_+`~!@#$%^&*()'; // 32 chars
-const ALPHANUMERIC_CHARS = LOWERCASE_ALPHABET + UPPERCASE_ALPHABET + NUMBERS; // 62 chars
-const ALL_CHARS = ALPHANUMERIC_CHARS + SYMBOLS; // 94 chars
-
-function generateRandomPassword(length, alphabet) {
-
-  let rb = randomBytes(length);
-  let rp = "";
-
-  for (let i = 0; i < length; i++) {
-
-    rb[i] = rb[i] % alphabet.length;
-    rp += alphabet[rb[i]];
-
-  }
-
-  return rp;
-
-}
+const User = require('./models/user');
+const {generateRandomPassword} = require('./passwd')
+const {createHash} = require('./passwd')
+const {ALL_CHARS} = require('./passwd')
 
 bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
 
@@ -59,7 +36,7 @@ bot.onText(/register/, (msg, match) => {
 
             if (doc1) {
 
-              let password = generateRandomPassword(PASSWORD_LENGTH, ALL_CHARS)
+              let password = generateRandomPassword(6, ALL_CHARS)
               doc1.chat_id = chat_id
               doc1.password = createHash('sha256').update(password).digest('base64')
               console.log(doc1.password)

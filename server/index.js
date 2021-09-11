@@ -39,5 +39,4 @@ app.listen(port, function(){
 })
 
 //device.listen_device(app, bot)
-
 module.exports.server = app;

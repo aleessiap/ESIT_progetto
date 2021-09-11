@@ -2,9 +2,10 @@ const Door = require('../models/door');
 const User = require('../models/user')
 const Authorization = require('../models/authorization')
 const mongoose = require("mongoose");
-const {randomInt} = require("crypto");
 const bot = require('./../bot-telegram')
-const {createHash} = require("crypto");
+const {generateRandomPassword} = require('./../passwd');
+const {createHash} = require('./../passwd');
+const {NUMBERS} = require('./../passwd')
 
 module.exports.getAllAuthorizations = function (req, res) {
 
@@ -138,9 +139,10 @@ module.exports.insertAuthorization = function (req, res) {
       let pinHash = ''
 
       do {
-        pin = randomInt(100000, 1000000)
-        pin = '' + pin
+
+        pin = generateRandomPassword(6, NUMBERS)
         pinHash = createHash('sha256').update(pin).digest('base64')
+
       } while (pinHash in  Object.keys(doc['authorizations']['_doc']))
 
       Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pinHash)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
