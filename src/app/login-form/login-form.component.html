@@ -24,6 +24,10 @@
                 Password is required
               </div>
             </div>
+
+            <div *ngIf="errorCredentials" class="invalid-feedback">
+               Wrong credentials!
+            </div>
             <div class="row px-3 mb-4">
               <a href="#" class=" small ml-auto mb-0 text-sm">Forgot password?</a>
             </div>

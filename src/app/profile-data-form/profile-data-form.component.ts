@@ -95,4 +95,12 @@ export class ProfileDataFormComponent implements OnInit {
   changePassword(){
     this.router.navigateByUrl('change_password/'+ this.currentUser).then();
   }
+
+  cancel(){
+    if(this.currentUser == this.idUser){
+      this.router.navigateByUrl('/dashboard');
+    }else{
+      this.router.navigateByUrl('/manage_users');
+    }
+  }
 }

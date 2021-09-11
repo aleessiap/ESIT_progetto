@@ -17,6 +17,7 @@ export class LoginFormComponent implements OnInit {
   submitted = false;
   currentUser: string;
   admin : string;
+  errorCredentials: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -55,7 +56,7 @@ export class LoginFormComponent implements OnInit {
         },
         (err:HttpErrorResponse) => {
           console.log("Error in the login");
-          alert("Error in the login");
+          //alert("Error in the login");
         }
       );
 

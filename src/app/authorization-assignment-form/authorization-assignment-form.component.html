@@ -4,11 +4,12 @@
     <div *ngIf = "loggedIn == 'True' && admin == 'true'">
       <div class="card">
         <div class="container-fluid">
-          <nav class="navbar-light bg-light" style="margin-top: 20px">
-            <div>
-              <div class="col-md-5 button">
+          <nav  style="margin-top: 20px">
+            <div class="form-inline">
+              <div>
+
               </div>
-              <div class="d-inline-block" style=" float: right;" >
+              <div class="d-inline-block " style=" float: right;" >
                 <a  class="btn btn-outline-primary button" href="/authorization" role="button">Gestione permessi</a>
                 <a  class="btn btn-outline-primary button" href="/manage_doors" role="button">Gestione porte</a>
                 <a  class="btn btn-outline-primary button"  href="/manage_users" role="button">Gestione utenti</a>
@@ -24,7 +25,7 @@
 
             <div class="card" style="margin-bottom: 20px">
 
-              <h4 class="card-header" >Select door</h4>
+              <h4 class="card-header">Select door</h4>
               <div class="card-body">
 
                 <select class="form-select" [(ngModel)]="selected" (change)="loadAuth(selected)">
@@ -41,14 +42,17 @@
 
           <div class="col-md-8">
 
-            <div class="row">
+            <div class="row" style="margin-bottom: 20px">
               <div class="col-md-6">
                 <div class="card">
 
-                  <div class="card-header">
+                  <div class="card-header form-inline ">
 
                     <h4>Authorized</h4>
-                    <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="authorized_filter" (change)=filterAuthorized(authorized_filter)>
+                    <form class=" d-inline-block button" >
+                      <input  #searchAuthorized  type="text"  placeholder="Search users...">
+                      <button class="btn btn-default" (click)="filterAuthorized(searchAuthorized.value)" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
 
                   </div>
                   <div class="card-body">
@@ -63,13 +67,15 @@
                 </div>
               </div>
               <div class="col-md-6">
-              <div class="card">
+              <div class="card" style="margin-bottom: 20px">
 
                 <div class="card-header">
 
                   <h4>Unauthorized</h4>
-                  <input class="search_input" type="text" name="" placeholder="Search..." [(ngModel)]="not_authorized_filter" (change)=filterUnauthorized(not_authorized_filter)>
-
+                  <form class="d-inline-block button" >
+                    <input  #searchUnauthorized  type="text"  placeholder="Search users..." class="d-inline-block">
+                    <button class="btn btn-default d-inline-block" (click)="filterUnauthorized(searchUnauthorized.value)" type="submit"><i class="fa fa-search"></i></button>
+                  </form>
                 </div>
                 <div class="card-body">
 

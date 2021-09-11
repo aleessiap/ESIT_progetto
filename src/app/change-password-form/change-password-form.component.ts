@@ -87,4 +87,7 @@ export class ChangePasswordFormComponent implements OnInit {
 
   }
 
+  cancel(){
+    this.router.navigateByUrl('/modify_profile/'+this.id);
+  }
 }

@@ -7,6 +7,7 @@ import { Observable } from "rxjs";
 import {map} from "rxjs/operators";
 import {waitForAsync} from "@angular/core/testing";
 import {HttpErrorResponse} from "@angular/common/http";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-authorization-assignment-form',
@@ -28,7 +29,8 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
 
   constructor(
     private api_door:DoorService,
-    private api_auth:AuthorizationService
+    private api_auth:AuthorizationService,
+    private api_user: UserService
   ) {
 
   }
@@ -94,12 +96,25 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
 
   }
 
-  filterAuthorized(authorized_filter): void{
-    console.log(this.authorized_filter)
+  filterAuthorized(user : string): void{
+
+    this.api_user.searchUser(user).subscribe((data: User[]) => {
+      this.authorized = data;
+    }),
+      (err: HttpErrorResponse) => {
+        console.log("Error in the searching");
+        alert("Error in the searching");
+      }
   }
 
-  filterUnauthorized(not_authorized_filter): void{
-
+  filterUnauthorized(user: string): void{
+    this.api_user.searchUser(user).subscribe((data: User[]) => {
+      this.not_authorized = data;
+    }),
+      (err: HttpErrorResponse) => {
+        console.log("Error in the searching");
+        alert("Error in the searching");
+      }
   }
 
 }

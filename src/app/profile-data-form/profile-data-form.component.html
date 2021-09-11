@@ -58,33 +58,25 @@
                 </div>
               </div>
 
-              <div class = "align-content-center input" style="margin-top: 20px">
-                <div class="form-group mx-sm-3">
 
-                  <div *ngIf="idUser == currentUser">
-                    <button class="btn btn-primary spacingButton" >
+                <div class="form-group mx-sm-3 input">
+                  <div >
+
+                    <button class="btn btn-primary spacingButton d-inline-block" >
                       Save changes
                     </button>
-                    <a role="button" href="/dashboard" class="btn btn-link">
+                    <a role="button" (click)="cancel()" class="btn btn-link d-inline-block">
                       Cancel
                     </a>
-                  </div>
-                  <div *ngIf="idUser != currentUser">
-                    <button class="btn btn-primary spacingButton" >
-                      Save changes
-                    </button>
-                    <a role="button" href="/manage_users" class="btn btn-link">
-                      Cancel
-                    </a>
+                    <div *ngIf ="currentUser == idUser" class="d-inline-block " style=" float: right;">
+                      <a role="button" class="btn btn-primary spacingButton" (click)="changePassword()" >
+                        Change password
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div *ngIf ="currentUser == idUser">
-                <a role="button" class="btn btn-outline-primary" (click)="changePassword()" class="btn btn-link">
-                  Change password
-                </a>
-              </div>
+
 
             </form>
 
