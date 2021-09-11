@@ -7,7 +7,47 @@ const {ALL_CHARS} = require('./passwd')
 
 bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
 
-bot.onText(/register/, (msg, match) => {
+
+bot.onText(/\/help/, (msg, match) =>{
+
+  let chat_id = msg.chat.id;
+  let username = msg.chat.username;
+
+  bot.sendMessage(chat_id, 'Allowed commands:\n/help\n/register')
+
+})
+
+bot.onText(/\/start/, (msg, match) => {
+
+  let chat_id = msg.chat.id;
+  let username = msg.chat.username;
+
+  User.findOne({chat_id: chat_id}, (err, doc) => {
+
+    if (err) {
+
+      bot.sendMessage(chat_id, err.message).then().catch()
+
+    } else {
+
+      if (doc) {
+
+        bot.sendMessage(chat_id, 'Welcome ' + username + ' to ESIT app!\nYou are already registered with username: ' + doc.username + '\nUse /help command for more info').then().catch();
+
+      } else {
+
+        bot.sendMessage(chat_id, 'Welcome ' + username + ' to ESIT app!\nUse \/register command to register\nUse /help command for more info')
+
+      }
+
+    }
+
+  })
+
+})
+
+
+bot.onText(/\/register/, (msg, match) => {
 
   let chat_id = msg.chat.id;
   let username = msg.chat.username;
@@ -39,7 +79,6 @@ bot.onText(/register/, (msg, match) => {
               let password = generateRandomPassword(6, ALL_CHARS)
               doc1.chat_id = chat_id
               doc1.password = createHash('sha256').update(password).digest('base64')
-              console.log(doc1.password)
 
               User.findByIdAndUpdate(doc1._id, doc1, {useFindAndModify: false}, (err2, doc2, res) => {
 
