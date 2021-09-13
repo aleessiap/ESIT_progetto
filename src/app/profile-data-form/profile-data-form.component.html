@@ -2,6 +2,9 @@
   <div class="col-md-8">
 
     <div *ngIf = "loggedIn == 'True'">
+      <div *ngIf = "modified" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
+        Profile correctly updated!
+      </div>
       <div class="card">
         <h4 class="card-header">Modify profile</h4>
         <div class="card-body  align-items-center" >

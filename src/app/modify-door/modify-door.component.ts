@@ -19,6 +19,7 @@ export class ModifyDoorComponent implements OnInit {
   idDoor : string;
   loggedIn : string | null;
   admin : string | null;
+  modified : boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -42,6 +43,7 @@ export class ModifyDoorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.modified = false;
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
     this.modifyDoor = this.fb.group({
@@ -77,7 +79,7 @@ export class ModifyDoorComponent implements OnInit {
       };
 
     this.loading = true;
-    alert("Modification of the door succeeded!");
+    this.modified = true;
 
   }
 

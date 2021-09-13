@@ -18,6 +18,7 @@ export class RegistrationFormComponent implements OnInit {
   submitted = false;
   loggedIn : string | null;
   admin : string | null;
+  created : boolean;
 
   constructor(
     private  fb : FormBuilder,
@@ -31,6 +32,7 @@ export class RegistrationFormComponent implements OnInit {
 
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
+    this.created = false;
 
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
@@ -58,10 +60,7 @@ export class RegistrationFormComponent implements OnInit {
         alert("Error in adding the user");
       };
 
-    this.registrationForm.reset();
     this.loading = true;
-    alert("Registration succeed!");
-    this.router.navigateByUrl('/dashboard').then();
-
+    this.created= true;
   }
 }

@@ -2,6 +2,9 @@
   <div class="col-md-12">
 
     <div *ngIf = "loggedIn == 'True' && admin == 'true'">
+      <div *ngIf = "created" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
+        User created!
+      </div>
       <div class="card">
         <h4 class="card-header">Register</h4>
         <div class="card-body  align-items-center" >

@@ -20,6 +20,7 @@ export class ProfileDataFormComponent implements OnInit {
   idUser: string;
   loggedIn : string | null;
   currentUser : string | null;
+  modified : boolean;
 
   constructor(
     private  fb : FormBuilder,
@@ -49,6 +50,8 @@ export class ProfileDataFormComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.modified = false;
     this.loggedIn = localStorage.getItem('loggedIn');
     this.currentUser = localStorage.getItem('currentUser');
 
@@ -88,7 +91,7 @@ export class ProfileDataFormComponent implements OnInit {
 
     this.profileForm.reset();
     this.loading = true;
-    alert("Modification succed!");
+    this.modified = true;
     this.router.navigateByUrl('/dashboard').then();
 
   }

@@ -2,6 +2,9 @@
   <div class="col-md-12">
 
     <div *ngIf = "loggedIn == 'True' && admin == 'true'">
+      <div *ngIf = "modified" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
+        Door correctly updated!
+      </div>
       <div class="card">
         <h4 class="card-header">Modify data</h4>
         <div class="card-body  align-items-center" >

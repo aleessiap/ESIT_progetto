@@ -18,6 +18,9 @@ export class ChangePasswordFormComponent implements OnInit {
   currentUser : string | null;
   id : string;
   user : User;
+  modified: boolean;
+  wrongPassword: boolean;
+  mismatch: boolean;
 
   constructor(    private  fb : FormBuilder,
                   public api: UserService,
@@ -31,6 +34,10 @@ export class ChangePasswordFormComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.modified = false;
+    this.mismatch = false;
+    this.wrongPassword = false;
 
     this.loggedIn = localStorage.getItem('loggedIn');
     this.currentUser = localStorage.getItem('currentUser');
@@ -60,7 +67,7 @@ export class ChangePasswordFormComponent implements OnInit {
 
     if(this.changePassword.value.oldPassword == this.user.password) {
       if (this.changePassword.value.password != this.changePassword.value.confirmation) {
-        alert("Error in new password!");
+        this.mismatch = true;
         return;
       }
       else {
@@ -76,12 +83,12 @@ export class ChangePasswordFormComponent implements OnInit {
             alert("Error in modifying the password");
           };
 
-        alert("Changed password!");
+        this.modified=true;
         this.router.navigateByUrl('/dashboard').then();
       }
     }
     else{
-      alert("Wrong password!");
+      this.wrongPassword = true;
       return;
     }
 
