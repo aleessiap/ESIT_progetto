@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit {
       for (const door of this.doors) {
 
         this.api_accs.getAccessByDoorId(door._id).subscribe((data:Access[]) => {
+
           data.forEach((value) => {
             value['time'] = new Date(value['createdAt']).toLocaleTimeString()
             value['date'] = new Date(value['createdAt']).toLocaleDateString()
@@ -55,7 +56,7 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    setInterval(() => {this.search_door(this.search_value)}, 3000)
+    setInterval(() => {this.search_door(this.search_value)}, 1000)
 
   }
 
@@ -69,20 +70,24 @@ export class DashboardComponent implements OnInit {
 
         for (const door of this.doors) {
 
-          this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
-            data.forEach((value) => {
-              value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-              value['date'] = new Date(value['createdAt']).toLocaleDateString()
+          if (door.state == 2) {
 
-              this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+            this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
+              data.forEach((value) => {
+                value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+                value['date'] = new Date(value['createdAt']).toLocaleDateString()
 
-                value['username'] = data.username
+                this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                  value['username'] = data.username
+
+                })
 
               })
+              this.access[door._id] = data
+            });
 
-            })
-            this.access[door._id] = data
-          });
+          }
 
         }
 
@@ -96,20 +101,24 @@ export class DashboardComponent implements OnInit {
 
         for (const door of this.doors) {
 
-          this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
-            data.forEach((value) => {
-              value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-              value['date'] = new Date(value['createdAt']).toLocaleDateString()
+          if (door.state == 2) {
 
-              this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+            this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
+              data.forEach((value) => {
+                value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+                value['date'] = new Date(value['createdAt']).toLocaleDateString()
 
-                value['username'] = data.username
+                this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                  value['username'] = data.username
+
+                })
 
               })
+              this.access[door._id] = data
+            });
 
-            })
-            this.access[door._id] = data
-          });
+          }
 
         }
 

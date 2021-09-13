@@ -9,7 +9,7 @@ const doorSchema = new Schema(
     name: { type: String, required: true },
     aws_thing_name: { type: String, required: true },
     description: {type: String, required: true},
-    state: { type: Boolean, required: true },
+    state: { type: Number, required: true },
     online: { type: Boolean, required: true },
     authorizations: { type: authorizationSchema, required: true }
 

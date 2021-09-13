@@ -98,7 +98,7 @@ function listen_devices(server, bot) {
 
               if (user_id === undefined) {
 
-                sendUpdate(aws_thing_name, 1, 2)
+                sendUpdate(aws_thing_name, 1, 5)
 
               } else {
 
@@ -107,7 +107,7 @@ function listen_devices(server, bot) {
                   if (err1) {
 
                     console.log(err1)
-                    sendUpdate(aws_thing_name, 1, 2)
+                    sendUpdate(aws_thing_name, 1, 5)
                     return undefined
 
                   } else {
@@ -131,12 +131,12 @@ function listen_devices(server, bot) {
 
                           if (err2) {
 
-                            sendUpdate(aws_thing_name, 1, 2)
+                            sendUpdate(aws_thing_name, 1, 5)
                             res.send(err2)
 
                           } else {
 
-                            sendUpdate(aws_thing_name, 2, 2)
+                            sendUpdate(aws_thing_name, 2, 5)
                             res.send("Door " + doc['name'] + " unlocked!");
 
                           }
@@ -151,7 +151,7 @@ function listen_devices(server, bot) {
 
                       if (!expired) {
 
-                        sendUpdate(aws_thing_name, 1, 2)
+                        sendUpdate(aws_thing_name, 1, 5)
                         expired = true
 
                       }
@@ -190,12 +190,40 @@ function listen_devices(server, bot) {
 
     device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
 
+    Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {state: update}, {useFindAndModify: false, returnDocument:"after"}, (err, doc) => {
+
+      if (err) {
+
+
+
+      } else {
+
+        // console.log('updated state to ', doc['state'])
+
+      }
+
+    })
+
     if (reset_after >= 0) {
 
       setTimeout(() => {
 
         update_json['state']['desired']['d_state'] = 3
         device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
+        Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {state: 3}, {useFindAndModify: false, returnDocument:"after"}, (err, doc) => {
+
+          if(err) {
+
+
+
+          } else {
+
+            // console.log('updated state to ', doc['state'])
+
+          }
+
+
+        })
 
       }, reset_after * 1000);
 
