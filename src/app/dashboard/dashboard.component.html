@@ -30,7 +30,14 @@
                 <div class="card align-self-top col-sm-4" style="margin: 10px" *ngFor="let door of doors">
 
                   <li class="list-group-item">
-                    <h3  >{{door.name}}</h3>
+
+                    <div>
+                    <h5 class="col-md-6">{{door.name}}</h5>
+                      <div class="row">
+                        <i class="fa fa-circle col-md-6" style="color: green" *ngIf="door.online"> Online</i>
+                        <i class="fa fa-circle col-md-6" style="color: red" *ngIf="!door.online"> Offline</i>
+                      </div>
+                    </div>
                     <hr>
 
                     <div class="scroll">

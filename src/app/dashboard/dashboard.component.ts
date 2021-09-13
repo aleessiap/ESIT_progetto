@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    setInterval(() => {this.search_door(this.search_value)}, 60000)
+    setInterval(() => {this.search_door(this.search_value)}, 3000)
 
   }
 
