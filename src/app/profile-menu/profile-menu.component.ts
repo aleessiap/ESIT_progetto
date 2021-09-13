@@ -44,7 +44,7 @@ export class ProfileMenuComponent implements OnInit {
     this.auth_api.logout().subscribe(
 
     );
-    //this.router.navigateByUrl('login').then(r => window.location.reload());
+    this.router.navigateByUrl('login').then(r => window.location.reload());
   }
 
   name(){
