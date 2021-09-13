@@ -10,7 +10,7 @@
               <div class="form-inline ">
                 <form class="d-inline-block col-md-5 button" >
                   <input  #searchV  type="text"  placeholder="Search" name="q">
-                  <button class="btn btn-default" (click)="search(searchV.value)" type="submit"><i class="fa fa-search"></i></button>
+                  <button class="btn btn-default" (click)="search_door(searchV.value)" (change)="search_value = searchV.value" type="submit"><i class="fa fa-search"></i></button>
                 </form>
                 <div class="d-inline-block" style=" float: right;" >
                   <a  class="btn btn-outline-primary button"  href="/authorization" role="button">Gestione permessi</a>

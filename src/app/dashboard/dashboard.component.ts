@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
 
   doors: Door[] = [];
   access = {};
+  search_value: string = ''
 
   loggedIn : string | null;
   admin : string | null;
@@ -54,24 +55,68 @@ export class DashboardComponent implements OnInit {
       }
     })
 
+    setInterval(() => {this.search_door(this.search_value)}, 60000)
+
   }
 
-  search(door: string) {
-    this.api_door.searchDoor(door).subscribe((data: Door[]) => {
-      this.doors = data;
-    })
+  search_door(door: string) {
 
-    for (const door of this.doors) {
+    if (door === '') {
 
-      this.api_accs.getAccessByDoorId(door._id).subscribe((data:Access[]) => {
-        data.forEach((value) => {
-          value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-          value['date'] = new Date(value['createdAt']).toLocaleDateString()
-        })
-        this.access[door._id] = data
-      });
+      this.api_door.getAllDoors().subscribe((data: Door[]) => {
+
+        this.doors = data
+
+        for (const door of this.doors) {
+
+          this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
+            data.forEach((value) => {
+              value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+              value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+              this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                value['username'] = data.username
+
+              })
+
+            })
+            this.access[door._id] = data
+          });
+
+        }
+
+      })
+
+    } else {
+
+      this.api_door.searchDoor(door).subscribe((data: Door[]) => {
+
+        this.doors = data
+
+        for (const door of this.doors) {
+
+          this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
+            data.forEach((value) => {
+              value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+              value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+              this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                value['username'] = data.username
+
+              })
+
+            })
+            this.access[door._id] = data
+          });
+
+        }
+
+      })
 
     }
+
   }
 
 }
