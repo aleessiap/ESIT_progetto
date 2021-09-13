@@ -17,6 +17,9 @@ module.exports.getAllDoors = function (req, res) {
 }
 
 module.exports.getDoor = function (req, res) {
+  //console log per far vedere i dati salvati in sessione quando si apre la dashboard
+  console.log("Session: " + req.session.userid + " " + req.session.admin) ;
+
   console.log('Get door controller parameter ' + req.param("_id"));
   let id = mongoose.Types.ObjectId(req.param("_id"));
   Door.findOne({_id: id}, (err, door) => {

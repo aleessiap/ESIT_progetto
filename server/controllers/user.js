@@ -2,6 +2,14 @@ const User = require('../models/user')
 const mongoose = require("mongoose");
 const {createHash} = require("crypto")
 
+module.exports.logout = function(req, res) {
+
+  req.session.destroy();
+  console.log("Session: " + req.session+ " " + req.session) ;
+
+  res.json("logout done");
+}
+
 module.exports.login = function(req, res){
 
   const credential = {
@@ -20,15 +28,20 @@ module.exports.login = function(req, res){
         })
       }
       else{
-
+        console.log(createHash('sha256').update(credential.password).digest('base64'));
         if(createHash('sha256').update(credential.password).digest('base64') === user.password){
           console.log("User found");
+          req.session.userid = user._id;
+          req.session.admin = user.admin;
+          console.log("Session: " + req.session.userid + " " + req.session.admin) ;
+
           res.status(200).json({
             success: true,
             msg: "User found",
             userFound: user
           })
         }else{
+          console.log(user);
           console.log("Wrong password");
           res.status(400).json({
             success: false,
@@ -61,7 +74,7 @@ module.exports.getUsers = function(req, res){
 
 module.exports.modifyProfile = function(req,res){
   console.log(req);
-  var update = {
+  const update = {
     surname : req.body.profile.surname,
     name: req.body.profile.name,
     email: req.body.profile.email,

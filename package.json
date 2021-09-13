@@ -25,6 +25,7 @@
     "bootstrap": "^5.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "mongoose": "^5.13.3",
     "node-telegram-bot-api": "^0.54.0",
     "rxjs": "~6.6.0",

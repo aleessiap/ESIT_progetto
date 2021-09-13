@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const conf = require('../config');
+const session = require('express-session');
 const usersRoutes = require('./routes/user');
 const doorsRoutes = require('./routes/door');
 const accessRoutes = require('./routes/access');
@@ -11,6 +12,10 @@ const authorizationRoutes = require('./routes/authorization');
 //const device = require('./aws-iot')
 const app = express();
 const port = process.env.PORT || 8080;
+app.use(session({
+  secret: 'keyboard cat', // random unique string key used to authenticate a session
+  cookie: { }
+}))
 
 db = mongoose.connect(conf.DB, {useNewUrlParser:true , useUnifiedTopology: true})
   .then(() => {console.log("Connected to the database!");})

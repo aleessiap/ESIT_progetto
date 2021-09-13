@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { User } from '../../../server/models/user';
-import {Observable} from "rxjs";
-import { map} from "rxjs/operators";
+import {Observable, throwError} from "rxjs";
+import {catchError, map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +22,31 @@ export class AuthenticationService {
       }));
   }
 
-  logout() {
+  logout(){
     localStorage.setItem('currentUser','None');
     localStorage.setItem('admin', 'false');
     localStorage.setItem('loggedIn','False');
+    return this.http.get<any>('/api/users/logout')
+      .pipe(
+        catchError(this.errorMgmt)
+      ) ;
+
+
+  }
+
+  errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = '';
+
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    console.log(error.statusText);
+    return throwError(errorMessage);
   }
 
 
