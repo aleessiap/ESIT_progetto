@@ -3,61 +3,61 @@
 
     <div *ngIf = "loggedIn == 'True'">
       <div *ngIf = "modified" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
-        Profile correctly updated!
+        Profilo aggiornato!
       </div>
       <div class="card">
-        <h4 class="card-header">Modify profile</h4>
+        <h4 class="card-header">Modifica profilo utente</h4>
         <div class="card-body  align-items-center" >
 
             <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
               <div class="form-group mx-sm-3 input">
-                <label for="name">Name</label>
+                <label for="name">Nome</label>
                 <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.name.errors }" />
                 <div *ngIf="submitted && profileForm.controls.name.errors" class="invalid-feedback">
-                  <div *ngIf="profileForm.controls.name.errors.required">Name is required</div>
+                  <div *ngIf="profileForm.controls.name.errors.required">Il nome è obbligatorio.</div>
                 </div>
               </div>
 
               <div class="form-group mx-sm-3 input">
-                <label for="surname">Surname</label>
+                <label for="surname">Cognome</label>
                 <input type="text" formControlName="surname" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.surname.errors }" />
                 <div *ngIf="submitted && profileForm.controls.surname.errors" class="invalid-feedback">
-                  <div *ngIf="profileForm.controls.surname.errors.required">Last Name is required</div>
+                  <div *ngIf="profileForm.controls.surname.errors.required">Il cognome è obbligatorio.</div>
                 </div>
               </div>
 
               <div class="form-group mx-sm-3 input">
-                <label for="email">Email </label>
+                <label for="email">Email</label>
                 <input type="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.email.errors }" />
                 <div *ngIf="submitted && profileForm.controls.email.errors" class="invalid-feedback">
-                  <div *ngIf="profileForm.controls.email.errors.email">This is not an email</div>
-                  <div *ngIf="profileForm.controls.email.errors.required">Email is required</div>
+                  <div *ngIf="profileForm.controls.email.errors.email">Il testo inserito non è in un formato email valido.</div>
+                  <div *ngIf="profileForm.controls.email.errors.required">L'email è obbligatoria.</div>
                 </div>
               </div>
 
               <div class="form-group mx-sm-3 input">
-                <label for="username">Username</label>
+                <label for="username">Username Telegram</label>
                 <input type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.username.errors }" />
                 <div *ngIf="submitted && profileForm.controls.username.errors" class="invalid-feedback">
-                  <div *ngIf="profileForm.controls.username.errors.required">Username is required</div>
+                  <div *ngIf="profileForm.controls.username.errors.required">Lo username Telegram è obbligaorio.</div>
                 </div>
               </div>
 
               <div class="form-group mx-sm-3 input">
-                <label for="phone_num">Phone Number</label>
+                <label for="phone_num">Numero di telefono</label>
                 <input type="text" formControlName="phone_num" class="form-control"  [ngClass]="{'is-invalid': submitted && profileForm.controls.phone_num.errors }" />
                 <div *ngIf="submitted && profileForm.controls.phone_num.errors" class="invalid-feedback">
-                  <div *ngIf="profileForm.controls.phone_num.errors.required">Phone number is required</div>
-                  <div *ngIf="profileForm.controls.phone_num.errors.pattern">Phone number is invalid</div>
+                  <div *ngIf="profileForm.controls.phone_num.errors.required">Il numero di telefono è obbligatorio.</div>
+                  <div *ngIf="profileForm.controls.phone_num.errors.pattern">Il numero di telefono inserito non è valido.</div>
                 </div>
               </div>
 
               <div class="form-group mx-sm-3 input">
-                <label for="birthdate">Date of Birth</label>
+                <label for="birthdate">Data di nascita</label>
                 <input type="date" formControlName="birthdate" class="form-control" [ngClass]="{'is-invalid': submitted && profileForm.controls.birthdate.errors }" />
                 <div *ngIf="submitted && profileForm.controls.birthdate.errors" class="invalid-feedback">
-                  <div *ngIf="profileForm.controls.birthdate.errors.required">Date of birth is required</div>
+                  <div *ngIf="profileForm.controls.birthdate.errors.required">La data di nascita è obbligatoria.</div>
                 </div>
               </div>
 
@@ -66,14 +66,14 @@
                   <div >
 
                     <button class="btn btn-primary spacingButton d-inline-block" >
-                      Save changes
+                      Salva
                     </button>
                     <a role="button" (click)="cancel()" class="btn btn-link d-inline-block">
-                      Cancel
+                      Indietro
                     </a>
                     <div *ngIf ="currentUser == idUser" class="d-inline-block " style=" float: right;">
                       <a role="button" class="btn btn-primary spacingButton" (click)="changePassword()" >
-                        Change password
+                        Cambia password
                       </a>
                     </div>
                   </div>
@@ -88,7 +88,7 @@
 
     </div>
     <div *ngIf="!loggedIn || loggedIn == 'False'">
-      <h3>Can't open this page!</h3>
+      <h3>Non puoi accedere a questa pagina</h3>
     </div>
 
   </div>

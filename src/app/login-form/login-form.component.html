@@ -7,10 +7,10 @@
 
           <div class="row px-3 form-group input">
             <label for="username" class="mb-1">Username:</label>
-            <input type="text" formControlName="username" class="form-control" placeholder="Choose a username"   [ngClass]="{ 'is-invalid': submitted && loginForm.controls.username.errors}" />
+            <input type="text" formControlName="username" class="form-control" placeholder="Inserisci il tuo username o la tua email"   [ngClass]="{ 'is-invalid': submitted && loginForm.controls.username.errors}" />
             <div *ngIf="submitted && loginForm.controls.username.errors" class="invalid-feedback">
               <div  *ngIf="loginForm.controls.username.errors.required">
-                Username is required
+                Username o email obbligatori.
               </div>
 
             </div>
@@ -18,25 +18,25 @@
 
           <div class="row px-3 form-group input">
             <label for="password" class="mb-1">Password: </label>
-            <input type="password" formControlName="password" class="form-control" placeholder="Choose a password" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors}" />
+            <input type="password" formControlName="password" class="form-control" placeholder="Inserisci la tua password" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors}" />
             <div *ngIf="submitted && loginForm.controls.password.errors" class="invalid-feedback">
               <div *ngIf="loginForm.controls.password.errors.required" >
-                Password is required
+                La password è obbligatoria.
               </div>
             </div>
 
             <div *ngIf = "wrongCredentials" class="alert-danger" style="margin-top: 10px; margin-bottom: 10px;">
-              Wrong credentials
+              Credenziali errate
             </div>
             <div class="row px-3 mb-4">
-              <a href="#" class=" small ml-auto mb-0 text-sm">Forgot password?</a>
+              <a href="#" class=" small ml-auto mb-0 text-sm">Password dimenticata?</a>
             </div>
           </div>
 
           <div class="form-group input">
             <div class="row mx-sm-5">
               <button (click)="loginPressed()" type="submit"  class="btn btn-primary spacingButton" >
-                Login
+                Accedi
               </button>
             </div>
           </div>

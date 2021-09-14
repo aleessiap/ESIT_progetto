@@ -9,7 +9,7 @@
             <div>
               <div class="form-inline ">
                 <form class="d-inline-block col-md-5 button" >
-                  <input  #searchV  type="text"  placeholder="Search" name="q">
+                  <input  #searchV  type="text"  placeholder="Ricerca porte..." >
                   <button class="btn btn-default" (click)="search_door(searchV.value)" (change)="search_value = searchV.value" type="submit"><i class="fa fa-search"></i></button>
                 </form>
                 <div class="d-inline-block" style=" float: right;" >
@@ -37,10 +37,10 @@
                         <i class="fa fa-circle col-md-6" style="color: green" *ngIf="door.online"> Online</i>
                         <i class="fa fa-circle col-md-6" style="color: red" *ngIf="!door.online"> Offline</i>
 
-                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 0"> Locked</i>
-                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 1"> Failed access</i>
-                        <i class="fa fa-circle col-lg-6" style="color: green" *ngIf="door.state == 2"> Successful access</i>
-                        <i class="fa fa-circle col-lg-6" style="color: orange" *ngIf="door.state == 3"> Waiting</i>
+                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 0"> Chiusa</i>
+                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 1"> Accesso fallito</i>
+                        <i class="fa fa-circle col-lg-6" style="color: green" *ngIf="door.state == 2"> Accesso</i>
+                        <i class="fa fa-circle col-lg-6" style="color: orange" *ngIf="door.state == 3"> In attesa</i>
                       </div>
                     </div>
                     <hr>
@@ -48,7 +48,7 @@
                     <div class="scroll">
                         <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
                           <dt class="col-sm-6">{{acc.username}}</dt>
-                          <dd class="col-sm-6">Date: {{acc.date}}<br>Time: {{acc.time}}</dd>
+                          <dd class="col-sm-6">Data: {{acc.date}}<br>Ora: {{acc.time}}</dd>
                         </dl>
 
                     </div>
@@ -65,7 +65,7 @@
     </div>
 
     <div *ngIf="loggedIn=='False'">
-      <h3>Can't open this page!</h3>
+      <h3>Non puoi accedere a questa pagina!</h3>
     </div>
 
   </div>
