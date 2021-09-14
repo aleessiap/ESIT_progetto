@@ -67,6 +67,16 @@ export class DoorService {
       )
   }
 
+  searchDoorByUserId(door: string, user_id: string | null){
+    let API_URL = '/api/doors/search/'+door + '/' + user_id;
+    console.log(API_URL);
+    return this.http.get<Door[]>(API_URL)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+
+
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
 

@@ -9,8 +9,8 @@
             <div>
               <div class="form-inline ">
                 <form class="d-inline-block col-md-5 button" >
-                  <input  #searchV  type="text"  placeholder="Search" name="q">
-                  <button class="btn btn-default" (click)="search_door(searchV.value)" (change)="search_value = searchV.value" type="submit"><i class="fa fa-search"></i></button>
+                  <input  #searchV  type="text"  placeholder="Search" name="q" (change)="search_value = searchV.value">
+                  <button class="btn btn-default" (click)="search_door(searchV.value)" type="submit"><i class="fa fa-search"></i></button>
                 </form>
                 <div class="d-inline-block" style=" float: right;" >
                   <a  class="btn btn-outline-primary button"  href="/authorization" role="button">Gestione permessi</a>
@@ -37,10 +37,10 @@
                         <i class="fa fa-circle col-md-6" style="color: green" *ngIf="door.online"> Online</i>
                         <i class="fa fa-circle col-md-6" style="color: red" *ngIf="!door.online"> Offline</i>
 
-                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 0 && admin"> Locked</i>
-                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 1 && admin"> Failed access</i>
-                        <i class="fa fa-circle col-lg-6" style="color: green" *ngIf="door.state == 2 && admin"> Successful access</i>
-                        <i class="fa fa-circle col-lg-6" style="color: orange" *ngIf="door.state == 3 && admin"> Waiting</i>
+                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 0 && admin === 'true'"> Locked</i>
+                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 1 && admin === 'true'"> Failed access</i>
+                        <i class="fa fa-circle col-lg-6" style="color: green" *ngIf="door.state == 2 && admin === 'true'"> Successful access</i>
+                        <i class="fa fa-circle col-lg-6" style="color: orange" *ngIf="door.state == 3 && admin === 'true'"> Waiting</i>
                       </div>
                     </div>
                     <hr>

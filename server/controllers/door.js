@@ -19,16 +19,14 @@ module.exports.getAllDoors = function (req, res) {
 
 module.exports.getDoorsByUserId = function (req, res) {
 
-  User.findById(mongoose.Types.ObjectId(req.param['user_id']), {_id:0, door_list:1}, (err, doc) => {
+  User.findById(mongoose.Types.ObjectId(req.params['_id']), {_id:0, door_list:1}, (err, doc) => {
 
     if (err) {
       res.send(err)
     }
     else {
 
-      console.log(doc)
-      Door.find({_id: {$in: doc}}, (err1, docs) => {
-
+      Door.find({_id: {$in: doc['door_list']}}, (err1, docs) => {
 
         if (err1) {
 
@@ -141,4 +139,33 @@ module.exports.searchDoor = function (req, res) {
         console.log(doors)
       }
     })
+}
+
+module.exports.searchDoorByUserId = function (req, res) {
+  console.log("Search suggestion door " + req.param("name"))
+
+  User.findById(req.param("user_id"), {_id:0, door_list:1}, function (err, doc) {
+
+    if(err) {
+
+      res.json(err)
+
+    } else {
+
+      Door.find({$and: [{name: new RegExp(req.param("name"), "i")}, {_id: {$in:doc['door_list']}}]},
+        function (err1, doors) {
+          if (err1) {
+            res.send(err1);
+          }
+          if (!doors) {
+            res.json(doors);
+          } else {
+            res.json(doors)
+            console.log(doors)
+          }
+      })
+
+    }
+
+  })
 }

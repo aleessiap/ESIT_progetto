@@ -10,5 +10,6 @@ router.get('/:_id', doorController.getDoor);
 router.post('/', doorController.insertDoor);
 router.put('/', doorController.updateDoor);
 router.get('/search/:name', doorController.searchDoor);
+router.get('/search/:name/:user_id', doorController.searchDoorByUserId);
 
 module.exports = router;
