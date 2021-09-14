@@ -37,10 +37,10 @@
                         <i class="fa fa-circle col-md-6" style="color: green" *ngIf="door.online"> Online</i>
                         <i class="fa fa-circle col-md-6" style="color: red" *ngIf="!door.online"> Offline</i>
 
-                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 0"> Locked</i>
-                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 1"> Failed access</i>
-                        <i class="fa fa-circle col-lg-6" style="color: green" *ngIf="door.state == 2"> Successful access</i>
-                        <i class="fa fa-circle col-lg-6" style="color: orange" *ngIf="door.state == 3"> Waiting</i>
+                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 0 && admin"> Locked</i>
+                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 1 && admin"> Failed access</i>
+                        <i class="fa fa-circle col-lg-6" style="color: green" *ngIf="door.state == 2 && admin"> Successful access</i>
+                        <i class="fa fa-circle col-lg-6" style="color: orange" *ngIf="door.state == 3 && admin"> Waiting</i>
                       </div>
                     </div>
                     <hr>

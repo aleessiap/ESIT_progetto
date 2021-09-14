@@ -14,6 +14,10 @@ export class DoorService {
     return this.http.get<Door[]>('/api/doors')
   }
 
+  getDoorsByUserId(_id: string | null): Observable<Door[]> {
+    return this.http.get<Door[]>('/api/doors/user/' + _id)
+  }
+
   getDoor(id : string): Observable<Door> {
     let API_URL = '/api/doors/' +id;
     console.log(API_URL)

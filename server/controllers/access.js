@@ -32,6 +32,21 @@ module.exports.getAccessByDoorId = function (req, res) {
 
 }
 
+module.exports.getAccessByDoorIdAndUserId = function (req, res) {
+
+  Access.find({door_id: mongoose.Types.ObjectId(req.params["door_id"]), user_id:mongoose.Types.ObjectId(req.params["user_id"])}, (err, docs) => {
+
+    if(err) {
+      res.send(err);
+    }
+    else {
+      res.json(docs);
+    }
+
+  })
+
+}
+
 module.exports.getAccess = function (req, res) {
 
   Access.findById(req.param["_id"], (err, docs) => {

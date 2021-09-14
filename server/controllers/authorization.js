@@ -145,8 +145,21 @@ module.exports.insertAuthorization = function (req, res) {
                   res.send(err1)
                 }
                 else {
-                  bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
-                  res.json(doc1)
+
+                  User.findOneAndUpdate({_id: user._id}, {door_list: user.door_list.append(mongoose.Types.ObjectId(doc._id))}, {returnDocument: "after"}, (err2, doc2)=>{
+
+                    if(err2){
+
+                      res.send(err2)
+
+                    } else {
+
+                      bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
+                      res.json(doc1)
+
+                    }
+
+                  })
 
                 }
 

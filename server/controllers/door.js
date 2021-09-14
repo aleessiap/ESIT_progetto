@@ -1,4 +1,5 @@
 const Door = require('../models/door');
+const User = require('../models/user');
 const mongoose = require("mongoose");
 
 module.exports.getAllDoors = function (req, res) {
@@ -10,6 +11,37 @@ module.exports.getAllDoors = function (req, res) {
     }
     else {
       res.json(docs);
+    }
+
+  })
+
+}
+
+module.exports.getDoorsByUserId = function (req, res) {
+
+  User.findById(mongoose.Types.ObjectId(req.param['user_id']), {_id:0, door_list:1}, (err, doc) => {
+
+    if (err) {
+      res.send(err)
+    }
+    else {
+
+      console.log(doc)
+      Door.find({_id: {$in: doc}}, (err1, docs) => {
+
+
+        if (err1) {
+
+          res.send(err1)
+
+        } else {
+
+          res.json(docs);
+
+        }
+
+      })
+
     }
 
   })
