@@ -33,6 +33,8 @@ device.on('connect', function() {
 
         let thing_name = docs[doc]['aws_thing_name']
         device.subscribe('$aws/things/' + thing_name + '/shadow/update/accepted');
+        device.subscribe('$aws/events/presence/connected/' + thing_name);
+        device.subscribe('$aws/events/presence/disconnected/' + thing_name);
 
       }
 
@@ -47,107 +49,130 @@ function listen_devices(server, bot) {
   device.on('message', function (topic, payload) {
 
     payload = JSON.parse(payload)
-    if (payload["state"]["reported"] === undefined) return;
 
-    let aws_thing_name = topic.split('/')[2];
+    if (topic.split('/')[1] === 'events') {
 
-    Door.findOne({aws_thing_name: aws_thing_name}, ((err, doc) => {
+      let aws_thing_name = topic.split('/')[4]
+      let connected = false
 
-        if (err) {
+      if(topic.split('/')[3] === 'connected') {
+
+        connected = true
+        console.log(aws_thing_name, " connected!")
+
+      } else {
+
+        connected = false
+        console.log(aws_thing_name, " disconnected!")
+
+      }
+
+      Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {online: connected}, {useFindAndModify: false}, (err, doc) => {
+
+        if(err) {
 
           console.log(err)
 
-        } else {
+        }
 
-          if (payload["state"]["reported"]["last_password"] === undefined) {
+      })
 
+    } else if (payload["state"]["reported"]) {
+
+        let aws_thing_name = topic.split('/')[2];
+
+        Door.findOne({aws_thing_name: aws_thing_name}, (err, doc) => {
+
+          if (err) {
+
+            console.log(err)
 
           } else {
 
-            let last_password = createHash('sha256').update(payload["state"]["reported"]["last_password"]).digest('base64')
-            let user_id = doc['authorizations']['_doc'][last_password]
-            let door_id = doc['_id']
-            let d_state = undefined;
+            if (payload["state"]["reported"]["last_password"]) {
 
-            if (user_id === undefined) {
+              let last_password = createHash('sha256').update(payload["state"]["reported"]["last_password"]).digest('base64')
+              let user_id = doc['authorizations']['_doc'][last_password]
+              let door_id = doc['_id']
+              let d_state = undefined;
 
-              sendUpdate(aws_thing_name, 1, 2)
+              if (user_id === undefined) {
 
-            } else {
+                sendUpdate(aws_thing_name, 1, 5)
 
-              User.findById(user_id, (err1, doc1) => {
+              } else {
 
-                if (err1) {
+                User.findById(user_id, (err1, doc1) => {
 
-                  console.log(err1)
-                  sendUpdate(aws_thing_name, 1, 2)
-                  return undefined
+                  if (err1) {
 
-                } else {
+                    console.log(err1)
+                    sendUpdate(aws_thing_name, 1, 5)
+                    return undefined
 
-                  let expired = false
-                  let user = doc1
+                  } else {
 
-                  link_string = createHash('sha256').update(user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
-                  bot.sendMessage(user.chat_id, 'Click this link to unlock:\n' + doc['name'] + '\nhttp://192.168.1.26:8080/verify/' + link_string).then()
+                    let expired = false
+                    let user = doc1
 
-                  server.get("/verify/" + link_string, ((req, res) => {
+                    link_string = createHash('sha256').update(user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
+                    bot.sendMessage(user.chat_id, 'Click this link to unlock:\n' + doc['name'] + '\nhttp://192.168.1.26:8080/verify/' + link_string).then()
 
-                    if (expired) {
+                    server.get("/verify/" + link_string, ((req, res) => {
 
-                      res.send('Link expired!')
+                      if (expired) {
 
-                    } else {
+                        res.send('Link expired!')
 
-                      expired = true
-                      Access.create({door_id: door_id, user_id: user_id}, (err2, doc2) => {
+                      } else {
 
-                        if (err2) {
+                        expired = true
+                        Access.create({door_id: door_id, user_id: user_id}, (err2, doc2) => {
 
-                          sendUpdate(aws_thing_name, 1, 2)
-                          res.send(err2)
+                          if (err2) {
 
-                        } else {
+                            sendUpdate(aws_thing_name, 1, 5)
+                            res.send(err2)
 
-                          sendUpdate(aws_thing_name, 2, 2)
-                          res.send("Door " + doc['name'] + " unlocked!");
+                          } else {
 
-                        }
+                            sendUpdate(aws_thing_name, 2, 5)
+                            res.send("Door " + doc['name'] + " unlocked!");
 
-                      });
+                          }
 
-                    }
+                        });
 
-                  }))
+                      }
 
-                  setTimeout(() => {
+                    }))
 
-                    if(!expired) {
+                    setTimeout(() => {
 
-                      sendUpdate(aws_thing_name, 1, 2)
-                      expired = true
+                      if (!expired) {
 
-                    }
+                        sendUpdate(aws_thing_name, 1, 5)
+                        expired = true
 
-                  }, 10 * 1000)
+                      }
 
-                }
+                    }, 10 * 1000)
 
-              })
+                  }
+
+                })
+
+              }
 
             }
 
           }
 
-        }
-
-      })
-    )
-
+        })
+      }
   });
 
-
-  function sendUpdate(aws_thing_name, update, relisten_after = -1) {
+  function sendUpdate(aws_thing_name, update, reset_after = -1) {
 
     let update_json = {
 
@@ -165,14 +190,42 @@ function listen_devices(server, bot) {
 
     device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
 
-    if (relisten_after >= 0) {
+    Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {state: update}, {useFindAndModify: false, returnDocument:"after"}, (err, doc) => {
+
+      if (err) {
+
+
+
+      } else {
+
+        // console.log('updated state to ', doc['state'])
+
+      }
+
+    })
+
+    if (reset_after >= 0) {
 
       setTimeout(() => {
 
         update_json['state']['desired']['d_state'] = 3
         device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
+        Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {state: 3}, {useFindAndModify: false, returnDocument:"after"}, (err, doc) => {
 
-      }, relisten_after * 1000);
+          if(err) {
+
+
+
+          } else {
+
+            // console.log('updated state to ', doc['state'])
+
+          }
+
+
+        })
+
+      }, reset_after * 1000);
 
     }
 
