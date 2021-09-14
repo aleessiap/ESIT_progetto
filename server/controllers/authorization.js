@@ -112,54 +112,63 @@ module.exports.insertAuthorization = function (req, res) {
       res.send(err)
     } else {
 
-      if(!doc.chat_id){
+      if( (doc.chat_id) !== undefined ){
+        //console.log(doc.chat_id)
+        user = doc
 
-        res.status(400).json({
+          /**res.status(400).json({
           type: "Not Found",
           msg: "The user need to perform the first access procedure."
+        })**/
+          Door.findById(mongoose.Types.ObjectId(req.body.door_id), (err, doc) => {
+
+            if(err) {
+              res.send(err)
+            }
+            else {
+
+              let update = {}
+              let value = {}
+              let pin = ''
+              let pinHash = ''
+
+              do {
+
+                pin = generateRandomPassword(6, NUMBERS)
+                pinHash = createHash('sha256').update(pin).digest('base64')
+
+              } while (pinHash in  Object.keys(doc['authorizations']['_doc']))
+
+              Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pinHash)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
+
+                if(err1) {
+                  res.send(err1)
+                }
+                else {
+                  bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
+                  res.json(doc1)
+
+                }
+
+              })
+
+            }
+
+          })
+      }
+      else {
+        //console.log( doc.chat_id)
+
+        res.json({
+          found: false
         })
-      } else {
-        user = doc
       }
 
     }
 
   })
 
-  Door.findById(mongoose.Types.ObjectId(req.body.door_id), (err, doc) => {
 
-    if(err) {
-      res.send(err)
-    }
-    else {
-
-      let update = {}
-      let value = {}
-      let pin = ''
-      let pinHash = ''
-
-      do {
-
-        pin = generateRandomPassword(6, NUMBERS)
-        pinHash = createHash('sha256').update(pin).digest('base64')
-
-      } while (pinHash in  Object.keys(doc['authorizations']['_doc']))
-
-      Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pinHash)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
-
-        if(err1) {
-          res.send(err1)
-        }
-        else {
-          bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
-          res.json(doc1)
-        }
-
-      })
-
-    }
-
-  })
 
 }
 

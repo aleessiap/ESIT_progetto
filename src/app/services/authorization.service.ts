@@ -4,6 +4,7 @@ import { Door } from "../../../server/models/door"
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+import {convertDirectiveMetadataToExpression} from "@angular/core/schematics/migrations/undecorated-classes-with-di/decorator_rewrite/convert_directive_metadata";
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,9 @@ export class AuthorizationService {
     return this.http.get<User[]>('/api/auths/denied/' + _id)
   }
 
-  insertAuthorization(door_id: string, user_id: string) {
-    return this.http.post('/api/auths', {door_id: door_id, user_id: user_id});
+  insertAuthorization(door_id: string, user_id: string){
+    return this.http.post('/api/auths', {door_id: door_id, user_id: user_id})
+
   }
 
   updateAuthorizations(_id: string, old_pin:string, new_pin:string): Observable<void> {

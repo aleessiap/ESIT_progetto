@@ -65,31 +65,34 @@
                   </div>
 
                 </div>
+
               </div>
               <div class="col-md-6">
-              <div class="card" style="margin-bottom: 20px">
+                <div class="card" style="margin-bottom: 20px">
 
-                <div class="card-header">
+                  <div class="card-header">
 
-                  <h4 class="col-md-6 d-inline-block">Unauthorized</h4>
-                  <form class="col-md-6 d-inline-block " style="float: right"  (change)="filterUnauthorized(searchUnauthorized.value)">
-                    <input  #searchUnauthorized  type="text" size="10" placeholder="Search users..." class="d-inline-block">
-                    <button class="btn btn-default d-inline-block" (click)="filterUnauthorized(searchUnauthorized.value)" type="submit"><i class="fa fa-search"></i></button>
-                  </form>
+                    <h4 class="col-md-6 d-inline-block">Unauthorized</h4>
+                    <form class="col-md-6 d-inline-block " style="float: right"  (change)="filterUnauthorized(searchUnauthorized.value)">
+                      <input  #searchUnauthorized  type="text" size="10" placeholder="Search users..." class="d-inline-block">
+                      <button class="btn btn-default d-inline-block" (click)="filterUnauthorized(searchUnauthorized.value)" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                  </div>
+                  <div class="card-body">
+
+                    <dl class="row" *ngFor="let user of not_authorized; let i=index;">
+
+                        <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
+                        <dd class="col-sm-1"><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
+
+                    </dl>
+
+                  </div>
+
                 </div>
-                <div class="card-body">
-
-                  <dl class="row" *ngFor="let user of not_authorized; let i=index;">
-
-                      <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
-                      <dd class="col-sm-1"><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
-
-                  </dl>
-
+                <div *ngIf="unable" class="alert alert-danger">
+                  Can't authorize! User still needs to perform the first access procedure.
                 </div>
-
-              </div>
-
               </div>
 
             </div>

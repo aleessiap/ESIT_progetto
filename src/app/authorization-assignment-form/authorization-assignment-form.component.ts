@@ -26,6 +26,7 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   authorized_filter: string = '';
   loggedIn : string | null;
   admin : string | null;
+  unable: boolean;
 
   constructor(
     private api_door:DoorService,
@@ -36,7 +37,7 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.unable = false;
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
 
@@ -51,7 +52,7 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   }
 
   removeAuth(door_id:string, user_id:string, index:number): void {
-
+    this.unable = false;
     this.api_auth.deleteAuthorizations(door_id, user_id).subscribe((data) => {
       let user = this.authorized.splice(index, 1)[0]
       this.not_authorized.push(user)
@@ -64,10 +65,16 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   }
 
   addAuth(door_id:string, user_id:string, index:number): void {
+    this.unable = false;
 
     this.api_auth.insertAuthorization(door_id, user_id).subscribe((data) => {
-      let user = this.not_authorized.splice(index, 1)[0]
-      this.authorized.push(user)
+      if(! data.hasOwnProperty('found')){
+        let user = this.not_authorized.splice(index, 1)[0]
+        this.authorized.push(user);
+      }else{
+        this.unable = true;
+      }
+
     }),
       (err: HttpErrorResponse) => {
         console.log("Error in adding an authorization");
