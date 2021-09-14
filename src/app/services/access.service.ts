@@ -23,6 +23,10 @@ export class AccessService {
     return this.http.get<Access>('/api/access/door/' + _id)
   }
 
+  getAccessByDoorIdAndUserId(door_id: string, user_id:string | null): Observable<Access> {
+    return this.http.get<Access>('/api/access/door/' + door_id + '/' + user_id)
+  }
+
 
   insertAccess(access: Access): Observable<Access> {
     return this.http.post<Access>('/api/access', access)

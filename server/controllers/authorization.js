@@ -2,10 +2,10 @@ const Door = require('../models/door');
 const User = require('../models/user')
 const Authorization = require('../models/authorization')
 const mongoose = require("mongoose");
-const bot = require('./../bot-telegram')
+const bot = require('./../bot-telegram');
 const {generateRandomPassword} = require('./../passwd');
 const {createHash} = require('./../passwd');
-const {NUMBERS} = require('./../passwd')
+const {NUMBERS} = require('./../passwd');
 
 module.exports.getAllAuthorizations = function (req, res) {
 
@@ -37,7 +37,7 @@ module.exports.getAllNotAuthorized = function (req, res) {
 
 }
 
-module.exports.getAuthorizations = function (req, res) {
+/*module.exports.getAuthorizations = function (req, res) {
 
   Door.findById(mongoose.Types.ObjectId(req.params["_id"]), (err, doc) => {
 
@@ -66,9 +66,25 @@ module.exports.getAuthorizations = function (req, res) {
 
   })
 
+}*/
+
+module.exports.getAuthorizations = function (req, res) {
+
+  User.find({door_list: mongoose.Types.ObjectId(req.params["_id"])}, (err, docs) => {
+
+    if(err) {
+      res.send(err)
+    }
+    else {
+
+      res.send(docs)
+
+    }
+  })
+
 }
 
-module.exports.getNotAuthorized = function (req, res) {
+/*module.exports.getNotAuthorized = function (req, res) {
 
   Door.findById(mongoose.Types.ObjectId(req.params["_id"]), (err, doc) => {
 
@@ -97,6 +113,22 @@ module.exports.getNotAuthorized = function (req, res) {
 
     }
 
+  })
+
+}*/
+
+module.exports.getNotAuthorized = function (req, res) {
+
+  User.find({door_list: {$not: {"$eq": mongoose.Types.ObjectId(req.params["_id"])}}}, (err, docs) => {
+
+    if(err) {
+      res.send(err)
+    }
+    else {
+
+      res.send(docs)
+
+    }
   })
 
 }
@@ -145,8 +177,23 @@ module.exports.insertAuthorization = function (req, res) {
                   res.send(err1)
                 }
                 else {
-                  bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
-                  res.json(doc1)
+
+                  user.door_list.push(mongoose.Types.ObjectId(doc._id))
+                  User.findOneAndUpdate({_id: user._id}, {door_list: user.door_list}, {useFindAndModify: false, returnDocument: "after"}, (err2, doc2)=>{
+
+                    if(err2){
+
+                      res.send(err2)
+
+                    } else {
+
+
+                      bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
+                      res.json(doc1)
+
+                    }
+
+                  })
 
                 }
 
@@ -157,7 +204,6 @@ module.exports.insertAuthorization = function (req, res) {
           })
       }
       else {
-        //console.log( doc.chat_id)
 
         res.json({
           found: false
@@ -202,30 +248,59 @@ module.exports.deleteAuthorization = function (req, res) {
     }
     else {
 
-      let update = {}
-      let value = {}
-      let pins = Object.keys(doc['authorizations']['_doc'])
-      let pin = undefined
-
-      for (let x of pins) {
-
-        if(mongoose.Types.ObjectId(req.params["user_id"]).equals(doc['authorizations']['_doc'][x])) {
-
-            pin = x
-            break
-
-        }
-
-      }
-
-      Door.collection.findOneAndUpdate({_id: doc._id}, {$unset:{['authorizations.'.concat(pin)]:1}}, {returnDocument: "after"}, (err1, doc1) => {
+      User.findById(mongoose.Types.ObjectId(req.params["user_id"]), function (err1, doc1) {
 
         if(err1) {
 
           res.send(err1)
-        }
-        else {
-          res.json(doc1)
+
+        } else {
+
+          let update = {}
+          let value = {}
+          let pins = Object.keys(doc['authorizations']['_doc'])
+          let pin = undefined
+
+          for (let x of pins) {
+
+            if (mongoose.Types.ObjectId(req.params["user_id"]).equals(doc['authorizations']['_doc'][x])) {
+
+              pin = x
+              break
+
+            }
+
+          }
+
+          Door.collection.findOneAndUpdate({_id: doc._id}, {$unset: {['authorizations.'.concat(pin)]: 1}}, {useFindAndModify: false, returnDocument: "after"}, (err2, doc2) => {
+
+            if (err2) {
+
+              res.send(err2)
+
+            } else {
+
+              doc1.door_list.splice(doc1.door_list.indexOf(mongoose.Types.ObjectId(req.params["door_id"])))
+
+              User.findOneAndUpdate({_id: doc1._id}, {door_list: doc1.door_list}, {useFindAndModify: false, returnDocument:"after"}, function (err3, doc3) {
+
+                if(err3){
+
+                  res.send(err3)
+
+                } else {
+
+                  bot.sendMessage(doc1.chat_id, "You lost access to door \"" + doc.name + "\".")
+                  res.send(doc3)
+
+                }
+
+              })
+
+            }
+
+          })
+
         }
 
       })

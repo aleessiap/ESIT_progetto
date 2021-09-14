@@ -14,6 +14,10 @@ export class DoorService {
     return this.http.get<Door[]>('/api/doors')
   }
 
+  getDoorsByUserId(_id: string | null): Observable<Door[]> {
+    return this.http.get<Door[]>('/api/doors/user/' + _id)
+  }
+
   getDoor(id : string): Observable<Door> {
     let API_URL = '/api/doors/' +id;
     console.log(API_URL)
@@ -62,6 +66,16 @@ export class DoorService {
         catchError(this.errorMgmt)
       )
   }
+
+  searchDoorByUserId(door: string, user_id: string | null){
+    let API_URL = '/api/doors/search/'+door + '/' + user_id;
+    console.log(API_URL);
+    return this.http.get<Door[]>(API_URL)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+
 
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';

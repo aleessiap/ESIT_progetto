@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   access = {};
   search_value: string = ''
 
+  currentUser : string | null;
   loggedIn : string | null;
   admin : string | null;
 
@@ -28,33 +29,66 @@ export class DashboardComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+
+    this.currentUser = localStorage.getItem('currentUser');
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
 
-    this.api_door.getAllDoors().subscribe((data: Door[]) => {
+    if(this.admin === 'true') {
 
-      this.doors = data
+      this.api_door.getAllDoors().subscribe((data: Door[]) => {
 
-      for (const door of this.doors) {
+        this.doors = data
 
-        this.api_accs.getAccessByDoorId(door._id).subscribe((data:Access[]) => {
+        for (const door of this.doors) {
 
-          data.forEach((value) => {
-            value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-            value['date'] = new Date(value['createdAt']).toLocaleDateString()
+          this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
 
-            this.api_user.getUser(value['user_id']).subscribe((data:User) => {
+            data.forEach((value) => {
+              value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+              value['date'] = new Date(value['createdAt']).toLocaleDateString()
 
-              value['username'] = data.username
+              this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                value['username'] = data.username
+
+              })
 
             })
+            this.access[door._id] = data.reverse()
+          });
 
-          })
-          this.access[door._id] = data
-        });
+        }
+      })
 
-      }
-    })
+    } else {
+
+      this.api_door.getDoorsByUserId(this.currentUser).subscribe((data: Door[]) => {
+
+        this.doors = data
+
+        for (const door of this.doors) {
+
+          this.api_accs.getAccessByDoorIdAndUserId(door._id, this.currentUser).subscribe((data: Access[]) => {
+
+            data.forEach((value) => {
+              value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+              value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+              this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                value['username'] = data.username
+
+              })
+
+            })
+            this.access[door._id] = data.reverse()
+          });
+
+        }
+      })
+
+    }
 
     setInterval(() => {this.search_door(this.search_value)}, 1000)
 
@@ -64,65 +98,136 @@ export class DashboardComponent implements OnInit {
 
     if (door === '') {
 
-      this.api_door.getAllDoors().subscribe((data: Door[]) => {
+      if(this.admin === 'true') {
 
-        this.doors = data
+        this.api_door.getAllDoors().subscribe((data: Door[]) => {
 
-        for (const door of this.doors) {
+          this.doors = data
 
-          if (door.state == 2) {
+          for (const door of this.doors) {
 
-            this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
-              data.forEach((value) => {
-                value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-                value['date'] = new Date(value['createdAt']).toLocaleDateString()
+            if (door.state == 2) {
 
-                this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+              this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
+                data.forEach((value) => {
+                  value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+                  value['date'] = new Date(value['createdAt']).toLocaleDateString()
 
-                  value['username'] = data.username
+                  this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                    value['username'] = data.username
+
+                  })
 
                 })
+                this.access[door._id] = data.reverse()
+              });
 
-              })
-              this.access[door._id] = data
-            });
+            }
 
           }
 
-        }
+        })
 
-      })
+      } else {
+
+        this.api_door.getDoorsByUserId(this.currentUser).subscribe((data: Door[]) => {
+
+          this.doors = data
+
+          for (const door of this.doors) {
+
+            if (door.state == 2) {
+
+              this.api_accs.getAccessByDoorIdAndUserId(door._id, this.currentUser).subscribe((data: Access[]) => {
+                data.forEach((value) => {
+                  value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+                  value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+                  this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                    value['username'] = data.username
+
+                  })
+
+                })
+                this.access[door._id] = data.reverse()
+              });
+
+            }
+
+          }
+
+        })
+
+      }
 
     } else {
 
-      this.api_door.searchDoor(door).subscribe((data: Door[]) => {
+      if(this.admin === 'true') {
 
-        this.doors = data
+        this.api_door.searchDoor(door).subscribe((data: Door[]) => {
 
-        for (const door of this.doors) {
+          this.doors = data
 
-          if (door.state == 2) {
+          for (const door of this.doors) {
 
-            this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
-              data.forEach((value) => {
-                value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-                value['date'] = new Date(value['createdAt']).toLocaleDateString()
+            if (door.state == 2) {
 
-                this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+              this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
+                data.forEach((value) => {
+                  value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+                  value['date'] = new Date(value['createdAt']).toLocaleDateString()
 
-                  value['username'] = data.username
+                  this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                    value['username'] = data.username
+
+                  })
 
                 })
+                this.access[door._id] = data.reverse()
+              });
 
-              })
-              this.access[door._id] = data
-            });
+            }
 
           }
 
-        }
+        })
 
-      })
+      } else {
+
+        this.api_door.searchDoorByUserId(door, this.currentUser).subscribe((data: Door[]) => {
+
+          this.doors = data
+
+          for (const door of this.doors) {
+
+            if (door.state == 2) {
+
+              this.api_accs.getAccessByDoorIdAndUserId(door._id, this.currentUser).subscribe((data: Access[]) => {
+                data.forEach((value) => {
+                  value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+                  value['date'] = new Date(value['createdAt']).toLocaleDateString()
+
+                  this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+
+                    value['username'] = data.username
+
+                  })
+
+                })
+                this.access[door._id] = data.reverse()
+              });
+
+            }
+
+          }
+
+        })
+
+
+      }
 
     }
 
