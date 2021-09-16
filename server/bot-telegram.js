@@ -5,8 +5,7 @@ const {generateRandomPassword} = require('./passwd')
 const {createHash} = require('./passwd')
 const {ALL_CHARS} = require('./passwd')
 
-bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
-
+bot = new TelegramBot(TELEGRAM_TOKEN, {polling:true});
 
 bot.onText(/\/help/, (msg, match) =>{
 
