@@ -40,7 +40,7 @@ module.exports.login = function(req, res){
           req.session.admin = user.admin;
           //console.log("Session: " + req.session.userid + " " + req.session.admin) ;
 
-          res.json({
+          res.status(200).json({
             success: true,
             msg: "User found",
             userFound: user
@@ -48,7 +48,7 @@ module.exports.login = function(req, res){
         }else{
           //console.log(user);
           console.log("Wrong password");
-          res.json({
+          res.status(403).json({
             success: false,
             msg: "Wrong Password",
             userFound: "not found"
@@ -60,7 +60,7 @@ module.exports.login = function(req, res){
   }
   catch(err){
     console.log(err)
-    res.json({
+    res.status(500).json({
       type: "An error accurred",
       msg: err
     })

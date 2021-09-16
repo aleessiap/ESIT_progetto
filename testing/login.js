@@ -29,7 +29,7 @@ it ('8 - login user registered', function(done) {
     .post('/api/users/login')
 
     .send({ username: 'username', password: 'password' })
-
+    .expect(200)
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
       console.log("Cannot login sux  : ")
