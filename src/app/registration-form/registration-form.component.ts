@@ -75,6 +75,8 @@ export class RegistrationFormComponent implements OnInit {
           }
           console.log(em + ' ' + ph + ' '+ us)
         }else{
+          this.error = false;
+
           this.created = true;
         }}),
         (err) => {
