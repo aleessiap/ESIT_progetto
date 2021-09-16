@@ -29,7 +29,7 @@ it ('3 - register a user', function(done) {
   request(server)
     .post('/api/users/add-user')
 
-    .send({ name: 'user', surname: 'user', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user' })
+    .send({ name: 'user', surname: 'user', username: 'username', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user' })
 
     .end(function(err, res) {
       console.log(res)
@@ -44,7 +44,7 @@ it ('4 - cannot register a user with an email already registered', function(done
   request(server)
     .post('/api/users/add-user')
 
-    .send({ name: 'user', surname: 'user', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user' })
+    .send({ name: 'user', surname: 'user', username: 'cool_username', phone_num: '3425581426', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user' })
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
       assert.strictEqual(res.found, true);
@@ -55,8 +55,35 @@ it ('4 - cannot register a user with an email already registered', function(done
 
 });
 
+it ('5 - cannot register a user with an username already used', function(done) {
+  request(server)
+    .post('/api/users/add-user')
 
-it ('5 - login user not registered', function(done) {
+    .send({ name: 'user', surname: 'user', username: 'username', phone_num: '3489987147', birthdate: '2021-07-25T00:00:00.000+00:00', email:'email@gmail.it' })
+    .end(function(err, res) {
+      if (err) console.log('error' + err.message);
+      assert.strictEqual(res.found, true);
+      assert.strictEqual(res.username, 1);
+    });
+  done();
+
+});
+
+it ('6 - cannot register a user with a phone number already registered', function(done) {
+  request(server)
+    .post('/api/users/add-user')
+
+    .send({ name: 'user', surname: 'user', username: 'new_username', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'new_email@gmail.it' })
+    .end(function(err, res) {
+      if (err) console.log('error' + err.message);
+      assert.strictEqual(res.found, true);
+      assert.strictEqual(res.phone_num, 1);
+    });
+  done();
+
+});
+
+it ('7 - login user not registered', function(done) {
   request(server)
     .post('/api/users//login')
     .send({ username: 'bruce@wayne.inc', password: 'batman' })
@@ -70,7 +97,7 @@ it ('5 - login user not registered', function(done) {
 
 });
 
-it ('6 - login user registered', function(done) {
+it ('8 - login user registered', function(done) {
   request(server)
     .post('/api/users/login')
 
