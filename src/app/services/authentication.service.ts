@@ -34,6 +34,18 @@ export class AuthenticationService {
 
   }
 
+  recover_password_pin_req(email:string):Observable<any>{
+
+    return this.http.post<any>('/api/users/recover-pin',{email:email})
+
+  }
+
+  recover_password(pin:string):Observable<any>{
+
+    return this.http.post<any>('/api/users/recover-password',{pin:pin})
+
+  }
+
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
 
