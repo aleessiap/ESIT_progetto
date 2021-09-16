@@ -35,6 +35,7 @@ export class LoginFormComponent implements OnInit {
 
   loginPressed() {
     this.submitted = true;
+    console.log(this.loginForm.controls['username'])
 
     if(this.loginForm.invalid){
       return;

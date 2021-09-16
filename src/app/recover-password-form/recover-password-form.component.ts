@@ -4,7 +4,7 @@ import { User } from '../../../server/models/user';
 
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
-import {HttpErrorResponse} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-recover-password-form',
@@ -36,14 +36,14 @@ export class RecoverPasswordFormComponent implements OnInit {
 
   submitPinReqPressed() {
     this.submittedPinRequest = true;
-
+    console.log(this.recoverPasswordFrom.controls['username'])
     if(this.recoverPasswordFrom.invalid){
 
-      this.submittedPinRequest = false;
+
       return;
 
     }
-
+    this.submittedPinRequest = false;
   }
 
 }
