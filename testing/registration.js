@@ -14,8 +14,7 @@ it ('3 - register a user', function(done) {
     .end(function(err, res) {
 
       if (err) console.log('error' + err.message);
-      console.log("register sux: ")
-      console.log(res.body)
+
       assert.strictEqual(res.body.success, true);
 
     });
@@ -30,8 +29,7 @@ it ('4 - cannot register a user with an email already registered', function(done
     .send({ name: 'email', surname: 'email', username: 'email', phone_num: '3425581426', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user@gmail.it' })
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
-      console.log("Cannot registry email ")
-      console.log(res.body)
+
       assert.strictEqual(res.body.success, false);
       assert.strictEqual(res.body.email, 1);
     });
@@ -46,8 +44,7 @@ it ('5 - cannot register a user with an username already used', function(done) {
     .send({ name: 'username', surname: 'username', username: 'username', phone_num: '3489987147', birthdate: '2021-07-25T00:00:00.000+00:00', email:'username@gmail.it' })
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
-      console.log("Cannot reg usern : ")
-      console.log(res.body)
+
       assert.strictEqual(res.body.success, false);
       assert.strictEqual(res.body.username, 1);
     });
@@ -62,8 +59,7 @@ it ('6 - cannot register a user with a phone number already registered', functio
     .send({ name: 'phone', surname: 'phone', username: 'phone', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'phone@gmail.it' })
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
-      console.log("Cannot reg phone  : ")
-      console.log(res.body)
+
       assert.strictEqual(res.body.success, false);
       assert.strictEqual(res.body.phone, 1);
     });

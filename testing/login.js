@@ -10,7 +10,7 @@ beforeEach(function () {
 
 it ('7 - login user not registered', function(done) {
   request(server)
-    .post('/api/users//login')
+    .post('/api/users/login')
     .send({ username: 'bruce@wayne.inc', password: 'batman' })
     .expect(403)
     .end(function(err, res) {
