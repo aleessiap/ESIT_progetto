@@ -10,7 +10,7 @@
 
               <div class="form-inline">
                 <form class="d-inline-block col-md-5 button" >
-                  <input #searchV type="text"  placeholder="Search"  name="searchUserBar" id="searchUserBar" >
+                  <input #searchV type="text"  placeholder="Ricerca utenti..."  name="searchUserBar" id="searchUserBar" >
                   <button class="btn btn-default" (click)="search(searchV.value)" type="submit"><i class="fa fa-search"></i></button>
                 </form>
                 <div class="d-inline-block" style=" float: right;">
@@ -73,7 +73,7 @@
     </div>
 
     <div *ngIf="!loggedIn ||  loggedIn == 'False' || admin =='false' || !admin">
-      <h3>Can't open this page! Permission denied.</h3>
+      <h3>Non puoi accedere a questa pagina!</h3>
     </div>
 
   </div>

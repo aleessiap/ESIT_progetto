@@ -6,34 +6,34 @@
         Door correctly updated!
       </div>
       <div class="card">
-        <h4 class="card-header">Modify data</h4>
+        <h4 class="card-header">Modifica dei dati della porta</h4>
         <div class="card-body  align-items-center" >
 
           <form [formGroup]="modifyDoor" (ngSubmit)="onSubmit()">
 
             <div class="form-group mx-sm-3 input">
-              <label for="name">Name</label>
+              <label for="name">Nome</label>
               <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted &&  modifyDoor.controls.name.errors }" />
               <div *ngIf="submitted &&  modifyDoor.controls.name.errors" class="invalid-feedback">
-                <div *ngIf="modifyDoor.controls.name.errors.required">Name is required</div>
+                <div *ngIf="modifyDoor.controls.name.errors.required">Il nome è obbligatorio.</div>
               </div>
             </div>
 
             <div class="form-group mx-sm-3 input">
-              <label for="aws_thing_name">Aws thing name</label>
+              <label for="aws_thing_name">Nome della AWS thing</label>
               <input type="text" formControlName="aws_thing_name" class="form-control" [ngClass]="{'is-invalid': submitted  && modifyDoor.controls.aws_thing_name.errors }" />
               <div *ngIf="submitted &&  modifyDoor.controls.aws_thing_name.errors" class="invalid-feedback">
-                <div *ngIf="modifyDoor.controls.aws_thing_name.errors.required">Aws thing Name is required</div>
+                <div *ngIf="modifyDoor.controls.aws_thing_name.errors.required">Il nome della AWS thing è obbligatorio.</div>
               </div>
             </div>
 
             <div class="form-group mx-sm-3 input">
-              <label for="description">Description </label>
+              <label for="description">Descrizione </label>
               <textarea formControlName="description" class="form-control" [ngClass]="{'is-invalid': submitted && modifyDoor.controls.description.errors }" >
 
               </textarea>
               <div *ngIf="submitted && modifyDoor.controls.description.errors" class="invalid-feedback">
-                <div *ngIf="modifyDoor.controls.description.errors.required">Description is required</div>
+                <div *ngIf="modifyDoor.controls.description.errors.required">La descrizione è obbligatoria.</div>
               </div>
             </div>
 
@@ -41,10 +41,10 @@
             <div class = "align-content-center input " >
               <div class="form-group mx-sm-3 input">
                 <button class="btn btn-primary spacingButton" style="background-color: #3b5998;">
-                  Save changes
+                  Salva
                 </button>
                 <a role="button" href="/manage_doors" class="btn btn-link">
-                  Cancel
+                  Indietro
                 </a>
               </div>
             </div>
@@ -56,7 +56,7 @@
     </div>
 
     <div *ngIf="!loggedIn ||  loggedIn == 'False' || admin =='false' || !admin">
-      <h3>Can't open this page! Permission denied.</h3>
+      <h3>Non puoi accedere a questa pagina!</h3>
     </div>
 
   </div>

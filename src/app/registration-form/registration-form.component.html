@@ -3,27 +3,30 @@
 
     <div *ngIf = "loggedIn == 'True' && admin == 'true'">
       <div *ngIf = "created" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
-        User created!
+        Utente creato!
+      </div>
+      <div *ngIf = "error" class="alert alert-danger" style="margin-top: 10px; margin-bottom: 10px;">
+        Utente già registrato con questi dati!
       </div>
       <div class="card">
-        <h4 class="card-header">Register</h4>
+        <h4 class="card-header">Registrazione di un nuovo utente</h4>
         <div class="card-body  align-items-center" >
 
           <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
 
             <div class="form-group  mx-sm-3 input">
-              <label for="name">Name</label>
+              <label for="name">Nome</label>
               <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.name.errors }" />
               <div *ngIf="submitted && registrationForm.controls.name.errors" class="invalid-feedback">
-                <div *ngIf="registrationForm.controls.name.errors.required">Name is required</div>
+                <div *ngIf="registrationForm.controls.name.errors.required">Il nome è obbligatorio.</div>
               </div>
             </div>
 
             <div class="form-group  mx-sm-3 input">
-              <label for="surname">Surname</label>
+              <label for="surname">Cognome</label>
               <input type="text" formControlName="surname" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.surname.errors }" />
               <div *ngIf="submitted && registrationForm.controls.surname.errors" class="invalid-feedback">
-                  <div *ngIf="registrationForm.controls.surname.errors.required">Last Name is required</div>
+                  <div *ngIf="registrationForm.controls.surname.errors.required">Il cognome è obbligatorio.</div>
                 </div>
             </div>
 
@@ -31,43 +34,43 @@
               <label for="email">Email </label>
               <input type="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.email.errors }" />
               <div *ngIf="submitted && registrationForm.controls.email.errors" class="invalid-feedback">
-                  <div *ngIf="registrationForm.controls.email.errors.email">This is not an email</div>
-                  <div *ngIf="registrationForm.controls.email.errors.required">Email is required</div>
+                  <div *ngIf="registrationForm.controls.email.errors.email">Il testo inserito non è in un formato email valido.</div>
+                  <div *ngIf="registrationForm.controls.email.errors.required">L'email è obbligatoria.</div>
                 </div>
             </div>
 
             <div class="form-group  mx-sm-3 input">
-              <label for="username">Username</label>
+              <label for="username">Username Telegram</label>
               <input type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.username.errors }" />
               <div *ngIf="submitted && registrationForm.controls.username.errors" class="invalid-feedback">
-                <div *ngIf="registrationForm.controls.username.errors.required">Username is required</div>
+                <div *ngIf="registrationForm.controls.username.errors.required">Lo username Telegram è obbligatorio.</div>
               </div>
             </div>
 
             <div class="form-group  mx-sm-3 input">
-              <label for="phone_num">Phone Number</label>
+              <label for="phone_num">Numero di telefono</label>
               <input type="text" formControlName="phone_num" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.phone_num.errors }" />
               <div *ngIf="submitted && registrationForm.controls.phone_num.errors" class="invalid-feedback">
-                  <div *ngIf="registrationForm.controls.phone_num.errors.required">Phone number is required</div>
-                  <div *ngIf="registrationForm.controls.phone_num.errors.pattern">Phone number is invalid</div>
+                  <div *ngIf="registrationForm.controls.phone_num.errors.required">Il numero di telefono è obbligatorio.</div>
+                  <div *ngIf="registrationForm.controls.phone_num.errors.pattern">Il numero di telefono inserito non è valido.</div>
 
                 </div>
             </div>
 
             <div class="form-group mx-sm-3 input">
-              <label for="birthdate">Date of Birth</label>
+              <label for="birthdate">Data di nascita</label>
               <input type="date" formControlName="birthdate" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.birthdate.errors }" />
               <div *ngIf="submitted && registrationForm.controls.birthdate.errors" class="invalid-feedback">
-                  <div *ngIf="registrationForm.controls.birthdate.errors.required">Date of birth is required</div>
+                  <div *ngIf="registrationForm.controls.birthdate.errors.required">La data di nascita è obbligatoria.</div>
                 </div>
             </div>
 
               <div class="form-group mx-sm-3  input">
                 <div class="d-inline-block">
                   <button class="btn btn-primary spacingButton" >
-                    Register
+                    Registra
                   </button>
-                  <a role="button" href="/manage_users" class="btn btn-link ">Cancel</a>
+                  <a role="button" href="/manage_users" class="btn btn-link ">Indietro</a>
                 </div>
               </div>
 
@@ -79,7 +82,7 @@
     </div>
 
     <div *ngIf="!loggedIn ||  loggedIn == 'False' || admin =='false' || !admin">
-      <h3>Can't open this page! Permission denied.</h3>
+      <h3>Non puoi accedere a questa pagina!</h3>
     </div>
 
   </div>

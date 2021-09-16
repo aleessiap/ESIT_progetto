@@ -25,7 +25,7 @@
 
             <div class="card" style="margin-bottom: 20px">
 
-              <h4 class="card-header">Select door</h4>
+              <h4 class="card-header">Seleziona la porta</h4>
               <div class="card-body bootstrap-select-wrapper">
 
                 <select class="form-select" [(ngModel)]="selected" (change)="loadAuth(selected)">
@@ -48,9 +48,9 @@
 
                   <div class="card-header form-inline justify-content-evenly ">
 
-                    <h4 class="col-md-6  d-inline-block" >Authorized</h4>
+                    <h4 class="col-md-6  d-inline-block" >Autorizzati</h4>
                     <form class="col-md-6 d-inline-block " style="float: right" (change)="filterAuthorized(searchAuthorized.value)">
-                      <input  #searchAuthorized  type="text" size="10" placeholder="Search users...">
+                      <input  #searchAuthorized  type="text" size="10" placeholder="Ricerca utenti...">
                       <button class="btn btn-default" (click)="filterAuthorized(searchAuthorized.value)" type="submit"><i class="fa fa-search"></i></button>
                     </form>
 
@@ -72,9 +72,9 @@
 
                   <div class="card-header">
 
-                    <h4 class="col-md-6 d-inline-block">Unauthorized</h4>
+                    <h4 class="col-md-6 d-inline-block">Non autorizzati</h4>
                     <form class="col-md-6 d-inline-block " style="float: right"  (change)="filterUnauthorized(searchUnauthorized.value)">
-                      <input  #searchUnauthorized  type="text" size="10" placeholder="Search users..." class="d-inline-block">
+                      <input  #searchUnauthorized  type="text" size="10" placeholder="Ricerca utenti..." class="d-inline-block">
                       <button class="btn btn-default d-inline-block" (click)="filterUnauthorized(searchUnauthorized.value)" type="submit"><i class="fa fa-search"></i></button>
                     </form>
                   </div>
@@ -91,7 +91,7 @@
 
                 </div>
                 <div *ngIf="unable" class="alert alert-danger">
-                  Can't authorize! User still needs to perform the first access procedure.
+                  Impossibile assegnare l'autorizzazione! L'utente selezionato deve ancora completare la procedura di primo accesso.
                 </div>
               </div>
 
@@ -104,7 +104,7 @@
     </div>
 
     <div *ngIf="!loggedIn ||  loggedIn == 'False' || admin =='false' || !admin">
-      <h3>Can't open this page! Permission denied.</h3>
+      <h3>Non puoi accedere a questa pagina!</h3>
     </div>
 
   </div>

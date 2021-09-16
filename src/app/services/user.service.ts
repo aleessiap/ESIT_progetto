@@ -36,7 +36,7 @@ export class UserService {
       )
   }
 
-  addUser(data: User): Observable<User> {
+  addUser(data: User): Observable<any> {
     let API_URL = '/api/users/add-user';
     return this.http.post<User>(API_URL, data)
       .pipe(

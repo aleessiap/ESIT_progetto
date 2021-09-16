@@ -22,7 +22,7 @@ module.exports.login = function(req, res){
 
       if (!user){
         console.log("User not found");
-        res.status(400).json({
+        res.status(403).json({
           success: false,
           msg: "Wrong Login Credentials"
         })
@@ -43,7 +43,7 @@ module.exports.login = function(req, res){
         }else{
           console.log(user);
           console.log("Wrong password");
-          res.status(400).json({
+          res.status(403).json({
             success: false,
             msg: "Wrong Password"
           })
@@ -109,17 +109,31 @@ module.exports.modifyPassword = function(req,res){
   })
 }
 
-module.exports.register = function(req, res){
-  try {
-    User.count({email: req.body.email}, function (err, count) {
-      if (count > 0) {
-        console.log('User already registered');
-        res.status(400).send({message: "User already registered"});
-        return;
-      }
-    });
+module.exports.register = async function (req, res) {
+  let countEmail = 0;
+  let countUsername = 0;
+  let countPhone = 0;
 
-    //creo nuovo utente e popolo con i dati passati
+    await User.count({email: req.body.email}, function (err, count) {
+      countEmail = count;
+      console.log("email : " + count)
+
+    }, err => console.log(err));
+
+    await User.count({phone_num: req.body.phone_num}, function (err, count) {
+      countPhone = count;
+      console.log("phone : " + count)
+
+    }, err => console.log(err));
+    await User.count({username: req.body.username}, function (err, count) {
+      countUsername = count;
+      console.log("username : " + count)
+
+    }, err => console.log(err));
+
+  console.log('us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
+  if (countUsername == 0 && countPhone == 0 && countEmail == 0) {
+    console.log("not already registered");
     let newUser;
     newUser = new User();
     newUser.name = req.body.name;
@@ -136,13 +150,15 @@ module.exports.register = function(req, res){
       msg: "New user has been created",
       data: savedUser
     })
-  }
-  catch(err){
-    console.log(err)
-    res.status(500).json({
-      error:err
+  } else{
+    res.json({
+      found: true,
+      email: countEmail,
+      phone: countPhone,
+      username: countUsername
     })
   }
+
 }
 
 module.exports.deleteUser = function (req, res) {
