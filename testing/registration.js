@@ -1,8 +1,7 @@
-var request = require('supertest');
+let request = require('supertest');
 const assert = require("assert");
-const User = require ('../server/models/user');
-//inside describe block
-var server;
+
+let server;
 beforeEach(function () {
   server = require('../server/index').server;
 });

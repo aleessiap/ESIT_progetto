@@ -1,8 +1,8 @@
-var request = require('supertest');
+let request = require('supertest');
 const assert = require("assert");
-const User = require ('../server/models/user');
-//inside describe block
-var server;
+
+let server;
+
 beforeEach(function () {
   server = require('../server/index').server;
 });
@@ -13,7 +13,7 @@ it('1 - should respond with JSON data when the root is called', function (done) 
     .get('/')
     .expect(200)
     .end(function (err, response) {
-      assert.equal(response.header['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(response.header['content-type'], 'application/json; charset=utf-8');
 
     });
   done();
