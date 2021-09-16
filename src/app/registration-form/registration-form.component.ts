@@ -57,7 +57,7 @@ export class RegistrationFormComponent implements OnInit {
     this.api.addUser(this.registrationForm.value)
       .subscribe((response) => {
         console.log(response)
-        if (response.hasOwnProperty('found')){
+        if (response.success == false){
           console.log("User already registered")
 
           this.error = true;

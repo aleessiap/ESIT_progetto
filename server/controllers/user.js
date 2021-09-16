@@ -5,9 +5,9 @@ const {createHash} = require("crypto")
 module.exports.logout = function(req, res) {
 
   req.session.destroy();
-  console.log("Session: " + req.session+ " " + req.session) ;
+  //console.log("Session: " + req.session+ " " + req.session) ;
 
-  res.json("logout done");
+  res.json({msg: "Logout done"});
 }
 
 module.exports.login = function(req, res){
@@ -24,28 +24,30 @@ module.exports.login = function(req, res){
         console.log("User not found");
         res.status(403).json({
           success: false,
-          msg: "Wrong Login Credentials"
+          msg: "Wrong Login Credentials",
+          userFound: "not found"
         })
       }
       else{
-        console.log(createHash('sha256').update(credential.password).digest('base64'));
+        //console.log(createHash('sha256').update(credential.password).digest('base64'));
         if(createHash('sha256').update(credential.password).digest('base64') === user.password){
           console.log("User found");
           req.session.userid = user._id;
           req.session.admin = user.admin;
-          console.log("Session: " + req.session.userid + " " + req.session.admin) ;
+          //console.log("Session: " + req.session.userid + " " + req.session.admin) ;
 
-          res.status(200).json({
+          res.json({
             success: true,
             msg: "User found",
             userFound: user
           })
         }else{
-          console.log(user);
+          //console.log(user);
           console.log("Wrong password");
-          res.status(403).json({
+          res.json({
             success: false,
-            msg: "Wrong Password"
+            msg: "Wrong Password",
+            userFound: "not found"
           })
         }
       }
@@ -54,7 +56,7 @@ module.exports.login = function(req, res){
   }
   catch(err){
     console.log(err)
-    res.status(500).json({
+    res.json({
       type: "An error accurred",
       msg: err
     })
@@ -73,7 +75,7 @@ module.exports.getUsers = function(req, res){
 }
 
 module.exports.modifyProfile = function(req,res){
-  console.log(req);
+
   const update = {
     surname : req.body.profile.surname,
     name: req.body.profile.name,
@@ -88,8 +90,8 @@ module.exports.modifyProfile = function(req,res){
       res.send(err)
 
     }else{
-      console.log('Ok');
-      res.send(user);
+
+      res.json({success: true,user: user});
     }
   })
 }
@@ -116,22 +118,18 @@ module.exports.register = async function (req, res) {
 
     await User.count({email: req.body.email}, function (err, count) {
       countEmail = count;
-      console.log("email : " + count)
-
     }, err => console.log(err));
 
     await User.count({phone_num: req.body.phone_num}, function (err, count) {
       countPhone = count;
-      console.log("phone : " + count)
 
     }, err => console.log(err));
     await User.count({username: req.body.username}, function (err, count) {
       countUsername = count;
-      console.log("username : " + count)
 
     }, err => console.log(err));
 
-  console.log('us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
+  console.log( req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
   if (countUsername == 0 && countPhone == 0 && countEmail == 0) {
     console.log("not already registered");
     let newUser;
@@ -143,16 +141,17 @@ module.exports.register = async function (req, res) {
     newUser.email = req.body.email;
     newUser.admin = false;
     newUser.username = req.body.username;
-    newUser.password = 'password'; //per ora sto mettendo una password fissa poi sarà cambiata con una random
+    newUser.password = createHash('sha256').update('password').digest('base64'); //per ora sto mettendo una password fissa poi sarà cambiata con una random
     console.log(newUser.toString());
     let savedUser = newUser.save(); //salvo il nuovo utente nel db
     res.status(200).json({
+      success: true,
       msg: "New user has been created",
-      data: savedUser
+      user: newUser
     })
   } else{
     res.json({
-      found: true,
+      success: false,
       email: countEmail,
       phone: countPhone,
       username: countUsername
@@ -197,12 +196,10 @@ module.exports.getUser = function (req, res) {
     }
     if(!user) {
       res.json(user);
-
       console.log("User not found!");
 
     }else{
       console.log("User found");
-      console.log(user);
       res.status(200).json({
         success: true,
         userFound: user
