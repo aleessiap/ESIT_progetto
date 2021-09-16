@@ -1,6 +1,10 @@
 const User = require('../models/user')
 const mongoose = require("mongoose");
-const {createHash} = require("crypto")
+const bot = require("../bot-telegram");
+const {createHash} = require("../passwd");
+const {generateRandomPassword} = require("../passwd")
+const {NUMBERS} = require("../passwd")
+const {ALL_CHARS} = require("../passwd")
 
 module.exports.logout = function(req, res) {
 
@@ -63,6 +67,124 @@ module.exports.login = function(req, res){
   }
 
 }
+
+module.exports.pinRequest = function (req, res) {
+
+  try {
+    User.findOne({email: req.body.email}, {chat_id:1, _id:1}, (err, user) => {
+
+      if(!user) {
+
+        console.log("User not found");
+        res.status(403).json({
+          success: false,
+          msg: "User not found"
+        })
+
+      } else {
+
+        pin = generateRandomPassword(5, NUMBERS)
+        bot.sendMessage(user.chat_id, "Recover pin: " + pin)
+
+        req.session.req_user = {}
+        req.session.req_user._id = user._id
+        req.session.req_user.chat_id = user.chat_id
+        req.session.req_user.pin = createHash('sha256').update(pin).digest('base64')
+        setInterval(() => { if (req.session && req.session.hasOwnProperty('req_user')) {req.session.destroy()} }, 60 * 1000)
+
+        res.status(200).json({
+
+          success: true,
+          msg: "User found",
+          userFound: user
+
+        })
+
+      }
+
+    })
+
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
+
+}
+
+module.exports.recoverPassword = function (req, res) {
+
+  if(req.session.hasOwnProperty('req_user')) {
+
+    if (createHash('sha256').update(req.body.pin).digest('base64') === req.session.req_user.pin) {
+
+      try{
+
+        let passwd = generateRandomPassword(6, ALL_CHARS)
+        User.findByIdAndUpdate(req.session.req_user._id, {password: createHash('sha256').update(passwd).digest('base64')}, (err, user) => {
+
+          if(!user) {
+
+            req.session.destroy()
+            res.status(403).json({
+              success: false,
+              msg: "User not found"
+            })
+
+          } else {
+
+            bot.sendMessage(req.session.req_user.chat_id, "Your new password: " + passwd)
+
+            req.session.destroy()
+            res.status(200).json({
+
+              success: true,
+              msg: "Password resetted",
+
+            })
+
+          }
+
+        })
+
+
+      } catch (err) {
+
+        console.log(err)
+        req.session.destroy()
+        res.status(500).json({
+          type: "An error accurred",
+          msg: err
+        })
+
+      }
+
+    } else {
+
+      req.session.destroy()
+      res.status(403).json({
+        success: false,
+        msg: "Wrong Pin!"
+      })
+
+    }
+
+  } else {
+
+    req.session.destroy()
+    res.status(403).json({
+      success: false,
+      msg: "Your reset pin has expired!"
+    })
+
+  }
+
+}
+
 
 module.exports.getUsers = function(req, res){
   User.find((error, data) => {

@@ -4,6 +4,7 @@ import { User } from '../../../server/models/user';
 
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 
 @Component({
@@ -14,10 +15,13 @@ import {AuthenticationService} from "../services/authentication.service";
 export class RecoverPasswordFormComponent implements OnInit {
   recoverPasswordFrom: FormGroup;
   submittedPinRequest = false;
+  submittedPinRequestSuccess = false;
   submittedPin = false;
   currentUser: string;
   admin : string;
   wrongPin: boolean;
+  errorMsg: string = '';
+
   constructor(
     private fb: FormBuilder,
     private api: AuthenticationService,
@@ -27,7 +31,7 @@ export class RecoverPasswordFormComponent implements OnInit {
   ngOnInit() {
     this.wrongPin = false;
     this.recoverPasswordFrom = this.fb.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       pin: ['', [Validators.maxLength(5), Validators.minLength(5), Validators.pattern(/[0-9]{5}/)]],
 
     });
@@ -35,15 +39,54 @@ export class RecoverPasswordFormComponent implements OnInit {
   }
 
   submitPinReqPressed() {
+
     this.submittedPinRequest = true;
-    console.log(this.recoverPasswordFrom.controls['username'])
-    if(this.recoverPasswordFrom.invalid){
 
+    if(this.recoverPasswordFrom.controls.email.invalid){
 
-      return;
+      this.submittedPinRequestSuccess = false;
+
+    } else {
+
+      this.api.recover_password_pin_req(this.recoverPasswordFrom.value.email).subscribe(data => {
+
+        this.submittedPinRequestSuccess = data.success;
+
+        if (this.submittedPinRequestSuccess) {
+
+          this.recoverPasswordFrom.controls.email.disable()
+
+        }
+
+      }), (err: HttpErrorResponse) => {
+
+        this.errorMsg = err.error.message
+
+      }
 
     }
-    this.submittedPinRequest = false;
+
+  }
+
+  submitPinPressed() {
+
+    this.submittedPin = true
+
+    if(this.recoverPasswordFrom.controls.pin.invalid){
+
+
+    } else {
+
+      this.api.recover_password(this.recoverPasswordFrom.controls.pin.value).subscribe(), (err: HttpErrorResponse) => {
+
+        this.errorMsg = err.error.message
+
+      }
+
+    }
+
+    this.router.navigateByUrl('/login')
+
   }
 
 }
