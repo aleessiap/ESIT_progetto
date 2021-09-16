@@ -7,6 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 
 
 
+
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
@@ -19,7 +20,7 @@ export class RegistrationFormComponent implements OnInit {
   loggedIn : string | null;
   admin : string | null;
   created : boolean;
-
+  error : boolean;
   constructor(
     private  fb : FormBuilder,
     public api: UserService,
@@ -33,7 +34,7 @@ export class RegistrationFormComponent implements OnInit {
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
     this.created = false;
-
+    this.error = false;
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -54,13 +55,33 @@ export class RegistrationFormComponent implements OnInit {
     }
 
     this.api.addUser(this.registrationForm.value)
-      .subscribe(() => {}),
-      (err: HttpErrorResponse) => {
-        console.log("Error in adding the user");
-        alert("Error in adding the user");
-      };
+      .subscribe((response) => {
+        console.log(response)
+        if (response.hasOwnProperty('found')){
+          console.log("User already registered")
+
+          this.error = true;
+          let em = response.email
+          let ph = response.phone
+          let us = response.username
+          if(em > 0){
+            this.registrationForm.controls['email'].setErrors({'incorrect': true});
+          }
+          if(ph > 0){
+            this.registrationForm.controls['phone_num'].setErrors({'incorrect': true});
+          }
+          if(us >0){
+            this.registrationForm.controls['username'].setErrors({'incorrect': true});
+          }
+          console.log(em + ' ' + ph + ' '+ us)
+        }else{
+          this.created = true;
+        }}),
+        (err) => {
+          console.log("Error in adding the user");
+          alert("Error in adding the user");
+        };
 
     this.loading = true;
-    this.created= true;
   }
 }

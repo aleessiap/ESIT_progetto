@@ -5,6 +5,9 @@
       <div *ngIf = "created" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
         Utente creato!
       </div>
+      <div *ngIf = "error" class="alert alert-danger" style="margin-top: 10px; margin-bottom: 10px;">
+        Utente già registrato con questi dati!
+      </div>
       <div class="card">
         <h4 class="card-header">Registrazione di un nuovo utente</h4>
         <div class="card-body  align-items-center" >
