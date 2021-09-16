@@ -17,6 +17,7 @@ import { ModifyDoorComponent } from './modify-door/modify-door.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageDoorsComponent } from './manage-doors/manage-doors.component';
 import { ChangePasswordFormComponent } from './change-password-form/change-password-form.component';
+import { RecoverPasswordFormComponent } from './recover-password-form/recover-password-form.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ChangePasswordFormComponent } from './change-password-form/change-passw
     ModifyDoorComponent,
     ManageUsersComponent,
     ManageDoorsComponent,
-    ChangePasswordFormComponent
+    ChangePasswordFormComponent,
+    RecoverPasswordFormComponent
   ],
   imports: [
     BrowserModule,
