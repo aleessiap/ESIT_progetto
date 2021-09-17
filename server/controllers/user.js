@@ -187,13 +187,24 @@ module.exports.recoverPassword = function (req, res) {
 
 
 module.exports.getUsers = function(req, res){
-  User.find((error, data) => {
-    if (error) {
-      console.log(error.message);
-    } else {
-      res.json(data);
-    }
-  })
+
+  try{
+
+    User.find({},(error, data) => {
+
+      res.status(200).json(data);
+
+    })
+
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 }
 
 module.exports.modifyProfile = function(req,res){
@@ -206,31 +217,62 @@ module.exports.modifyProfile = function(req,res){
     username: req.body.profile.username,
     phone_num: req.body.profile.phone_num
   }
-  User.findOneAndUpdate({_id: req.body.id}, update,function(err, user){
-    if(err){
-      console.log(err.message);
-      res.send(err)
 
-    }else{
+  try {
 
-      res.json({success: true,user: user});
-    }
-  })
+    User.findOneAndUpdate({_id: req.body.id}, update,function(err, user){
+
+      if(!user) {
+
+        res.status(403).json({success:false, msg:'User not found'})
+
+      } else {
+
+        res.status(200).json({success: true,user: user});
+
+      }
+
+    })
+
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 }
 
 module.exports.modifyPassword = function(req,res){
   const update = { password: req.body.password };
 
-  User.findOneAndUpdate({_id: req.body.id}, update ,function(err, user){
-    if(err){
-      console.log(err.message);
-      res.send(err)
+  try {
 
-    }else{
-      console.log('Password changed');
-      res.send(user);
-    }
-  })
+    User.findOneAndUpdate({_id: req.body.id}, update,function(err, user){
+
+      if(!user) {
+
+        res.status(403).json({success:false, msg:'User not found'})
+
+      } else {
+
+        res.status(200).json({success: true,user: user});
+
+      }
+
+    })
+
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 }
 
 module.exports.register = async function (req, res) {
@@ -238,6 +280,7 @@ module.exports.register = async function (req, res) {
   let countUsername = 0;
   let countPhone = 0;
 
+  try {
     await User.count({email: req.body.email}, function (err, count) {
       countEmail = count;
     }, err => console.log(err));
@@ -251,83 +294,111 @@ module.exports.register = async function (req, res) {
 
     }, err => console.log(err));
 
-  console.log( req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
-  if (countUsername == 0 && countPhone == 0 && countEmail == 0) {
-    console.log("not already registered");
-    let newUser;
-    newUser = new User();
-    newUser.name = req.body.name;
-    newUser.surname = req.body.surname;
-    newUser.phone_num = req.body.phone_num;
-    newUser.birthdate = req.body.birthdate;
-    newUser.email = req.body.email;
-    newUser.admin = false;
-    newUser.username = req.body.username;
-    newUser.password = createHash('sha256').update('password').digest('base64'); //per ora sto mettendo una password fissa poi sarà cambiata con una random
-    console.log(newUser.toString());
-    let savedUser = newUser.save(); //salvo il nuovo utente nel db
-    res.status(200).json({
-      success: true,
-      msg: "New user has been created",
-      user: newUser
-    })
-  } else{
-    res.json({
-      success: false,
-      email: countEmail,
-      phone: countPhone,
-      username: countUsername
-    })
-  }
+    console.log( req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
+    if (countUsername == 0 && countPhone == 0 && countEmail == 0) {
+      console.log("not already registered");
+      let newUser;
+      newUser = new User();
+      newUser.name = req.body.name;
+      newUser.surname = req.body.surname;
+      newUser.phone_num = req.body.phone_num;
+      newUser.birthdate = req.body.birthdate;
+      newUser.email = req.body.email;
+      newUser.admin = false;
+      newUser.username = req.body.username;
+      newUser.password = createHash('sha256').update('password').digest('base64'); //per ora sto mettendo una password fissa poi sarà cambiata con una random
+      console.log(newUser.toString());
+      let savedUser = newUser.save(); //salvo il nuovo utente nel db
+      res.status(200).json({
+        success: true,
+        msg: "New user has been created",
+        user: newUser
+      })
+    } else{
+      res.status(403).json({
+        success: false,
+        email: countEmail,
+        phone: countPhone,
+        username: countUsername
+      })
+    }
+  } catch (err) {
 
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 }
 
 module.exports.deleteUser = function (req, res) {
   console.log('deleting user');
   let id = mongoose.Types.ObjectId(req.param("_id"));
 
-  User.findByIdAndDelete(id, function (err) {
+  try {
 
-    if (err) {
-      res.send(err);
-      console.log("Error in deleting door ")
-      console.log(req.param("_id"))
-      console.log(err)
-    }
-    else {
+    User.findByIdAndDelete(id, function (err, user) {
 
-      console.log('User deleted');
-      res.status(200).json({
-        msg: "User deleted"
-      })
-    }
+      if(!user) {
 
-  })
+        res.status(403).json({success:false, msg:'User not found'})
+
+      } else {
+
+        res.status(200).json({
+          success: true,
+          msg: "User deleted"
+        })
+
+      }
+
+    })
+
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 
 }
 
 module.exports.getUser = function (req, res) {
   console.log('Get user controller parameter ' + req.param("_id"));
   let id = mongoose.Types.ObjectId(req.param("_id"));
-  User.findOne({_id: id}, (err, user) => {
 
-    if(err) {
-      console.log('Error occurred');
-      res.send(err);
+  try{
 
-    }
-    if(!user) {
-      res.json(user);
-      console.log("User not found!");
+    User.findOne({_id: id}, (err, user) => {
 
-    }else{
-      console.log("User found");
-      res.status(200).json({
-        success: true,
-        userFound: user
-      })
-    }
-  })
+      if(!user) {
+
+        res.status(403).json(user);
+        console.log("User not found!");
+
+      }else{
+        console.log("User found");
+        res.status(200).json({
+          success: true,
+          userFound: user
+        })
+      }
+    })
+
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 
 }
 

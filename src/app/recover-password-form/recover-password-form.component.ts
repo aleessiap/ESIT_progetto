@@ -87,7 +87,7 @@ export class RecoverPasswordFormComponent implements OnInit {
 
     }
 
-    // this.router.navigateByUrl('/login')
+    setInterval(() => {this.router.navigateByUrl('/login')}, 5000)
 
   }
 
