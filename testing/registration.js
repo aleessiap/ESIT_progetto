@@ -10,7 +10,7 @@ it ('3 - register a user', function(done) {
   request(server)
     .post('/api/users/add-user')
 
-    .send({ name: 'user', surname: 'user', username: 'username', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user@gmail.it'})
+    .send({_id:'0', name: 'user', surname: 'user', username: 'username', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user@gmail.it'})
 
     .end(function(err, res) {
 
