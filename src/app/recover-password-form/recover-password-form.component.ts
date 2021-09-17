@@ -40,6 +40,7 @@ export class RecoverPasswordFormComponent implements OnInit {
 
   submitPinReqPressed() {
 
+    this.errorMsg = ''
     this.submittedPinRequest = true;
 
     if(this.recoverPasswordFrom.controls.email.invalid){
@@ -58,11 +59,11 @@ export class RecoverPasswordFormComponent implements OnInit {
 
         }
 
-      }), (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
 
-        this.errorMsg = err.error.message
+        this.errorMsg = err.error.msg
 
-      }
+      });
 
     }
 
@@ -70,6 +71,7 @@ export class RecoverPasswordFormComponent implements OnInit {
 
   submitPinPressed() {
 
+    this.errorMsg = ''
     this.submittedPin = true
 
     if(this.recoverPasswordFrom.controls.pin.invalid){
@@ -77,15 +79,15 @@ export class RecoverPasswordFormComponent implements OnInit {
 
     } else {
 
-      this.api.recover_password(this.recoverPasswordFrom.controls.pin.value).subscribe(), (err: HttpErrorResponse) => {
+      this.api.recover_password(this.recoverPasswordFrom.controls.pin.value).subscribe(()=>{}, (err: HttpErrorResponse) => {
 
-        this.errorMsg = err.error.message
+        this.errorMsg = err.error.msg
 
-      }
+      })
 
     }
 
-    this.router.navigateByUrl('/login')
+    // this.router.navigateByUrl('/login')
 
   }
 

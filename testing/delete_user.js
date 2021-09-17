@@ -9,14 +9,10 @@ beforeEach(function () {
 });
 
 
-it ('10 - delete a user', function(done) {
+it ('11 - delete a user', function(done) {
   request(server)
-
-
     .delete()
-
     .send({ name: 'user', surname: 'user', username: 'username', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user@gmail.it'})
-
     .end(function(err, res) {
 
       if (err) console.log('error' + err.message);

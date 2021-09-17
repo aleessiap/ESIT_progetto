@@ -15,7 +15,7 @@ it ('7 - login user not registered', function(done) {
     .expect(403)
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
-      console.log("Login user nnot : ")
+      console.log("Login user not found: ")
       console.log(res.body)
       assert.strictEqual(res.body.success, false);
     });
@@ -51,4 +51,19 @@ it ('9 - logout', function(done) {
       assert.strictEqual(res.body.msg, "Logout done");
     });
   done();
+});
+
+it ('10 - login user not registered', function(done) {
+  request(server)
+    .post('/api/users/login')
+    .send({ username: 'bruce@wayne.inc', password: 'batman' })
+    .expect(403)
+    .end(function(err, res) {
+      if (err) console.log('error' + err.message);
+      console.log("Login user not found: ")
+      console.log(res.body)
+      assert.strictEqual(res.body.success, false);
+    });
+  done();
+
 });

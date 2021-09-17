@@ -6,6 +6,7 @@ beforeEach(function () {
   server = require('../server/index').server;
 });
 it ('3 - register a user', function(done) {
+
   request(server)
     .post('/api/users/add-user')
 
