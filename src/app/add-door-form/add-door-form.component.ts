@@ -5,6 +5,7 @@ import {DoorService} from "../services/door.service";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 
+
 @Component({
   selector: 'app-add-door-form',
   templateUrl: './add-door-form.component.html',
@@ -18,6 +19,7 @@ export class AddDoorFormComponent implements OnInit {
   loggedIn : string | null;
   admin : string | null;
   created : boolean;
+  error: boolean;
 
   constructor(
     private  fb : FormBuilder,
@@ -40,12 +42,12 @@ export class AddDoorFormComponent implements OnInit {
   }
 
   create(){
+    this.error= false;
     this.submitted = true;
+    this.created = false;
 
     if (this.registerDoor.invalid) {
       return;
-    }else{
-      this.loading = true;
     }
 
     const body = {};
@@ -59,17 +61,32 @@ export class AddDoorFormComponent implements OnInit {
     };
 
     this.api.insertDoor(newDoor)
-      .subscribe(() => {},
+      .subscribe(() => {
+
+          this.submitted = false;
+          this.created = true;
+          this.registerDoor.reset();
+          this.registerDoor.markAsUntouched();
+          this.registerDoor.markAsPristine();
+
+        },
       (err: HttpErrorResponse) => {
         console.log("Error inserting the door");
-        console.log(err);
+        console.log(err.error);
+        this.error= true;
+        if(err.error.countName > 0){
+          console.log("name")
+          this.registerDoor.controls['name'].setErrors({'incorrect': true});
+        }
+        if(err.error.countAws > 0){
+          console.log("aws")
+          this.registerDoor.controls['aws_thing_name'].setErrors({'incorrect': true});
+        }
+
       });
 
-    this.submitted = false;
-    this.registerDoor.clearValidators();
-    this.registerDoor.reset();
-    this.loading = false;
-    this.created = true;
+
+
 
   }
 }

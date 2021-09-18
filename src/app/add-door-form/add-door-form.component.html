@@ -5,6 +5,9 @@
       <div *ngIf = "created" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
         Porta creata!
       </div>
+      <div *ngIf = "error" class="alert alert-danger" style="margin-top: 10px; margin-bottom: 10px;">
+        Dati non validi!
+      </div>
       <div class="card">
         <h4 class="card-header">Registra una porta</h4>
         <div class="card-body  align-items-center" >
@@ -43,7 +46,7 @@
 
             <div class = "align-content-center ">
               <div class="form-group mx-sm-3">
-                <button [disabled]="loading" class="btn btn-primary spacingButton" style="background-color: #3b5998;">
+                <button class="btn btn-primary spacingButton" style="background-color: #3b5998;">
                   Registra
                 </button>
                 <a role="button" href="/manage_doors" class="btn btn-link">Indietro</a>

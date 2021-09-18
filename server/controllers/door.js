@@ -85,122 +85,152 @@ module.exports.getDoor = function (req, res) {
 }
 
 
-module.exports.insertDoor = function (req, res) {
+module.exports.insertDoor = async function (req, res) {
+  let countName = 0;
+  let countAws = 0;
 
-  Door.create(req.body, (err, door) => {
+  try {
+    await Door.count({name: req.body.name}, function (err, count) {
+      countName = count;
+    }, err => console.log(err));
 
-    if (err) {
-      res.status(500).json({
-        type: "An error accurred",
-        msg: err
-      })
-    } else {
-      res.json(door);
-    }
+    await Door.count({aws_thing_name: req.body.aws_thing_name}, function (err, count) {
+      countAws = count;
 
-  });
+    }, err => console.log(err));
+    if(countAws === 0 && countName === 0){
+      Door.create(req.body, (err, door) => {
 
-}
+        if (err) {
+          res.status(500).json({
+            type: "An error accurred",
+            msg: err
+          })
+        } else {
+          res.json(door);
+        }
 
-module.exports.updateDoor = function (req, res) {
-  console.log('Update door controller')
-
-  Door.findByIdAndUpdate(req.body.currentDoor._id, req.body.data, {useFindAndModify:false, returnDocument:"after"},(err, door) => {
-
-    if(err) {
-      res.status(500).json({
-        type: "An error accurred",
-        msg: err
-      })
-    }
-    else {
-
-      if(!door) {
-
-        res.status(403).json({success:false, msg: 'The door doesn\'t exists'})
-
-      } else {
-
-        res.status(200).json(door);
-
-      }
-
-    }
-
-  })
-
-}
-
-module.exports.deleteDoor = function (req, res) {
-  console.log("Deleting door")
-
-  let id = mongoose.Types.ObjectId(req.param("_id"));
-  Door.findByIdAndDelete(id,{useFindAndModify:false, returnDocument:"after"}, function (err, door) {
-
-    if (err) {
-      res.status(500).json({
-        type: "An error accurred",
-        msg: err
+      });
+    }else{
+      res.status(403).json({
+        success: false,
+        countName: countName,
+        countAws: countAws
       })
     }
-    else {
-      if(!door) {
 
-        res.status(403).json({success:false, msg: 'The door doesn\'t exists'})
 
-      } else {
 
-        res.status(200).json(door);
-
-      }
-    }
-
-  })
+  }catch(err){
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+  }
 }
 
-module.exports.searchDoor = function (req, res) {
-  console.log("Search suggestion door " + req.param("name"))
+  module.exports.updateDoor = function (req, res) {
+    console.log('Update door controller')
 
-  Door.find( { name: new RegExp(req.param("name"), "i")  },
-    function (err, doors) {
-      if(err) {
+    Door.findByIdAndUpdate(req.body.currentDoor._id, req.body.data, {
+      useFindAndModify: false,
+      returnDocument: "after"
+    }, (err, door) => {
+
+      if (err) {
         res.status(500).json({
           type: "An error accurred",
           msg: err
         })
       } else {
-        res.status(200).json(doors)
+
+        if (!door) {
+
+          res.status(403).json({success: false, msg: 'The door doesn\'t exists'})
+
+        } else {
+
+          res.status(200).json(door);
+
+        }
+
       }
+
     })
-}
 
-module.exports.searchDoorByUserId = function (req, res) {
-  console.log("Search suggestion door " + req.param("name"))
+  }
 
-  User.findById(req.param("user_id"), {_id:0, door_list:1}, function (err, doc) {
+  module.exports.deleteDoor = function (req, res) {
+    console.log("Deleting door")
 
-    if(err) {
+    let id = mongoose.Types.ObjectId(req.param("_id"));
+    Door.findByIdAndDelete(id, {useFindAndModify: false, returnDocument: "after"}, function (err, door) {
 
-      res.status(500).json({
-        type: "An error accurred",
-        msg: err
+      if (err) {
+        res.status(500).json({
+          type: "An error accurred",
+          msg: err
+        })
+      } else {
+        if (!door) {
+
+          res.status(403).json({success: false, msg: 'The door doesn\'t exists'})
+
+        } else {
+
+          res.status(200).json(door);
+
+        }
+      }
+
+    })
+  }
+
+  module.exports.searchDoor = function (req, res) {
+    console.log("Search suggestion door " + req.param("name"))
+
+    Door.find({name: new RegExp(req.param("name"), "i")},
+      function (err, doors) {
+        if (err) {
+          res.status(500).json({
+            type: "An error accurred",
+            msg: err
+          })
+        } else {
+          res.status(200).json(doors)
+        }
       })
+  }
 
-    } else {
+  module.exports.searchDoorByUserId = function (req, res) {
+    console.log("Search suggestion door " + req.param("name"))
 
-      Door.find({$and: [{name: new RegExp(req.param("name"), "i")}, {_id: {$in:doc['door_list']}}]},
-        function (err1, doors) {
-          if (err1) {
-            res.status(500).json({
-              type: "An error accurred",
-              msg: err1
-            })
-          } else {
-            res.status(200).json(doors)
-          }
-      })
+    User.findById(req.param("user_id"), {_id: 0, door_list: 1}, function (err, doc) {
 
-    }
+      if (err) {
 
-  })
-}
+        res.status(500).json({
+          type: "An error accurred",
+          msg: err
+        })
+
+      } else {
+
+        Door.find({$and: [{name: new RegExp(req.param("name"), "i")}, {_id: {$in: doc['door_list']}}]},
+          function (err1, doors) {
+            if (err1) {
+              res.status(500).json({
+                type: "An error accurred",
+                msg: err1
+              })
+            } else {
+              res.status(200).json(doors)
+            }
+          })
+
+      }
+
+    })
+  }
+
