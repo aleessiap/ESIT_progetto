@@ -8,32 +8,44 @@ const {createHash} = require('./../passwd');
 const {NUMBERS} = require('./../passwd');
 
 module.exports.getAllAuthorizations = function (req, res) {
+  try {
 
-  Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
+    Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
 
-    if (err) {
-      res.send(err);
-    }
-    else {
-      res.json(docs);
-    }
 
-  })
+      res.status(200).json(docs);
+
+    })
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 
 }
 
 module.exports.getAllNotAuthorized = function (req, res) {
 
-  Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
+  try {
+    Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
 
-    if (err) {
-      res.send(err);
-    }
-    else {
-      res.json(docs);
-    }
 
-  })
+      res.status(200).json(docs);
+
+    })
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 
 }
 
@@ -69,18 +81,21 @@ module.exports.getAllNotAuthorized = function (req, res) {
 }*/
 
 module.exports.getAuthorizations = function (req, res) {
+  try {
+    User.find({door_list: mongoose.Types.ObjectId(req.params["_id"])}, (err, docs) => {
 
-  User.find({door_list: mongoose.Types.ObjectId(req.params["_id"])}, (err, docs) => {
+      res.status(200).send(docs)
 
-    if(err) {
-      res.send(err)
-    }
-    else {
+    })
+  } catch (err) {
 
-      res.send(docs)
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
 
-    }
-  })
+  }
 
 }
 
@@ -118,18 +133,21 @@ module.exports.getAuthorizations = function (req, res) {
 }*/
 
 module.exports.getNotAuthorized = function (req, res) {
+  try {
+    User.find({door_list: {$not: {"$eq": mongoose.Types.ObjectId(req.params["_id"])}}}, (err, docs) => {
 
-  User.find({door_list: {$not: {"$eq": mongoose.Types.ObjectId(req.params["_id"])}}}, (err, docs) => {
+      res.status(200).send(docs)
 
-    if(err) {
-      res.send(err)
-    }
-    else {
+    })
+  } catch (err) {
 
-      res.send(docs)
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
 
-    }
-  })
+  }
 
 }
 
@@ -138,81 +156,100 @@ module.exports.insertAuthorization = function (req, res) {
 
   let user = undefined
 
-  User.findById(mongoose.Types.ObjectId(req.body.user_id), (err, doc) => {
+  try {
 
-    if(err) {
-      res.send(err)
-    } else {
+    User.findById(mongoose.Types.ObjectId(req.body.user_id), (err, doc) => {
 
       if( (doc.chat_id) !== undefined ){
         //console.log(doc.chat_id)
         user = doc
 
-          /**res.status(400).json({
+        /**res.status(400).json({
           type: "Not Found",
           msg: "The user need to perform the first access procedure."
         })**/
-          Door.findById(mongoose.Types.ObjectId(req.body.door_id), (err, doc) => {
+        Door.findById(mongoose.Types.ObjectId(req.body.door_id), (err, doc) => {
 
-            if(err) {
-              res.send(err)
-            }
-            else {
+          if(err) {
+            res.status(500).json({
+              type: "An error accurred",
+              msg: err
+            })
+          }
+          else {
 
-              let update = {}
-              let value = {}
-              let pin = ''
-              let pinHash = ''
+            let update = {}
+            let value = {}
+            let pin = ''
+            let pinHash = ''
 
-              do {
+            do {
 
-                pin = generateRandomPassword(6, NUMBERS)
-                pinHash = createHash('sha256').update(pin).digest('base64')
+              pin = generateRandomPassword(6, NUMBERS)
+              pinHash = createHash('sha256').update(pin).digest('base64')
 
-              } while (pinHash in  Object.keys(doc['authorizations']['_doc']))
+            } while (pinHash in  Object.keys(doc['authorizations']['_doc']))
 
-              Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pinHash)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
+            Door.collection.findOneAndUpdate({_id: doc._id}, {$set:{['authorizations.'.concat(pinHash)]:mongoose.Types.ObjectId(req.body.user_id)}}, {returnDocument: "after"}, (err1, doc1) => {
 
-                if(err1) {
-                  res.send(err1)
-                }
-                else {
+              if(err1) {
+                res.status(500).json({
+                  type: "An error accurred",
+                  msg: err1
+                })
+              }
+              else {
 
-                  user.door_list.push(mongoose.Types.ObjectId(doc._id))
-                  User.findOneAndUpdate({_id: user._id}, {door_list: user.door_list}, {useFindAndModify: false, returnDocument: "after"}, (err2, doc2)=>{
+                user.door_list.push(mongoose.Types.ObjectId(doc._id))
+                User.findOneAndUpdate({_id: user._id}, {door_list: user.door_list}, {useFindAndModify: false, returnDocument: "after"}, (err2, doc2)=>{
 
-                    if(err2){
+                  if(err2){
 
-                      res.send(err2)
+                    res.status(500).json({
+                      type: "An error accurred",
+                      msg: err2
+                    })
 
-                    } else {
+                  } else {
 
 
-                      bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
-                      res.json(doc1)
+                    bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
+                    res.status(200).json(doc1)
 
-                    }
+                  }
 
-                  })
+                })
 
-                }
+              }
 
-              })
+            })
 
-            }
+          }
 
-          })
+        })
       }
       else {
 
-        res.json({
-          found: false
+        res.status(403).json({
+          found: false,
+          success: false,
+          msg:'The user must perform the first access to app before.'
+
         })
+
       }
 
-    }
+    })
 
-  })
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "An error accurred",
+      msg: err
+    })
+
+  }
 
 
 

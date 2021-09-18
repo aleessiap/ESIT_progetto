@@ -71,9 +71,17 @@ module.exports.getAccess = function (req, res) {
 
   try{
 
-    Access.findById(req.param["_id"], (err, docs) => {
+    Access.findById(req.param["_id"], (err, doc) => {
 
-      res.status(200).json(docs);
+      if(!doc) {
+
+        res.status(403).json({success:false, msg:'Access not found'});
+
+      } else {
+
+        res.status(200).json(doc);
+
+      }
 
     })
 
@@ -116,9 +124,17 @@ module.exports.updateAccess = function (req, res) {
 
   try {
 
-    Access.findByIdAndUpdate(req.body._id, req.body, (err, doc) => {
+    Access.findByIdAndUpdate(req.body._id, req.body, {useFindAndModify:false, returnDocument:"after"}, (err, doc) => {
 
-      res.status(200).json(doc);
+      if(!doc) {
+
+        res.status(403).json({success:false, msg:'The access doesn\'t exists'});
+
+      } else {
+
+        res.status(200).json(doc);
+
+      }
 
     })
 
@@ -138,9 +154,17 @@ module.exports.deleteAccess = function (req, res) {
 
   try {
 
-    Access.findByIdAndDelete(req.params["_id"], function (err, doc) {
+    Access.findByIdAndDelete(req.params["_id"], {useFindAndModify:false, returnDocument:"after"},function (err, doc) {
 
-        res.status(200).send(doc);
+        if(!doc) {
+
+          res.status(403).send({success:false, msg:'The access doesn\'t exists'})
+
+        } else {
+
+          res.status(200).send(doc);
+
+        }
 
     })
 
