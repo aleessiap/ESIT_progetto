@@ -316,7 +316,7 @@ module.exports.register = async function (req, res) {
       })
       console.log("registered")
     } else{
-      res.status(403).json({
+      res.json({
         success: false,
         email: countEmail,
         phone: countPhone,

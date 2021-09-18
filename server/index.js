@@ -8,12 +8,14 @@ const usersRoutes = require('./routes/user');
 const doorsRoutes = require('./routes/door');
 const accessRoutes = require('./routes/access');
 const authorizationRoutes = require('./routes/authorization');
+const {generateRandomPassword} = require('./passwd');
+const {ALL_CHARS} = require('./passwd');
 //const bot = require('./bot-telegram')
 //const device = require('./aws-iot')
 const app = express();
 const port = process.env.PORT || 8080;
 app.use(session({
-  secret: 'keyboard cat', // random unique string key used to authenticate a session
+  secret: generateRandomPassword(128, ALL_CHARS), // random unique string key used to authenticate a session
   cookie: { }
 }))
 
