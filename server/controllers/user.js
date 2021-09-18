@@ -410,13 +410,11 @@ module.exports.searchUser = function (req, res) {
     function (err, users) {
       if(err) {
         console.log('Error occurred');
-        res.send(err);
-      }
-      if(!users) {
-        res.json(users);
-        console.log("Users not found!");
-
-      }else{
+        res.status(500).json({
+          type: "An error accurred",
+          msg: err
+        })
+      } else{
         console.log("Users found in suggestion");
         res.json(users)
         console.log(users)
