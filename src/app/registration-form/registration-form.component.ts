@@ -49,40 +49,34 @@ export class RegistrationFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
+    this.created = false;
+    this.error = false;
     if (this.registrationForm.invalid) {
       return;
     }
 
     this.api.addUser(this.registrationForm.value)
       .subscribe((response) => {
-        console.log(response)
-        if (response.success == false){
+
+          this.error = false;
+          this.created = true;
+        },
+        (err) => {
           console.log("User already registered")
 
           this.error = true;
-          let em = response.email
-          let ph = response.phone
-          let us = response.username
-          if(em > 0){
+
+          if(err.error.email > 0){
             this.registrationForm.controls['email'].setErrors({'incorrect': true});
           }
-          if(ph > 0){
+          if(err.error.phone > 0){
             this.registrationForm.controls['phone_num'].setErrors({'incorrect': true});
           }
-          if(us >0){
+          if(err.error.username >0){
             this.registrationForm.controls['username'].setErrors({'incorrect': true});
           }
-          console.log(em + ' ' + ph + ' '+ us)
-        }else{
-          this.error = false;
+        });
 
-          this.created = true;
-        }}),
-        (err) => {
-          console.log("Error in adding the user");
-          alert("Error in adding the user");
-        };
 
     this.loading = true;
   }

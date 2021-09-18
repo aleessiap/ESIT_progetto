@@ -24,11 +24,11 @@ export class ManageUsersComponent implements OnInit {
 
     this.api.getUsers().subscribe((data:User[]) =>{
       this.users = data
-    }),
+    },
       (err: HttpErrorResponse) => {
         console.log("Error in getting the users");
-        alert("Error in getting the users");
-      }
+        console.log(err);
+      })
   }
 
   modifyUser(user: User){
@@ -40,11 +40,11 @@ export class ManageUsersComponent implements OnInit {
   deleteUser(user: User){
 
     this.api.deleteUser(user._id).subscribe(
-      () => console.log("User deleted")),
+      () => console.log("User deleted"),
       (err: HttpErrorResponse) => {
         console.log("Error in the deletion of the user");
-        alert("Error in the deletion of the user");
-      };
+        console.log(err);
+      });
     window.location.reload();
   }
 
@@ -52,11 +52,11 @@ export class ManageUsersComponent implements OnInit {
 
     this.api.searchUser(user).subscribe((data: User[]) => {
       this.users = data;
-    }),
+    },
       (err: HttpErrorResponse) => {
         console.log("Error in searching users");
-        alert("Error in searching users");
-      }
+        console.log(err);
+      })
 
   }
 

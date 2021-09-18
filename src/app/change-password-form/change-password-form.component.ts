@@ -50,11 +50,11 @@ export class ChangePasswordFormComponent implements OnInit {
 
     this.api.getUser(this.id).subscribe(data => {
       this.user = data;
-    }),
+    },
     (err: HttpErrorResponse) => {
       console.log("Error in getting the user");
-      alert("Error in getting the user");
-    }
+      console.log(err);
+    })
   }
 
 
@@ -77,11 +77,11 @@ export class ChangePasswordFormComponent implements OnInit {
         }
 
         this.api.modifyPassword(doc)
-          .subscribe(() => {}),
+          .subscribe(() => {},
           (err: HttpErrorResponse) => {
             console.log("Error in modifying the password");
-            alert("Error in modifying the password");
-          };
+            console.log(err.error.msg);
+          });
 
         this.modified=true;
         this.router.navigateByUrl('/dashboard').then();

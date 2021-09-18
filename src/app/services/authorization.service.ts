@@ -6,6 +6,7 @@ import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import {convertDirectiveMetadataToExpression} from "@angular/core/schematics/migrations/undecorated-classes-with-di/decorator_rewrite/convert_directive_metadata";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,9 +31,10 @@ export class AuthorizationService {
   }
 
   insertAuthorization(door_id: string, user_id: string){
-    return this.http.post('/api/auths', {door_id: door_id, user_id: user_id})
 
-  }
+    return this.http.post<any>('/api/auths', {door_id: door_id, user_id: user_id});
+
+  };
 
   updateAuthorizations(_id: string, old_pin:string, new_pin:string): Observable<void> {
     return this.http.put<void>('/api/auths', {_id: _id, old_pin: old_pin, new_pin: new_pin})
@@ -41,5 +43,6 @@ export class AuthorizationService {
   deleteAuthorizations(door_id: string, user_id: string) {
     return this.http.delete('/api/auths/' + door_id + '/' + user_id)
   }
+
 
 }

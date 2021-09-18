@@ -4,6 +4,7 @@ import {DoorService} from "../services/door.service";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 
+
 @Component({
   selector: 'app-manage-doors',
   templateUrl: './manage-doors.component.html',
@@ -24,11 +25,11 @@ export class ManageDoorsComponent implements OnInit {
 
     this.api.getAllDoors().subscribe((data: Door[]) => {
       this.doors = data
-    }),
+    },
     (err: HttpErrorResponse) => {
       console.log("Error in getting the doors");
-      alert("Error in getting the doors");
-    }
+      console.log(err);
+    })
 
   }
 
@@ -41,7 +42,7 @@ export class ManageDoorsComponent implements OnInit {
       () => console.log("Door deleted"),
       (err:HttpErrorResponse) => {
             console.log("Error in the deletion of the door");
-            alert("Error in the deletion of the door");
+          console.log(err);
           }
     );
     window.location.reload();
@@ -50,11 +51,11 @@ export class ManageDoorsComponent implements OnInit {
   search(door: string) {
     this.api.searchDoor(door).subscribe((data: Door[]) => {
       this.doors = data;
-    }),
+    },
       (err: HttpErrorResponse) => {
         console.log("Error in the searching");
-        alert("Error in the searching");
-      }
+        console.log(err);
+      })
   }
 
 }

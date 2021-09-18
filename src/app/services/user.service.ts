@@ -31,18 +31,11 @@ export class UserService {
     let API_URL = '/api/users/modify-password/' + data.id;
     console.log('Update User controller ' + API_URL);
     return this.http.put<User>(API_URL, data)
-      .pipe(
-        catchError(this.errorMgmt)
-      )
   }
 
   addUser(data: User): Observable<any> {
     let API_URL = '/api/users/add-user';
     return this.http.post<User>(API_URL, data)
-      .pipe(
-        catchError(this.errorMgmt)
-      )
-
   }
 
   deleteUser(id : string) {

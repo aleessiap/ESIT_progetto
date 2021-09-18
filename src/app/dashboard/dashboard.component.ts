@@ -6,6 +6,8 @@ import {AuthenticationService} from "../services/authentication.service";
 import {DoorService} from "../services/door.service";
 import {AccessService} from "../services/access.service";
 import {UserService} from "../services/user.service";
+import {HttpErrorResponse} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-dashboard',
@@ -56,6 +58,10 @@ export class DashboardComponent implements OnInit {
 
             })
             this.access[door._id] = data.reverse()
+          },
+            (error: HttpErrorResponse) =>{
+            console.log("Error occurred in the dashboard");
+            console.log(error)
           });
 
         }
@@ -83,7 +89,11 @@ export class DashboardComponent implements OnInit {
 
             })
             this.access[door._id] = data.reverse()
-          });
+          },
+            (error: HttpErrorResponse) =>{
+              console.log("Error occurred in the dashboard");
+              console.log(error)
+            });
 
         }
       })
@@ -121,7 +131,11 @@ export class DashboardComponent implements OnInit {
 
                 })
                 this.access[door._id] = data.reverse()
-              });
+              },
+                (error: HttpErrorResponse) =>{
+                  console.log("Error occurred in the dashboard");
+                  console.log(error)
+                });
 
             }
 
@@ -152,7 +166,11 @@ export class DashboardComponent implements OnInit {
 
                 })
                 this.access[door._id] = data.reverse()
-              });
+              },
+                (error: HttpErrorResponse) =>{
+                  console.log("Error occurred in the dashboard");
+                  console.log(error)
+                });
 
             }
 
@@ -187,7 +205,11 @@ export class DashboardComponent implements OnInit {
 
                 })
                 this.access[door._id] = data.reverse()
-              });
+              },
+                (error: HttpErrorResponse) =>{
+                  console.log("Error occurred in the dashboard");
+                  console.log(error)
+                });
 
             }
 
@@ -218,7 +240,11 @@ export class DashboardComponent implements OnInit {
 
                 })
                 this.access[door._id] = data.reverse()
-              });
+              },
+                (error: HttpErrorResponse) =>{
+                  console.log("Error occurred in the dashboard");
+                  console.log(error)
+                });
 
             }
 

@@ -59,11 +59,11 @@ export class AddDoorFormComponent implements OnInit {
     };
 
     this.api.insertDoor(newDoor)
-      .subscribe(() => {}),
+      .subscribe(() => {},
       (err: HttpErrorResponse) => {
         console.log("Error inserting the door");
-        alert("Error inserting the door");
-      };
+        console.log(err);
+      });
 
     this.submitted = false;
     this.registerDoor.clearValidators();

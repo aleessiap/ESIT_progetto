@@ -55,11 +55,11 @@ export class ModifyDoorComponent implements OnInit {
     this.api.getDoor(this.idDoor).subscribe(data => {
       this.currentDoor = data;
       this.gettingData();
-    }),
+    },
       (err: HttpErrorResponse) => {
         console.log("Error in getting the door");
-        alert("Error in getting the door");
-      };
+        console.log(err);
+      });
 
   }
 
@@ -72,11 +72,11 @@ export class ModifyDoorComponent implements OnInit {
     const doc = { currentDoor: this.currentDoor, data: this.modifyDoor.value}
 
     this.api.updateDoor(doc)
-      .subscribe(() => {}),
+      .subscribe(() => {},
       (err: HttpErrorResponse) => {
         console.log("Error in updating the door");
-        alert("Error in updating the door");
-      };
+        console.log(err);
+      });
 
     this.loading = true;
     this.modified = true;

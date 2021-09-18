@@ -41,11 +41,8 @@ export class ProfileDataFormComponent implements OnInit {
     this.profileForm.controls['surname'].setValue(this.user.surname);
     this.profileForm.controls['email'].setValue(this.user.email);
     this.profileForm.controls['phone_num'].setValue(this.user.phone_num);
-    let bd = this.user.birthdate;
-    this.profileForm.controls['birthdate'].setValue(bd.substring(0,10));
-    console.log(this.user.birthdate)
+    this.profileForm.controls['birthdate'].setValue(this.user.birthdate.substring(0,10));
     this.profileForm.controls['username'].setValue(this.user.username);
-
   }
 
 
@@ -83,11 +80,11 @@ export class ProfileDataFormComponent implements OnInit {
     }
 
     this.api.modifyUser(doc)
-      .subscribe(() => {}),
+      .subscribe(() => {},
       (err: HttpErrorResponse) => {
         console.log("Error in updating the user");
-        alert("Error in updating the user");
-      };
+        console.log(err);
+      });
 
     this.profileForm.reset();
     this.loading = true;
