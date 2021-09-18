@@ -43,7 +43,7 @@ it ('14 - send email and wrong pin', function(done) {
 
   request(server)
     .post('/api/users/recover-pin')
-    .send({ email: 'fr.contu@outlook.com'})
+    .send({email: 'fr.contu@outlook.com'})
     .expect(200)
     .end(function(err, res) {
       if (err) console.log('error' + err.message);

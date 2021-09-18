@@ -314,6 +314,7 @@ module.exports.register = async function (req, res) {
         msg: "New user has been created",
         user: newUser
       })
+      console.log("registered")
     } else{
       res.status(403).json({
         success: false,
