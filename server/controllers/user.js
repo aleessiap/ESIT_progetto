@@ -185,7 +185,6 @@ module.exports.recoverPassword = function (req, res) {
 
 }
 
-
 module.exports.getUsers = function(req, res){
 
   try{
@@ -207,58 +206,97 @@ module.exports.getUsers = function(req, res){
   }
 }
 
-module.exports.modifyProfile = function(req,res){
+module.exports.modifyProfile = async function (req, res) {
 
-  const update = {
-    surname : req.body.profile.surname,
-    name: req.body.profile.name,
-    email: req.body.profile.email,
-    birthdate: req.body.profile.birthdate,
-    username: req.body.profile.username,
-    phone_num: req.body.profile.phone_num
-  }
-
+  let countEmail = 0;
+  let countUsername = 0;
+  let countPhone = 0;
+  let email = false, phone = false, username = false;
   try {
-
-    User.findOneAndUpdate({_id: req.body.id}, update,function(err, user){
-
-      if(!user) {
-
-        res.status(403).json({success:false, msg:'User not found'})
-
-      } else {
-
-        res.status(200).json({success: true,user: user});
-
+    await User.findOne({_id: req.body.id}, (err, user) => {
+      if(user.email != req.body.profile.email){
+        email = true;
+      }
+      if(user.phone_num != req.body.profile.phone_num){
+        phone = true;
+      }
+      if(user.username != req.body.profile.username){
+        username = true;
+      }
+    })
+    if(email) {
+      await User.count({email: req.body.profile.email}, function (err, count) {
+        countEmail = count;
+      }, err => console.log(err));
+    }
+    if(phone) {
+      await User.count({phone_num: req.body.profile.phone_num}, function (err, count) {
+        countPhone = count;
+      }, err => console.log(err));
+    }
+    if(username) {
+      await User.count({username: req.body.profile.username}, function (err, count) {
+        countUsername = count;
+      }, err => console.log(err));
+    }
+    console.log(req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
+    if (countUsername == 0 && countPhone == 0 && countEmail == 0) {
+      const update = {
+        surname: req.body.profile.surname,
+        name: req.body.profile.name,
+        email: req.body.profile.email,
+        birthdate: req.body.profile.birthdate,
+        username: req.body.profile.username,
+        phone_num: req.body.profile.phone_num
       }
 
-    })
+      User.findOneAndUpdate({_id: req.body.id}, update, function (err, user) {
 
+        if (!user) {
+
+          res.status(403).json({success: false, msg: 'User not found'})
+
+        } else {
+
+          res.status(200).json({success: true, user: user});
+
+        }
+
+      })
+    }else{
+      res.status(403).send({
+        success: false,
+        msg: 'Invalid data',
+        email: countEmail,
+        phone: countPhone,
+        username: countUsername
+      })
+    }
   } catch (err) {
 
-    console.log(err)
-    res.status(500).json({
-      type: "An error accurred",
-      msg: err
-    })
+      console.log(err)
+      res.status(500).json({
+        type: "An error accurred",
+        msg: err
+      })
 
   }
 }
 
-module.exports.modifyPassword = function(req,res){
-  const update = { password: req.body.password };
+module.exports.modifyPassword = function (req, res) {
+  const update = {password: req.body.password};
 
   try {
 
-    User.findOneAndUpdate({_id: req.body.id}, update,function(err, user){
+    User.findOneAndUpdate({_id: req.body.id}, update, function (err, user) {
 
-      if(!user) {
+      if (!user) {
 
-        res.status(403).json({success:false, msg:'User not found'})
+        res.status(403).json({success: false, msg: 'User not found'})
 
       } else {
 
-        res.status(200).json({success: true,user: user});
+        res.status(200).json({success: true, user: user});
 
       }
 
@@ -294,7 +332,7 @@ module.exports.register = async function (req, res) {
 
     }, err => console.log(err));
 
-    console.log( req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
+    console.log(req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
     if (countUsername == 0 && countPhone == 0 && countEmail == 0) {
       console.log("not already registered");
       let newUser;
@@ -315,7 +353,7 @@ module.exports.register = async function (req, res) {
         user: newUser
       })
       console.log("registered")
-    } else{
+    } else {
       res.status(403).send({
         success: false,
         email: countEmail,
@@ -342,9 +380,9 @@ module.exports.deleteUser = function (req, res) {
 
     User.findByIdAndDelete(id, function (err, user) {
 
-      if(!user) {
+      if (!user) {
 
-        res.status(403).json({success:false, msg:'User not found'})
+        res.status(403).json({success: false, msg: 'User not found'})
 
       } else {
 
@@ -373,16 +411,16 @@ module.exports.getUser = function (req, res) {
   console.log('Get user controller parameter ' + req.param("_id"));
   let id = mongoose.Types.ObjectId(req.param("_id"));
 
-  try{
+  try {
 
     User.findOne({_id: id}, (err, user) => {
 
-      if(!user) {
+      if (!user) {
 
         res.status(403).json(user);
         console.log("User not found!");
 
-      }else{
+      } else {
         console.log("User found");
         res.status(200).json({
           success: true,
@@ -407,18 +445,19 @@ module.exports.getUser = function (req, res) {
 module.exports.searchUser = function (req, res) {
   console.log("Search suggestion user " + req.param("name"))
 
-  User.find( { name: new RegExp(req.param("name"), "i")  },
+  User.find({name: new RegExp(req.param("name"), "i")},
     function (err, users) {
-      if(err) {
+      if (err) {
         console.log('Error occurred');
         res.status(500).json({
           type: "An error accurred",
           msg: err
         })
-      } else{
+      } else {
         console.log("Users found in suggestion");
         res.json(users)
         console.log(users)
       }
     })
 }
+

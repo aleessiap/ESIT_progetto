@@ -21,6 +21,7 @@ export class ProfileDataFormComponent implements OnInit {
   loggedIn : string | null;
   currentUser : string | null;
   modified : boolean;
+  error: boolean;
 
   constructor(
     private  fb : FormBuilder,
@@ -69,6 +70,7 @@ export class ProfileDataFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.error = false;
     this.submitted = true;
 
     if (this.profileForm.invalid) {
@@ -80,16 +82,29 @@ export class ProfileDataFormComponent implements OnInit {
     }
 
     this.api.modifyUser(doc)
-      .subscribe(() => {},
+      .subscribe(() => {
+          this.profileForm.reset();
+          this.loading = true;
+          this.modified = true;
+          this.router.navigateByUrl('/dashboard').then();
+        },
       (err: HttpErrorResponse) => {
         console.log("Error in updating the user");
-        console.log(err);
+        console.log(err.error.msg);
+        this.error = true;
+
+        if(err.error.email > 0){
+          this.profileForm.controls['email'].setErrors({'incorrect': true});
+        }
+        if(err.error.phone > 0){
+          this.profileForm.controls['phone_num'].setErrors({'incorrect': true});
+        }
+        if(err.error.username >0){
+          this.profileForm.controls['username'].setErrors({'incorrect': true});
+        }
       });
 
-    this.profileForm.reset();
-    this.loading = true;
-    this.modified = true;
-    this.router.navigateByUrl('/dashboard').then();
+
 
   }
   changePassword(){

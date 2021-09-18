@@ -22,9 +22,7 @@ export class UserService {
     let API_URL = '/api/users/';
     console.log('Update User controller');
     return this.http.put<User>(API_URL, data)
-      .pipe(
-        catchError(this.errorMgmt)
-      )
+
   }
 
   modifyPassword(data: any): Observable<User> {
