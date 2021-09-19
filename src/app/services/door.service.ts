@@ -42,9 +42,6 @@ export class DoorService {
     let API_URL = '/api/doors';
     console.log('update Door controller');
     return this.http.put<Door>(API_URL, door)
-      .pipe(
-        catchError(this.errorMgmt)
-      )
   }
 
   deleteDoor(door: Door) {

@@ -20,7 +20,7 @@ module.exports.getAllAuthorizations = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -41,7 +41,7 @@ module.exports.getAllNotAuthorized = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -91,7 +91,7 @@ module.exports.getAuthorizations = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -143,7 +143,7 @@ module.exports.getNotAuthorized = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -172,7 +172,7 @@ module.exports.insertAuthorization = function (req, res) {
 
           if(err) {
             res.status(500).json({
-              type: "An error accurred",
+              type: "Si e\' verificato un errore",
               msg: err
             })
           }
@@ -194,7 +194,7 @@ module.exports.insertAuthorization = function (req, res) {
 
               if(err1) {
                 res.status(500).json({
-                  type: "An error accurred",
+                  type: "Si e\' verificato un errore",
                   msg: err1
                 })
               }
@@ -206,14 +206,14 @@ module.exports.insertAuthorization = function (req, res) {
                   if(err2){
 
                     res.status(500).json({
-                      type: "An error accurred",
+                      type: "Si e\' verificato un errore",
                       msg: err2
                     })
 
                   } else {
 
 
-                    bot.sendMessage(user.chat_id, "You can now access to door \"" + doc.name + "\" with pin: " + pin)
+                    bot.sendMessage(user.chat_id, "Ora puoi accedere alla porta \"" + doc.name + "\" con il pin: " + pin)
                     res.status(200).json(doc1)
 
                   }
@@ -233,7 +233,7 @@ module.exports.insertAuthorization = function (req, res) {
         res.status(403).json({
           found: false,
           success: false,
-          msg:'The user must perform the first access to app before.'
+          msg:'L\'utente deve prima completare la procedura di primo accesso.'
 
         })
 
@@ -245,7 +245,7 @@ module.exports.insertAuthorization = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -327,7 +327,7 @@ module.exports.deleteAuthorization = function (req, res) {
 
                 } else {
 
-                  bot.sendMessage(doc1.chat_id, "You lost access to door \"" + doc.name + "\".")
+                  bot.sendMessage(doc1.chat_id, "Non puoi piu\' accedere alla porta \"" + doc.name + "\".")
                   res.send(doc3)
 
                 }

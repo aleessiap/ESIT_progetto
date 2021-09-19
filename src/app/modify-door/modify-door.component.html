@@ -5,6 +5,9 @@
       <div *ngIf = "modified" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
         Door correctly updated!
       </div>
+      <div *ngIf = "error" class="alert alert-danger" style="margin-top: 10px; margin-bottom: 10px;">
+        {{errorMessage}}
+      </div>
       <div class="card">
         <h4 class="card-header">Modifica dei dati della porta</h4>
         <div class="card-body  align-items-center" >

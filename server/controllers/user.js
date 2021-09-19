@@ -11,7 +11,7 @@ module.exports.logout = function(req, res) {
   req.session.destroy();
   //console.log("Session: " + req.session+ " " + req.session) ;
 
-  res.json({msg: "Logout done"});
+  res.json({msg: "Logout effettutato"});
 }
 
 module.exports.login = function(req, res){
@@ -25,11 +25,11 @@ module.exports.login = function(req, res){
     User.findOne({$or:[{email: credential.username}, {username: credential.username}]},function (err, user)  {
 
       if (!user){
-        console.log("User not found");
+        console.log("L\'utente non esiste");
         res.status(403).json({
           success: false,
-          msg: "Wrong Login Credentials",
-          userFound: "not found"
+          msg: "Le credenziali di Login sono errate",
+          userFound: "Non trovato"
         })
       }
       else{
@@ -42,16 +42,16 @@ module.exports.login = function(req, res){
 
           res.status(200).json({
             success: true,
-            msg: "User found",
+            msg: "Utente trovato",
             userFound: user
           })
         }else{
           //console.log(user);
-          console.log("Wrong password");
+          console.log("Password errata");
           res.status(403).json({
             success: false,
-            msg: "Wrong Password",
-            userFound: "not found"
+            msg: "Password errata",
+            userFound: "Non trovato"
           })
         }
       }
@@ -61,7 +61,7 @@ module.exports.login = function(req, res){
   catch(err){
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
   }
@@ -78,7 +78,7 @@ module.exports.pinRequest = function (req, res) {
         console.log("User not found");
         res.status(403).json({
           success: false,
-          msg: "User not found"
+          msg: "L\'utente non esiste"
         })
 
       } else {
@@ -95,7 +95,7 @@ module.exports.pinRequest = function (req, res) {
         res.status(200).json({
 
           success: true,
-          msg: "User found",
+          msg: "Utente trovato",
           userFound: user
 
         })
@@ -108,7 +108,7 @@ module.exports.pinRequest = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -132,18 +132,18 @@ module.exports.recoverPassword = function (req, res) {
             req.session.destroy()
             res.status(403).json({
               success: false,
-              msg: "User not found"
+              msg: "L\'utente non esiste"
             })
 
           } else {
 
-            bot.sendMessage(req.session.req_user.chat_id, "Your new password: " + passwd)
+            bot.sendMessage(req.session.req_user.chat_id, "La tua nuova password è: " + passwd)
 
             req.session.destroy()
             res.status(200).json({
 
               success: true,
-              msg: "Password resetted",
+              msg: "Password resettata",
 
             })
 
@@ -157,7 +157,7 @@ module.exports.recoverPassword = function (req, res) {
         console.log(err)
         req.session.destroy()
         res.status(500).json({
-          type: "An error accurred",
+          type: "Si e\' verificato un errore",
           msg: err
         })
 
@@ -168,7 +168,7 @@ module.exports.recoverPassword = function (req, res) {
       req.session.destroy()
       res.status(403).json({
         success: false,
-        msg: "Wrong Pin!"
+        msg: "Pin errato!"
       })
 
     }
@@ -178,7 +178,7 @@ module.exports.recoverPassword = function (req, res) {
     req.session.destroy()
     res.status(403).json({
       success: false,
-      msg: "Your reset pin has expired!"
+      msg: "Il tuo PIN di reset è scaduto!"
     })
 
   }
@@ -199,7 +199,7 @@ module.exports.getUsers = function(req, res){
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -214,13 +214,13 @@ module.exports.modifyProfile = async function (req, res) {
   let email = false, phone = false, username = false;
   try {
     await User.findOne({_id: req.body.id}, (err, user) => {
-      if(user.email != req.body.profile.email){
+      if(user.email !== req.body.profile.email){
         email = true;
       }
-      if(user.phone_num != req.body.profile.phone_num){
+      if(user.phone_num !== req.body.profile.phone_num){
         phone = true;
       }
-      if(user.username != req.body.profile.username){
+      if(user.username !== req.body.profile.username){
         username = true;
       }
     })
@@ -240,7 +240,7 @@ module.exports.modifyProfile = async function (req, res) {
       }, err => console.log(err));
     }
     console.log(req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
-    if (countUsername == 0 && countPhone == 0 && countEmail == 0) {
+    if (countUsername === 0 && countPhone === 0 && countEmail === 0) {
       const update = {
         surname: req.body.profile.surname,
         name: req.body.profile.name,
@@ -254,7 +254,7 @@ module.exports.modifyProfile = async function (req, res) {
 
         if (!user) {
 
-          res.status(403).json({success: false, msg: 'User not found'})
+          res.status(403).json({success: false, msg: 'L\'utente non esiste' })
 
         } else {
 
@@ -266,7 +266,7 @@ module.exports.modifyProfile = async function (req, res) {
     }else{
       res.status(403).send({
         success: false,
-        msg: 'Invalid data',
+        msg: 'I dati inseriti non sono accettabili',
         email: countEmail,
         phone: countPhone,
         username: countUsername
@@ -276,7 +276,7 @@ module.exports.modifyProfile = async function (req, res) {
 
       console.log(err)
       res.status(500).json({
-        type: "An error accurred",
+        type: "Si e\' verificato un errore",
         msg: err
       })
 
@@ -292,7 +292,7 @@ module.exports.modifyPassword = function (req, res) {
 
       if (!user) {
 
-        res.status(403).json({success: false, msg: 'User not found'})
+        res.status(403).json({success: false, msg: 'L\'utente non esiste'})
 
       } else {
 
@@ -306,7 +306,7 @@ module.exports.modifyPassword = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -333,7 +333,7 @@ module.exports.register = async function (req, res) {
     }, err => console.log(err));
 
     console.log(req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
-    if (countUsername == 0 && countPhone == 0 && countEmail == 0) {
+    if (countUsername === 0 && countPhone === 0 && countEmail === 0) {
       console.log("not already registered");
       let newUser;
       newUser = new User();
@@ -349,7 +349,7 @@ module.exports.register = async function (req, res) {
       let savedUser = newUser.save(); //salvo il nuovo utente nel db
       res.status(200).json({
         success: true,
-        msg: "New user has been created",
+        msg: "L\'utente e\' stato creato",
         user: newUser
       })
       console.log("registered")
@@ -365,7 +365,7 @@ module.exports.register = async function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -382,13 +382,13 @@ module.exports.deleteUser = function (req, res) {
 
       if (!user) {
 
-        res.status(403).json({success: false, msg: 'User not found'})
+        res.status(403).json({success: false, msg: 'L\'utente non esiste'})
 
       } else {
 
         res.status(200).json({
           success: true,
-          msg: "User deleted"
+          msg: "Utente cancellato"
         })
 
       }
@@ -399,7 +399,7 @@ module.exports.deleteUser = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -433,7 +433,7 @@ module.exports.getUser = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -450,7 +450,7 @@ module.exports.searchUser = function (req, res) {
       if (err) {
         console.log('Error occurred');
         res.status(500).json({
-          type: "An error accurred",
+          type: "Si e\' verificato un errore",
           msg: err
         })
       } else {

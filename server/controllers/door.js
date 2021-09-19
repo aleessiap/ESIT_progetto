@@ -8,7 +8,7 @@ module.exports.getAllDoors = function (req, res) {
 
     if (err) {
       res.status(500).json({
-        type: "An error accurred",
+        type: "Si e\' verificato un errore",
         msg: err
       })
     }
@@ -26,7 +26,7 @@ module.exports.getDoorsByUserId = function (req, res) {
 
     if (err) {
       res.status(500).json({
-        type: "An error accurred",
+        type: "Si e\' verificato un errore",
         msg: err
       })
     }
@@ -37,7 +37,7 @@ module.exports.getDoorsByUserId = function (req, res) {
         if (err1) {
 
           res.status(500).json({
-            type: "An error accurred",
+            type: "Si e\' verificato un errore",
             msg: err1
           })
 
@@ -65,7 +65,7 @@ module.exports.getDoor = function (req, res) {
 
     if(err) {
       res.status(500).json({
-        type: "An error accurred",
+        type: "Si e\' verificato un errore",
         msg: err
       })
     }
@@ -103,7 +103,7 @@ module.exports.insertDoor = async function (req, res) {
 
         if (err) {
           res.status(500).json({
-            type: "An error accurred",
+            type: "Si e\' verificato un errore",
             msg: err
           })
         } else {
@@ -119,118 +119,157 @@ module.exports.insertDoor = async function (req, res) {
       })
     }
 
-
-
   }catch(err){
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
   }
 }
 
-  module.exports.updateDoor = function (req, res) {
+  module.exports.updateDoor = async function (req, res) {
     console.log('Update door controller')
-
-    Door.findByIdAndUpdate(req.body.currentDoor._id, req.body.data, {
-      useFindAndModify: false,
-      returnDocument: "after"
-    }, (err, door) => {
-
-      if (err) {
-        res.status(500).json({
-          type: "An error accurred",
-          msg: err
-        })
-      } else {
-
-        if (!door) {
-
-          res.status(403).json({success: false, msg: 'The door doesn\'t exists'})
-
-        } else {
-
-          res.status(200).json(door);
-
+    let countName = 0;
+    let countAws = 0;
+    let name = false, aws = false;
+    console.log("body ")
+    console.log(req.body.currentDoor)
+    try {
+      await Door.findOne({_id : req.body.currentDoor._id}, (err, door) =>{
+        console.log("door "+door)
+        if(door.name !== req.body.data.name){
+          name =true;
         }
+        if(door.aws_thing_name !== req.body.data.aws_thing_name){
+          aws =true;
+        }
+      })
+      if(name) {
+        await Door.count({name: req.body.data.name}, function (err, count) {
+          countName = count;
+        }, err => console.log(err));
+      }
+      if(aws) {
+        await Door.count({aws_thing_name: req.body.data.aws_thing_name}, function (err, count) {
+          countAws = count;
 
+        }, err => console.log(err));
+      }
+      if(countAws === 0 && countName === 0){
+        Door.findByIdAndUpdate(req.body.currentDoor._id, req.body.data, {
+          useFindAndModify: false,
+          returnDocument: "after"
+        }, (err, door) => {
+
+          if (err) {
+            res.status(500).json({
+              type: "Si e\' verificato un errore",
+              msg: err
+            })
+          } else {
+
+            if (!door) {
+
+              res.status(403).json({success: false, msg: 'La porta non esiste'})
+
+            } else {
+
+              res.status(200).json(door);
+
+            }
+
+          }
+
+        })}else{
+        res.status(403).json({
+          success: false,
+          msg: 'I dati inseriti non sono accettabili',
+          countName: countName,
+          countAws: countAws
+        })
       }
 
-    })
-
+    }catch(err){
+      console.log(err)
+      res.status(500).json({
+        type: "Si e\' verificato un errore",
+        msg: err
+      })
+    }
   }
 
-  module.exports.deleteDoor = function (req, res) {
-    console.log("Deleting door")
+    module.exports.deleteDoor = function (req, res) {
+      console.log("Deleting door")
 
-    let id = mongoose.Types.ObjectId(req.param("_id"));
-    Door.findByIdAndDelete(id, {useFindAndModify: false, returnDocument: "after"}, function (err, door) {
+      let id = mongoose.Types.ObjectId(req.param("_id"));
+      Door.findByIdAndDelete(id, {useFindAndModify: false, returnDocument: "after"}, function (err, door) {
 
-      if (err) {
-        res.status(500).json({
-          type: "An error accurred",
-          msg: err
-        })
-      } else {
-        if (!door) {
-
-          res.status(403).json({success: false, msg: 'The door doesn\'t exists'})
-
-        } else {
-
-          res.status(200).json(door);
-
-        }
-      }
-
-    })
-  }
-
-  module.exports.searchDoor = function (req, res) {
-    console.log("Search suggestion door " + req.param("name"))
-
-    Door.find({name: new RegExp(req.param("name"), "i")},
-      function (err, doors) {
         if (err) {
           res.status(500).json({
-            type: "An error accurred",
+            type: "Si e\' verificato un errore",
             msg: err
           })
         } else {
-          res.status(200).json(doors)
+          if (!door) {
+
+            res.status(403).json({success: false, msg: 'La porta non esiste'})
+
+          } else {
+
+            res.status(200).json(door);
+
+          }
         }
+
       })
-  }
+    }
 
-  module.exports.searchDoorByUserId = function (req, res) {
-    console.log("Search suggestion door " + req.param("name"))
+    module.exports.searchDoor = function (req, res) {
+      console.log("Search suggestion door " + req.param("name"))
 
-    User.findById(req.param("user_id"), {_id: 0, door_list: 1}, function (err, doc) {
-
-      if (err) {
-
-        res.status(500).json({
-          type: "An error accurred",
-          msg: err
+      Door.find({name: new RegExp(req.param("name"), "i")},
+        function (err, doors) {
+          if (err) {
+            res.status(500).json({
+              type: "Si e\' verificato un errore",
+              msg: err
+            })
+          } else {
+            res.status(200).json(doors)
+          }
         })
+    }
 
-      } else {
+    module.exports.searchDoorByUserId = function (req, res) {
+      console.log("Search suggestion door " + req.param("name"))
 
-        Door.find({$and: [{name: new RegExp(req.param("name"), "i")}, {_id: {$in: doc['door_list']}}]},
-          function (err1, doors) {
-            if (err1) {
-              res.status(500).json({
-                type: "An error accurred",
-                msg: err1
-              })
-            } else {
-              res.status(200).json(doors)
-            }
+      User.findById(req.param("user_id"), {_id: 0, door_list: 1}, function (err, doc) {
+
+        if (err) {
+
+          res.status(500).json({
+            type: "Si e\' verificato un errore",
+            msg: err
           })
 
-      }
+        } else {
 
-    })
-  }
+          Door.find({$and: [{name: new RegExp(req.param("name"), "i")}, {_id: {$in: doc['door_list']}}]},
+            function (err1, doors) {
+              if (err1) {
+                res.status(500).json({
+                  type: "Si e\' verificato un errore",
+                  msg: err1
+                })
+              } else {
+                res.status(200).json(doors)
+              }
+            })
+
+        }
+
+      })
+    }
+
 

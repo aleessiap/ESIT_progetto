@@ -15,7 +15,7 @@ module.exports.getAllAccess = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -37,7 +37,7 @@ module.exports.getAccessByDoorId = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -59,7 +59,7 @@ module.exports.getAccessByDoorIdAndUserId = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -75,7 +75,7 @@ module.exports.getAccess = function (req, res) {
 
       if(!doc) {
 
-        res.status(403).json({success:false, msg:'Access not found'});
+        res.status(403).json({success:false, msg:'Accesso non trovato'});
 
       } else {
 
@@ -89,7 +89,7 @@ module.exports.getAccess = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -112,7 +112,7 @@ module.exports.insertAccess = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -128,7 +128,7 @@ module.exports.updateAccess = function (req, res) {
 
       if(!doc) {
 
-        res.status(403).json({success:false, msg:'The access doesn\'t exists'});
+        res.status(403).json({success:false, msg:'L\'accesso non esiste'});
 
       } else {
 
@@ -142,7 +142,7 @@ module.exports.updateAccess = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 
@@ -158,7 +158,7 @@ module.exports.deleteAccess = function (req, res) {
 
         if(!doc) {
 
-          res.status(403).send({success:false, msg:'The access doesn\'t exists'})
+          res.status(403).send({success:false, msg:'L\'accesso non esiste'})
 
         } else {
 
@@ -172,7 +172,7 @@ module.exports.deleteAccess = function (req, res) {
 
     console.log(err)
     res.status(500).json({
-      type: "An error accurred",
+      type: "Si e\' verificato un errore",
       msg: err
     })
 

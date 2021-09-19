@@ -20,6 +20,8 @@ export class ModifyDoorComponent implements OnInit {
   loggedIn : string | null;
   admin : string | null;
   modified : boolean;
+  error: boolean;
+  errorMessage: string;
 
   constructor(
     private fb: FormBuilder,
@@ -64,6 +66,8 @@ export class ModifyDoorComponent implements OnInit {
   }
 
   onSubmit() {
+    this.modified = false;
+    this.error = false;
     this.submitted = true;
     if (this.modifyDoor.invalid) {
       return;
@@ -72,14 +76,26 @@ export class ModifyDoorComponent implements OnInit {
     const doc = { currentDoor: this.currentDoor, data: this.modifyDoor.value}
 
     this.api.updateDoor(doc)
-      .subscribe(() => {},
+      .subscribe(() => {
+
+          this.modified = true;
+        },
       (err: HttpErrorResponse) => {
         console.log("Error in updating the door");
-        console.log(err);
+        this.error = true;
+        console.log(err.error)
+        if(err.error.hasOwnProperty('countName') && err.error.hasOwnProperty('countAws')) {
+          if (err.error.countName > 0) {
+            this.modifyDoor.controls['name'].setErrors({'incorrect': true});
+          }
+          if (err.error.countAws > 0) {
+            this.modifyDoor.controls['aws_thing_name'].setErrors({'incorrect': true});
+          }
+
+        }
+        this.errorMessage = err.error.msg;
       });
 
-    this.loading = true;
-    this.modified = true;
 
   }
 
