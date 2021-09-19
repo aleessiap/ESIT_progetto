@@ -45,8 +45,8 @@
                         </div>
                         <div class="col-md-4">
 
-                          <button *ngIf="door.state !== 0" class="btn btn-outline-primary" (click)="lockDoor(door._id)">Blocca</button>
-                          <button *ngIf="door.state === 0" class="btn btn-outline-primary" (click)="unlockDoor(door._id)">Sblocca</button>
+                          <button *ngIf="door.state !== 0 && admin" class="btn btn-outline-primary" (click)="lockDoor(door._id)">Blocca</button>
+                          <button *ngIf="door.state === 0 && admin" class="btn btn-outline-primary" (click)="unlockDoor(door._id)">Sblocca</button>
 
                         </div>
                       </div>
