@@ -8,7 +8,7 @@ beforeEach(function () {
 });
 
 
-it ('18 - add access', function(done) {
+it ('20 - add access', function(done) {
   request(server)
     .post('/api/access')
     .send({ _id: '0', user_id: '0', door_id: '0'})
@@ -24,7 +24,7 @@ it ('18 - add access', function(done) {
   done();
 });
 
-it ('19 - delete access', function(done) {
+it ('21 - delete access', function(done) {
   request(server)
     .delete('/api/access/0')
     .send()
