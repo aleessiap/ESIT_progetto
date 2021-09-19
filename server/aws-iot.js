@@ -44,6 +44,67 @@ device.on('connect', function() {
 
 });
 
+function sendUpdate(aws_thing_name, update, reset_after = -1) {
+
+  let update_json = {
+
+    "state": {
+
+      "desired": {
+
+        "d_state": update
+
+      }
+
+    }
+
+  }
+
+  device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
+
+  Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {state: update}, {useFindAndModify: false, returnDocument:"after"}, (err, doc) => {
+
+    if (err) {
+
+
+
+    } else {
+
+      console.log('updated state to ', doc['state'])
+
+    }
+
+  })
+
+  if (reset_after >= 0) {
+
+    setTimeout(() => {
+
+      update_json['state']['desired']['d_state'] = 3
+      device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
+      Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {state: 3}, {useFindAndModify: false, returnDocument:"after"}, (err, doc) => {
+
+        if(err) {
+
+
+
+        } else {
+
+          // console.log('updated state to ', doc['state'])
+
+        }
+
+
+      })
+
+      console.log('DWsdAWADASDASDSADSASDSDAS')
+
+    }, reset_after * 1000);
+
+  }
+
+}
+
 function listen_devices(server, bot) {
 
   device.on('message', function (topic, payload) {
@@ -169,68 +230,13 @@ function listen_devices(server, bot) {
           }
 
         })
+
       }
+
   });
 
-  function sendUpdate(aws_thing_name, update, reset_after = -1) {
-
-    let update_json = {
-
-      "state": {
-
-        "desired": {
-
-          "d_state": update
-
-        }
-
-      }
-
-    }
-
-    device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
-
-    Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {state: update}, {useFindAndModify: false, returnDocument:"after"}, (err, doc) => {
-
-      if (err) {
-
-
-
-      } else {
-
-        // console.log('updated state to ', doc['state'])
-
-      }
-
-    })
-
-    if (reset_after >= 0) {
-
-      setTimeout(() => {
-
-        update_json['state']['desired']['d_state'] = 3
-        device.publish('$aws/things/' + aws_thing_name + '/shadow/update', JSON.stringify(update_json))
-        Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {state: 3}, {useFindAndModify: false, returnDocument:"after"}, (err, doc) => {
-
-          if(err) {
-
-
-
-          } else {
-
-            // console.log('updated state to ', doc['state'])
-
-          }
-
-
-        })
-
-      }, reset_after * 1000);
-
-    }
-
-  }
-
 }
+
 module.exports.device = device
+module.exports.sendUpdate = sendUpdate
 module.exports.listen_device = listen_devices

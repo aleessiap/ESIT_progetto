@@ -259,4 +259,17 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  lockDoor(_id: string) {
+
+    this.api_door.lockDoor(_id).subscribe()
+    this.search_door(this.search_value)
+
+  }
+
+  unlockDoor(_id: string) {
+
+    this.api_door.unlockDoor(_id).subscribe()
+    this.search_door(this.search_value)
+
+  }
 }

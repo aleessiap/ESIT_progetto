@@ -32,24 +32,32 @@
                   <li class="list-group-item">
 
                     <div>
-                    <h5 class="col-md-6">{{door.name}}</h5>
+                      <h5 class="col-md-6">{{door.name}}</h5>
                       <div class="row">
-                        <i class="fa fa-circle col-md-6" style="color: green" *ngIf="door.online"> Online</i>
-                        <i class="fa fa-circle col-md-6" style="color: red" *ngIf="!door.online"> Offline</i>
+                        <div class="col-md-8">
+                          <i class="fa fa-circle" style="color: green" *ngIf="door.online"> Online</i>
+                          <i class="fa fa-circle" style="color: red" *ngIf="!door.online"> Offline</i>
+                          <br>
+                          <i class="fa fa-circle" style="color: red" *ngIf="door.state == 0"> Chiusa</i>
+                          <i class="fa fa-circle" style="color: red" *ngIf="door.state == 1"> Accesso fallito</i>
+                          <i class="fa fa-circle" style="color: green" *ngIf="door.state == 2"> Accesso</i>
+                          <i class="fa fa-circle" style="color: orange" *ngIf="door.state == 3"> In attesa</i>
+                        </div>
+                        <div class="col-md-4">
 
-                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 0"> Chiusa</i>
-                        <i class="fa fa-circle col-lg-6" style="color: red" *ngIf="door.state == 1"> Accesso fallito</i>
-                        <i class="fa fa-circle col-lg-6" style="color: green" *ngIf="door.state == 2"> Accesso</i>
-                        <i class="fa fa-circle col-lg-6" style="color: orange" *ngIf="door.state == 3"> In attesa</i>
+                          <button *ngIf="door.state !== 0" class="btn btn-outline-primary" (click)="lockDoor(door._id)">Blocca</button>
+                          <button *ngIf="door.state === 0" class="btn btn-outline-primary" (click)="unlockDoor(door._id)">Sblocca</button>
+
+                        </div>
                       </div>
                     </div>
                     <hr>
 
                     <div class="scroll">
-                        <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
-                          <dt class="col-sm-6">{{acc.username}}</dt>
-                          <dd class="col-sm-6">Data: {{acc.date}}<br>Ora: {{acc.time}}</dd>
-                        </dl>
+                      <dl class="row" *ngFor="let acc of access[door._id]; let i=index;">
+                        <dt class="col-sm-6">{{acc.username}}</dt>
+                        <dd class="col-sm-6">Data: {{acc.date}}<br>Ora: {{acc.time}}</dd>
+                      </dl>
 
                     </div>
                   </li>

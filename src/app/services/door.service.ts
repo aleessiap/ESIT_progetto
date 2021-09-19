@@ -62,6 +62,28 @@ export class DoorService {
       )
   }
 
+  lockDoor(_id: string) {
+
+    let API_URL = '/api/doors/lock'
+
+    return this.http.post<any>(API_URL, {_id:_id})
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+
+  }
+
+  unlockDoor(_id: string) {
+
+    let API_URL = '/api/doors/unlock'
+
+    return this.http.post<any>(API_URL, {_id:_id})
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+
+  }
+
   searchDoorByUserId(door: string, user_id: string | null){
     let API_URL = '/api/doors/search/'+door + '/' + user_id;
     console.log(API_URL);
