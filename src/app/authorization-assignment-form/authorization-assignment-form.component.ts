@@ -76,7 +76,8 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
 
     },
       (err) => {
-        if(err.status == 403 && err.found == false){
+
+        if(err.status == 403 && err.error.found == false){
           this.unable = true;
         }
       })
