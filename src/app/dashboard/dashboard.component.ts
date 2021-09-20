@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
 
-    if(this.admin === 'true') {
+    if (this.admin === 'true') {
 
       this.api_door.getAllDoors().subscribe((data: Door[]) => {
 
@@ -46,23 +46,23 @@ export class DashboardComponent implements OnInit {
 
           this.api_accs.getAccessByDoorId(door._id).subscribe((data: Access[]) => {
 
-            data.forEach((value) => {
-              value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-              value['date'] = new Date(value['createdAt']).toLocaleDateString()
+              data.forEach((value) => {
+                value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+                value['date'] = new Date(value['createdAt']).toLocaleDateString()
 
-              this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+                this.api_user.getUser(value['user_id']).subscribe((data: User) => {
 
-                value['username'] = data.username
+                  value['username'] = data.username
+
+                })
 
               })
-
-            })
-            this.access[door._id] = data.reverse()
-          },
-            (error: HttpErrorResponse) =>{
-            console.log("Error occurred in the dashboard");
-            console.log(error)
-          });
+              this.access[door._id] = data.reverse()
+            },
+            (error: HttpErrorResponse) => {
+              console.log("Error occurred in the dashboard");
+              console.log(error)
+            });
 
         }
       })
@@ -77,20 +77,20 @@ export class DashboardComponent implements OnInit {
 
           this.api_accs.getAccessByDoorIdAndUserId(door._id, this.currentUser).subscribe((data: Access[]) => {
 
-            data.forEach((value) => {
-              value['time'] = new Date(value['createdAt']).toLocaleTimeString()
-              value['date'] = new Date(value['createdAt']).toLocaleDateString()
+              data.forEach((value) => {
+                value['time'] = new Date(value['createdAt']).toLocaleTimeString()
+                value['date'] = new Date(value['createdAt']).toLocaleDateString()
 
-              this.api_user.getUser(value['user_id']).subscribe((data: User) => {
+                this.api_user.getUser(value['user_id']).subscribe((data: User) => {
 
-                value['username'] = data.username
+                  value['username'] = data.username
+
+                })
 
               })
-
-            })
-            this.access[door._id] = data.reverse()
-          },
-            (error: HttpErrorResponse) =>{
+              this.access[door._id] = data.reverse()
+            },
+            (error: HttpErrorResponse) => {
               console.log("Error occurred in the dashboard");
               console.log(error)
             });
@@ -100,7 +100,8 @@ export class DashboardComponent implements OnInit {
 
     }
 
-    setInterval(() => {this.search_door(this.search_value)}, 1000)
+    setInterval(() => {this.search_door(this.search_value)   }, 1000)
+
 
   }
 
@@ -182,6 +183,8 @@ export class DashboardComponent implements OnInit {
 
     } else {
 
+      console.log("done a research")
+      console.log(this.search_value)
       if(this.admin === 'true') {
 
         this.api_door.searchDoor(door).subscribe((data: Door[]) => {

@@ -67,9 +67,6 @@ export class DoorService {
     let API_URL = '/api/doors/lock'
 
     return this.http.post<any>(API_URL, {_id:_id})
-      .pipe(
-        catchError(this.errorMgmt)
-      )
 
   }
 
@@ -78,9 +75,6 @@ export class DoorService {
     let API_URL = '/api/doors/unlock'
 
     return this.http.post<any>(API_URL, {_id:_id})
-      .pipe(
-        catchError(this.errorMgmt)
-      )
 
   }
 

@@ -1,10 +1,10 @@
 const Door = require('../models/door');
 const User = require('../models/user');
 
-//const {sendUpdate} = require('../aws-iot');
+const {sendUpdate} = require('../aws-iot');
 
 const mongoose = require("mongoose");
-/**
+
 module.exports.lockDoor = function (req, res) {
 
   Door.findById(req.body._id, (err, door) => {
@@ -94,7 +94,7 @@ module.exports.unlockDoor = function (req, res) {
   })
 
 }
-**/
+
 module.exports.getAllDoors = function (req, res) {
 
   Door.find({}, (err, docs) => {
