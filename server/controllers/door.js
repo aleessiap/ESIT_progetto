@@ -1,10 +1,10 @@
 const Door = require('../models/door');
 const User = require('../models/user');
 
-const {sendUpdate} = require('../aws-iot');
+//const {sendUpdate} = require('../aws-iot');
 
 const mongoose = require("mongoose");
-
+/**
 module.exports.lockDoor = function (req, res) {
 
   Door.findById(req.body._id, (err, door) => {
@@ -94,7 +94,7 @@ module.exports.unlockDoor = function (req, res) {
   })
 
 }
-
+**/
 module.exports.getAllDoors = function (req, res) {
 
   Door.find({}, (err, docs) => {
@@ -181,7 +181,8 @@ module.exports.getDoor = function (req, res) {
 module.exports.insertDoor = async function (req, res) {
   let countName = 0;
   let countAws = 0;
-
+  console.log("req create door")
+  console.log(req.body)
   try {
     await Door.count({name: req.body.name}, function (err, count) {
       countName = count;
@@ -196,11 +197,11 @@ module.exports.insertDoor = async function (req, res) {
 
         if (err) {
           res.status(500).json({
-            type: "Si e\' verificato un errore",
+            type: "Si e\' verificato un errore nella creazione della porta",
             msg: err
           })
         } else {
-          res.json(door);
+          res.status(200).json(door);
         }
 
       });
@@ -215,7 +216,7 @@ module.exports.insertDoor = async function (req, res) {
   }catch(err){
     console.log(err)
     res.status(500).json({
-      type: "Si e\' verificato un errore",
+      type: "Si e\' verificato un errore nella creazione della porta",
       msg: err
     })
   }
@@ -226,8 +227,10 @@ module.exports.updateDoor = async function (req, res) {
   let countName = 0;
   let countAws = 0;
   let name = false, aws = false;
-  console.log("body ")
+  console.log("body update door : current door")
   console.log(req.body.currentDoor)
+  console.log("data : form data ")
+  console.log(req.body.data)
   try {
     await Door.findOne({_id : req.body.currentDoor._id}, (err, door) =>{
       console.log("door "+door)
@@ -257,7 +260,7 @@ module.exports.updateDoor = async function (req, res) {
 
         if (err) {
           res.status(500).json({
-            type: "Si e\' verificato un errore",
+            type: "Si e\' verificato un errore nella modifica della porta",
             msg: err
           })
         } else {
@@ -286,7 +289,7 @@ module.exports.updateDoor = async function (req, res) {
   }catch(err){
     console.log(err)
     res.status(500).json({
-      type: "Si e\' verificato un errore",
+      type: "Si e\' verificato un errore nella modifica della porta",
       msg: err
     })
   }
@@ -300,7 +303,7 @@ module.exports.deleteDoor = function (req, res) {
 
     if (err) {
       res.status(500).json({
-        type: "Si e\' verificato un errore",
+        type: "Si e\' verificato un errore nella cancellazione della porta",
         msg: err
       })
     } else {
