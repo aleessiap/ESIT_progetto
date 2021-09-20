@@ -100,8 +100,7 @@ export class DashboardComponent implements OnInit {
 
     }
 
-    setInterval(() => {this.search_door(this.search_value)   }, 1000)
-
+    setInterval(() => { this.search_door(this.search_value) }, 1000)
 
   }
 
@@ -183,8 +182,6 @@ export class DashboardComponent implements OnInit {
 
     } else {
 
-      console.log("done a research")
-      console.log(this.search_value)
       if(this.admin === 'true') {
 
         this.api_door.searchDoor(door).subscribe((data: Door[]) => {
