@@ -9,8 +9,8 @@ THING_NAME = 'APP'
 
 device = AwsIot.device({
 
-  keyPath: './certs/1fe372aea6dd66fc84e58e27c45f8c255c555868aa0fc51f1867d86c1b7dc98b-private.pem.key',
-  certPath: './certs/1fe372aea6dd66fc84e58e27c45f8c255c555868aa0fc51f1867d86c1b7dc98b-certificate.pem.crt',
+  keyPath: './certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-private.pem.key',
+  certPath: './certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-certificate.pem.crt',
   caPath: './certs/AmazonRootCA1.pem',
   clientId: THING_NAME,
   host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com',
@@ -97,8 +97,6 @@ function sendUpdate(aws_thing_name, update, reset_after = -1) {
 
       })
 
-      console.log('DWsdAWADASDASDSADSASDSDAS')
-
     }, reset_after * 1000);
 
   }
@@ -142,7 +140,7 @@ function listen_devices(server, bot) {
 
         let aws_thing_name = topic.split('/')[2];
 
-        Door.findOne({aws_thing_name: aws_thing_name}, (err, doc) => {
+        Door.findOneAndUpdate({aws_thing_name: aws_thing_name}, {online:true}, {useFindAndModify:false, returnDocument:"after"},(err, doc) => {
 
           if (err) {
 

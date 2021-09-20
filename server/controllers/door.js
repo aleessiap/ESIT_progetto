@@ -1,6 +1,7 @@
 const Door = require('../models/door');
 const User = require('../models/user');
 
+const {device} = require('../aws-iot');
 const {sendUpdate} = require('../aws-iot');
 
 const mongoose = require("mongoose");
@@ -201,6 +202,10 @@ module.exports.insertDoor = async function (req, res) {
             msg: err
           })
         } else {
+
+          device.subscribe('$aws/things/' + door.aws_thing_name + '/shadow/update/accepted');
+          device.subscribe('$aws/events/presence/connected/' + door.aws_thing_name);
+          device.subscribe('$aws/events/presence/disconnected/' + door.aws_thing_name);
           res.status(200).json(door);
         }
 

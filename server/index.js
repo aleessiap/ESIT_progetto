@@ -10,8 +10,8 @@ const accessRoutes = require('./routes/access');
 const authorizationRoutes = require('./routes/authorization');
 const {generateRandomPassword} = require('./passwd');
 const {ALL_CHARS} = require('./passwd');
-//const bot = require('./bot-telegram')
-//const device = require('./aws-iot')
+const bot = require('./bot-telegram')
+const device = require('./aws-iot')
 const app = express();
 const port = process.env.PORT || 8080;
 app.use(session({
@@ -45,5 +45,5 @@ app.listen(port, function(){
   console.log("Node Js Server is Running");
 })
 
-//device.listen_device(app, bot)
+device.listen_device(app, bot)
 module.exports.server = app;
