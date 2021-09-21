@@ -2,12 +2,16 @@
   "name": "angular8project",
   "version": "0.0.0",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "server": "nodemon server/index.js"
+  },
+  "resolutions": {
+    "glob-parent": "^5.1.2"
   },
   "private": true,
   "dependencies": {
@@ -26,7 +30,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "mongoose": "^5.13.3",
+    "mongoose": "^6.0.7",
     "node-telegram-bot-api": "^0.54.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
