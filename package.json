@@ -4,15 +4,19 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "server": "nodemon server/index.js"
+    "client": "ng serve --proxy-config proxy.conf.json",
+    "server": "nodemon server/index.js",
+
+    "aws_server": "run"
+
   },
   "resolutions": {
     "glob-parent": "^5.1.2"
   },
+
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.1.1",

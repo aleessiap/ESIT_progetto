@@ -4,14 +4,15 @@ const Access = require('./models/access')
 const User = require('./models/user')
 const mongoose = require("mongoose");
 const {createHash} = require('./passwd');
+const path = require("path");
 
 THING_NAME = 'APP'
 
 device = AwsIot.device({
 
-  keyPath: './certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-private.pem.key',
-  certPath: './certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-certificate.pem.crt',
-  caPath: './certs/AmazonRootCA1.pem',
+  keyPath: path.join(__dirname, 'certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-private.pem.key'),
+  certPath: path.join(__dirname, 'certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-certificate.pem.crt'),
+  caPath: path.join(__dirname, 'certs/AmazonRootCA1.pem'),
   clientId: THING_NAME,
   host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com',
   keepalive: 60

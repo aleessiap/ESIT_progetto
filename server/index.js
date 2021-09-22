@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, function(){
-  console.log("Node Js Server is Running");
+  console.log("Node Js Server is Running with ip: ", conf.HOST_IP);
 })
 
 device.listen_device(app, bot)

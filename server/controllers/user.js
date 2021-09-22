@@ -31,8 +31,16 @@ module.exports.login = function(req, res){
           msg: "Le credenziali di Login sono errate",
           userFound: "Non trovato"
         })
-      }
-      else{
+      } else if(!user.chatId) {
+
+        console.log("No procedura primo accesso");
+        res.status(403).json({
+          success: false,
+          msg: "L'utente non ha effettuato la procedura di primo accesso",
+          userFound: "Non trovato"
+        })
+
+      } else{
         //console.log(createHash('sha256').update(credential.password).digest('base64'));
         if(createHash('sha256').update(credential.password).digest('base64') === user.password){
           console.log("User found");
@@ -79,6 +87,15 @@ module.exports.pinRequest = function (req, res) {
         res.status(403).json({
           success: false,
           msg: "L\'utente non esiste"
+        })
+
+      } else if(!user.chatId) {
+
+        console.log("No procedura primo accesso");
+        res.status(403).json({
+          success: false,
+          msg: "L'utente non ha effettuato la procedura di primo accesso",
+          userFound: "Non trovato"
         })
 
       } else {
@@ -133,6 +150,15 @@ module.exports.recoverPassword = function (req, res) {
             res.status(403).json({
               success: false,
               msg: "L\'utente non esiste"
+            })
+
+          } else if(!user.chatId) {
+
+            console.log("No procedura primo accesso");
+            res.status(403).json({
+              success: false,
+              msg: "L'utente non ha effettuato la procedura di primo accesso",
+              userFound: "Non trovato"
             })
 
           } else {
@@ -344,9 +370,9 @@ module.exports.register = async function (req, res) {
       newUser.email = req.body.email;
       newUser.admin = false;
       newUser.username = req.body.username;
-      newUser.password = createHash('sha256').update('password').digest('base64'); //per ora sto mettendo una password fissa poi sarà cambiata con una random
+
       console.log(newUser.toString());
-      let savedUser = newUser.save(); //salvo il nuovo utente nel db
+      newUser.save(); //salvo il nuovo utente nel db
       res.status(200).json({
         success: true,
         msg: "L\'utente e\' stato creato",
