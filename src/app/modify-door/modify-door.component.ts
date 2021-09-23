@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DoorService} from "../services/door.service";
 import {Door} from "../../../server/models/door";
 import {HttpErrorResponse} from "@angular/common/http";
+import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modify-door',
@@ -27,7 +28,8 @@ export class ModifyDoorComponent implements OnInit {
     private fb: FormBuilder,
     public api: DoorService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private modalService: NgbModal
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.idDoor = params['_id'];
@@ -65,7 +67,7 @@ export class ModifyDoorComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  save() {
     this.modified = false;
     this.error = false;
     this.submitted = true;
@@ -110,6 +112,14 @@ export class ModifyDoorComponent implements OnInit {
     this.modifyDoor.controls['name'].setValue(this.currentDoor.name);
     this.modifyDoor.controls['aws_thing_name'].setValue(this.currentDoor.aws_thing_name);
     this.modifyDoor.controls['description'].setValue(this.currentDoor.description);
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      if (result === 'yes') {
+        this.save();
+      }
+    }, (closed) => {});
   }
 
 }

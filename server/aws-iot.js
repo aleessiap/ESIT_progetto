@@ -10,8 +10,8 @@ THING_NAME = 'APP'
 
 device = AwsIot.device({
 
-  keyPath: path.join(__dirname, 'certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-private.pem.key'),
-  certPath: path.join(__dirname, 'certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-certificate.pem.crt'),
+  keyPath: path.join(__dirname, 'certs/8bb21c651f3c7810c5cffa4b4bc83225d89bccd2e08c0ae3211f2408cb7279ea-private.pem.key'),
+  certPath: path.join(__dirname, 'certs/8bb21c651f3c7810c5cffa4b4bc83225d89bccd2e08c0ae3211f2408cb7279ea-certificate.pem.crt'),
   caPath: path.join(__dirname, 'certs/AmazonRootCA1.pem'),
   clientId: THING_NAME,
   host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com',

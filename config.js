@@ -10,6 +10,7 @@ let server_conf = {
 
 }
 
-
+console.log('*'+server_conf.DB+'*')
+console.log('*'+server_conf.HOST_IP+'*')
 module.exports = server_conf
 

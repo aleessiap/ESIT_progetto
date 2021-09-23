@@ -5,6 +5,7 @@ import {UserService} from "../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../server/models/user";
 import {HttpErrorResponse} from "@angular/common/http";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-profile-data-form',
@@ -27,7 +28,8 @@ export class ProfileDataFormComponent implements OnInit {
     private  fb : FormBuilder,
     public api: UserService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private modalService: NgbModal
   ) {
 
     this.activatedRoute.params.subscribe(params => {
@@ -69,7 +71,7 @@ export class ProfileDataFormComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  save() {
     this.error = false;
     this.submitted = true;
     let email = false, phone = false, username = false;
@@ -128,4 +130,12 @@ export class ProfileDataFormComponent implements OnInit {
       this.router.navigateByUrl('/manage_users');
     }
   }
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      if (result === 'yes') {
+        this.save();
+      }
+    }, (closed) => {});
+  }
+
 }

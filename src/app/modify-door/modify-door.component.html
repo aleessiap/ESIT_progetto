@@ -12,7 +12,7 @@
         <h4 class="card-header">Modifica dei dati della porta</h4>
         <div class="card-body  align-items-center" >
 
-          <form [formGroup]="modifyDoor" (ngSubmit)="onSubmit()">
+          <form [formGroup]="modifyDoor" >
 
             <div class="form-group mx-sm-3 input">
               <label for="name">Nome</label>
@@ -43,7 +43,7 @@
 
             <div class = "align-content-center input " >
               <div class="form-group mx-sm-3 input">
-                <button class="btn btn-primary spacingButton" style="background-color: #3b5998;">
+                <button class="btn btn-primary spacingButton" style="background-color: #3b5998;" (click)="open(content)">
                   Salva
                 </button>
                 <a role="button" href="/manage_doors" class="btn btn-link">
@@ -64,3 +64,18 @@
 
   </div>
 </div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modifica</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Sei sicuro di voler modificare questa porta?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Indietro</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('yes')">Conferma</button>
+  </div>
+</ng-template>

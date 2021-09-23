@@ -18,6 +18,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageDoorsComponent } from './manage-doors/manage-doors.component';
 import { ChangePasswordFormComponent } from './change-password-form/change-password-form.component';
 import { RecoverPasswordFormComponent } from './recover-password-form/recover-password-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { RecoverPasswordFormComponent } from './recover-password-form/recover-pa
     HttpClientModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [
     FormBuilder,
