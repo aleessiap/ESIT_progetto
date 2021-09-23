@@ -83,12 +83,17 @@
                     <dl class="row" *ngFor="let user of not_authorized; let i=index;">
 
                         <dt class="col-sm-11">{{user.name + " " + user.surname}}</dt>
-                        <dd class="col-sm-1"><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
+                        <dd class="col-sm-1"  ><i class="fa fa-plus" (click)="addAuth(selected, user._id, i)"></i></dd>
 
                     </dl>
 
                   </div>
-
+                  <div class="valid-tooltip">
+                    Looks good!
+                  </div>
+                  <div class="invalid-tooltip">
+                    Looks bad!
+                  </div>
                 </div>
                 <div *ngIf="unable" class="alert alert-danger">
                   Impossibile assegnare l'autorizzazione! L'utente selezionato deve ancora completare la procedura di primo accesso.

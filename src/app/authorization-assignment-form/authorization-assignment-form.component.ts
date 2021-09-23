@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { AuthorizationService } from "../services/authorization.service";
 import { DoorService } from "../services/door.service";
 import { Door } from "../../../server/models/door";
 import { User } from "../../../server/models/user"
-import { Observable } from "rxjs";
-import {map} from "rxjs/operators";
-import {waitForAsync} from "@angular/core/testing";
 import {HttpErrorResponse} from "@angular/common/http";
 import {UserService} from "../services/user.service";
-import {response} from "express";
+
 
 @Component({
   selector: 'app-authorization-assignment-form',
@@ -28,7 +25,7 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   loggedIn : string | null;
   admin : string | null;
   unable: boolean;
-
+  add: string;
   constructor(
     private api_door:DoorService,
     private api_auth:AuthorizationService,
@@ -38,6 +35,7 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.unable = false;
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
@@ -67,7 +65,6 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
 
   addAuth(door_id:string, user_id:string, index:number) {
     this.unable = false;
-
     this.api_auth.insertAuthorization(door_id, user_id).subscribe(
       (data ) => {
 
