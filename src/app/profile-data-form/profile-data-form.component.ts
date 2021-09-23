@@ -72,21 +72,31 @@ export class ProfileDataFormComponent implements OnInit {
   onSubmit() {
     this.error = false;
     this.submitted = true;
-
+    let email = false, phone = false, username = false;
     if (this.profileForm.invalid) {
       return;
     }
+    if(this.user.email !== this.profileForm.value.email){
+      email = true;
+    }
+    if(this.user.phone_num !== this.profileForm.value.phone_num){
+      phone = true;
+    }
+    if(this.user.username !== this.profileForm.value.username){
+      username = true;
+    }
     const doc = {
       id: this.idUser,
-      profile: this.profileForm.value
+      profile: this.profileForm.value,
+      email : email,
+      phone: phone,
+      username: username
     }
 
     this.api.modifyUser(doc)
       .subscribe(() => {
-          this.profileForm.reset();
-          this.loading = true;
+
           this.modified = true;
-          this.router.navigateByUrl('/dashboard').then();
         },
       (err: HttpErrorResponse) => {
         console.log("Error in updating the user");

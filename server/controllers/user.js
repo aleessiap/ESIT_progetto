@@ -31,8 +31,8 @@ module.exports.login = function(req, res){
           msg: "Le credenziali di Login sono errate",
           userFound: "Non trovato"
         })
-      } else if(!user.chatId) {
-
+      } else if(user.chat_id === undefined) {
+        console.log(user)
         console.log("No procedura primo accesso");
         res.status(403).json({
           success: false,
@@ -89,7 +89,7 @@ module.exports.pinRequest = function (req, res) {
           msg: "L\'utente non esiste"
         })
 
-      } else if(!user.chatId) {
+      } else if(user.chat_id  === undefined) {
 
         console.log("No procedura primo accesso");
         res.status(403).json({
@@ -152,7 +152,7 @@ module.exports.recoverPassword = function (req, res) {
               msg: "L\'utente non esiste"
             })
 
-          } else if(!user.chatId) {
+          } else if( user.chat_id   === undefined) {
 
             console.log("No procedura primo accesso");
             res.status(403).json({
@@ -239,28 +239,17 @@ module.exports.modifyProfile = async function (req, res) {
   let countPhone = 0;
   let email = false, phone = false, username = false;
   try {
-    await User.findOne({_id: req.body.id}, (err, user) => {
-      if(user.email !== req.body.profile.email){
-        email = true;
-      }
-      if(user.phone_num !== req.body.profile.phone_num){
-        phone = true;
-      }
-      if(user.username !== req.body.profile.username){
-        username = true;
-      }
-    })
-    if(email) {
+    if(req.body.email) {
       await User.count({email: req.body.profile.email}, function (err, count) {
         countEmail = count;
       }, err => console.log(err));
     }
-    if(phone) {
+    if(req.body.phone) {
       await User.count({phone_num: req.body.profile.phone_num}, function (err, count) {
         countPhone = count;
       }, err => console.log(err));
     }
-    if(username) {
+    if(req.body.username) {
       await User.count({username: req.body.profile.username}, function (err, count) {
         countUsername = count;
       }, err => console.log(err));

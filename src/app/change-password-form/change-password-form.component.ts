@@ -84,7 +84,7 @@ export class ChangePasswordFormComponent implements OnInit {
           });
 
         this.modified=true;
-        this.router.navigateByUrl('/dashboard').then();
+        this.router.navigateByUrl('/modify_profile/'+this.id).then();
       }
     }
     else{

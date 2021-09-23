@@ -3,6 +3,7 @@ import {Door} from 'server/models/door';
 import {DoorService} from "../services/door.service";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
+import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class ManageDoorsComponent implements OnInit {
   loggedIn : string | null;
   admin : string | null;
   constructor(private api: DoorService,
-              private router: Router) {
+              private router: Router,
+              private modalService: NgbModal) {
   }
 
 
@@ -56,6 +58,13 @@ export class ManageDoorsComponent implements OnInit {
         console.log("Error in the searching");
         console.log(err);
       })
+  }
+  open(content, door) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      if (result === 'yes') {
+        this.deleteDoor(door);
+      }
+    }, (closed) => {});
   }
 
 }

@@ -153,8 +153,8 @@ module.exports.getDoor = function (req, res) {
   //console log per far vedere i dati salvati in sessione quando si apre la dashboard
   console.log("Session: " + req.session.userid + " " + req.session.admin) ;
 
-  console.log('Get door controller parameter ' + req.param("_id"));
-  let id = mongoose.Types.ObjectId(req.param("_id"));
+  console.log('Get door controller parameter ' + req.params["_id"]);
+  let id = mongoose.Types.ObjectId(req.params["_id"]);
   Door.findOne({_id: id}, (err, door) => {
 
     if(err) {
@@ -237,21 +237,13 @@ module.exports.updateDoor = async function (req, res) {
   console.log("data : form data ")
   console.log(req.body.data)
   try {
-    await Door.findOne({_id : req.body.currentDoor._id}, (err, door) =>{
-      console.log("door "+door)
-      if(door.name !== req.body.data.name){
-        name =true;
-      }
-      if(door.aws_thing_name !== req.body.data.aws_thing_name){
-        aws =true;
-      }
-    })
-    if(name) {
+
+    if(req.body.name) {
       await Door.count({name: req.body.data.name}, function (err, count) {
         countName = count;
       }, err => console.log(err));
     }
-    if(aws) {
+    if(req.body.aws) {
       await Door.count({aws_thing_name: req.body.data.aws_thing_name}, function (err, count) {
         countAws = count;
 

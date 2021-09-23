@@ -69,11 +69,18 @@ export class ModifyDoorComponent implements OnInit {
     this.modified = false;
     this.error = false;
     this.submitted = true;
+    let name = false;
+    let aws = false;
     if (this.modifyDoor.invalid) {
       return;
     }
-
-    const doc = { currentDoor: this.currentDoor, data: this.modifyDoor.value}
+    if(this.currentDoor.name !== this.modifyDoor.value.name){
+      name =true;
+    }
+    if(this.currentDoor.aws_thing_name !== this.modifyDoor.value.aws_thing_name){
+      aws =true;
+    }
+    const doc = { currentDoor: this.currentDoor, data: this.modifyDoor.value, name: name, aws: aws}
 
     this.api.updateDoor(doc)
       .subscribe(() => {

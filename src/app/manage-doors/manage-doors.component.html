@@ -34,8 +34,8 @@
                         type="button"
                         class="btn btn-outline-dark btn-rounded"
                         data-mdb-ripple-color="dark"
-                        (click)="deleteDoor(door)"
-                      >
+                        (click)="open(content,door)">
+
                         <i class="fa fa-trash-o"></i>
                       </button>
 
@@ -73,3 +73,19 @@
 
   </div>
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Eliminazione</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Sei sicuro di voler eliminare questa porta?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Indietro</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('yes')">Conferma</button>
+  </div>
+</ng-template>

@@ -3,6 +3,8 @@ import {User} from 'server/models/user';
 import {UserService} from '../services/user.service'
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
+import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
@@ -14,7 +16,8 @@ export class ManageUsersComponent implements OnInit {
   admin : string | null;
 
   constructor(private api:UserService,
-              private router: Router
+              private router: Router,
+              private modalService: NgbModal
             )
   { }
 
@@ -58,6 +61,13 @@ export class ManageUsersComponent implements OnInit {
         console.log(err);
       })
 
+  }
+  open(content, user) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      if (result === 'yes') {
+        this.deleteUser(user);
+      }
+    }, (closed) => {});
   }
 
 }
