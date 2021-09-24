@@ -17,6 +17,7 @@ const port = process.env.PORT || conf.PORT;
 
 app.use(session({
   secret: generateRandomPassword(128, ALL_CHARS), // random unique string key used to authenticate a session
+  expires: 30 * 60 * 1000,
   cookie: { }
 }))
 

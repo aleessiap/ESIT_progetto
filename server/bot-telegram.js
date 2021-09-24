@@ -7,16 +7,15 @@ const {ALL_CHARS} = require('./passwd')
 
 bot = new TelegramBot(TELEGRAM_TOKEN, {polling:true});
 
-bot.onText(/\/help/, (msg, match) =>{
+bot.onText(/\/help/, (msg) =>{
 
   let chat_id = msg.chat.id;
-  let username = msg.chat.username;
 
-  bot.sendMessage(chat_id, 'Allowed commands:\n/help\n/register')
+  bot.sendMessage(chat_id, 'Comandi disponibili:\n/help\n/register')
 
 })
 
-bot.onText(/\/start/, (msg, match) => {
+bot.onText(/\/start/, (msg) => {
 
   let chat_id = msg.chat.id;
   let username = msg.chat.username;
@@ -31,11 +30,11 @@ bot.onText(/\/start/, (msg, match) => {
 
       if (doc) {
 
-        bot.sendMessage(chat_id, 'Welcome ' + username + ' to ESIT app!\nYou are already registered with username: ' + doc.username + '\nUse /help command for more info').then().catch();
+        bot.sendMessage(chat_id, 'Benvenuto ' + username + ' nell\'app ESIT!\nSei gia registrato con username: ' + doc.username + '\nUse /help command for more info').then().catch();
 
       } else {
 
-        bot.sendMessage(chat_id, 'Welcome ' + username + ' to ESIT app!\nUse \/register command to register\nUse /help command for more info')
+        bot.sendMessage(chat_id, 'Benvenuto ' + username + ' nell\'app ESIT!\nUsa il comando \/register per registrarti\nUsa il comando /help per info')
 
       }
 
@@ -46,7 +45,7 @@ bot.onText(/\/start/, (msg, match) => {
 })
 
 
-bot.onText(/\/register/, (msg, match) => {
+bot.onText(/\/register/, (msg) => {
 
   let chat_id = msg.chat.id;
   let username = msg.chat.username;
@@ -61,7 +60,7 @@ bot.onText(/\/register/, (msg, match) => {
 
       if (doc) {
 
-        bot.sendMessage(chat_id, 'Error!\nYou are already registered with username: ' + doc.username).then().catch();
+        bot.sendMessage(chat_id, 'Errore!\nSei gia registrato con username: ' + doc.username).then().catch();
 
       } else {
 
@@ -79,7 +78,7 @@ bot.onText(/\/register/, (msg, match) => {
               doc1.chat_id = chat_id
               doc1.password = createHash('sha256').update(password).digest('base64')
 
-              User.findByIdAndUpdate(doc1._id, doc1, {useFindAndModify: false}, (err2, doc2, res) => {
+              User.findByIdAndUpdate(doc1._id, doc1, {useFindAndModify: false}, (err2) => {
 
                 if(err2){
 
@@ -87,7 +86,7 @@ bot.onText(/\/register/, (msg, match) => {
 
                 } else {
 
-                  bot.sendMessage(chat_id, 'You are registered!\nUse your username/email and this password to login to the webapp:\n' + password).then().catch();
+                  bot.sendMessage(chat_id, 'Sei registrato!\nUsa la tua username/email e questa password per fare il login alla web app:\n' + password).then().catch();
 
                 }
 
@@ -95,7 +94,7 @@ bot.onText(/\/register/, (msg, match) => {
 
             } else {
 
-              bot.sendMessage(chat_id, 'Error!\nCan\'t find an user with username: ' + username).then().catch();
+              bot.sendMessage(chat_id, 'Errore!\nNon esiste un utente con username: ' + username).then().catch();
 
             }
 

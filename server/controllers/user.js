@@ -237,7 +237,7 @@ module.exports.modifyProfile = async function (req, res) {
   let countEmail = 0;
   let countUsername = 0;
   let countPhone = 0;
-  let email = false, phone = false, username = false;
+
   try {
     if(req.body.email) {
       await User.count({email: req.body.profile.email}, function (err, count) {
@@ -299,7 +299,7 @@ module.exports.modifyProfile = async function (req, res) {
 }
 
 module.exports.modifyPassword = function (req, res) {
-  const update = {password: req.body.password};
+  const update = {password: createHash('sha256').update(req.body.password).digest('base64')};
 
   try {
 
