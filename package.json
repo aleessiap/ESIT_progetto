@@ -5,6 +5,7 @@
     "preinstall": "npx npm-force-resolutions",
     "ng": "ng",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "client": "ng serve --proxy-config proxy.conf.json",
