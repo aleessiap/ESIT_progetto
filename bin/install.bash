@@ -13,27 +13,27 @@ then
 
             else
 
-                  echo "Syntax error!
-                        Passed file does not exists.
-                        Usage: ./install.bash <certs_zip_file_path>"
+echo "Syntax error!
+      Passed file does not exists.
+      Usage: ./install.bash <certs_zip_file_path>"
                   exit 1
 
             fi
 
       else
 
-            echo "Syntax error!
-                  Passed file must be .zip a file.
-                  Usage: ./install.bash <certs_zip_file_path>"
+echo "Syntax error!
+      Passed file must be .zip a file.
+       Usage: ./install.bash <certs_zip_file_path>"
             exit 1
 
       fi
 
 else
 
-     echo "Syntax error!
-           You must pass a file .zip containing aws certificates.
-           Usage: ./install.bash <certs_zip_file_path>"
+echo "Syntax error!
+      You must pass a file .zip containing aws certificates.
+      Usage: ./install.bash <certs_zip_file_path>"
      exit 1
 
 fi
