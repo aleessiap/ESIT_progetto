@@ -68,7 +68,7 @@ it ('21 - update door with a aws_thing_name already used', function(done) {
   done();
 });
 
-it ('19 - delete door', function(done) {
+it ('23 - delete door', function(done) {
   request(server)
     .delete('/api/doors/612c897c2e469a20f4558888')
     .send()

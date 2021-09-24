@@ -7,6 +7,32 @@ beforeEach(function () {
   server = require('../server/index').server;
 });
 
+it ('15 - recover password ', function(done) {
+  request(server)
+    .post('/api/users/add-user')
+
+    .send({_id:'12', name: 'user', surname: 'user', username: 'usernameUser', phone_num: '3425561425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user_email@gmail.it'})
+    .expect(200)
+    .end(function(err, res) {
+
+      if (err) console.log('error' + err.message);
+
+      assert.strictEqual(res.body.success, true);
+
+    })
+  request(server)
+    .post('/api/users/recover-pin')
+    .send({ email: 'user_email@gmail.it'})
+    .expect(200)
+    .end(function(err, res) {
+      if (err) console.log('error ' + err.message);
+      console.log(res.body)
+      assert.strictEqual(res.body.success, true);
+
+    });
+  done();
+
+});
 it ('12 - recover password wrong email', function(done) {
   request(server)
     .post('/api/users/recover-pin')
