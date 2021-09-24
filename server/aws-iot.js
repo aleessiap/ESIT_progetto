@@ -3,7 +3,7 @@ const Door = require('./models/door');
 const Access = require('./models/access')
 const User = require('./models/user')
 const mongoose = require("mongoose");
-const conf = require('config');
+const conf = require('../config');
 const {createHash} = require('./passwd');
 const path = require("path");
 
