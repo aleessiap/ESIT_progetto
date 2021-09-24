@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-command=$(wc -l < $1)
+command=$1
 
 case command in
 
