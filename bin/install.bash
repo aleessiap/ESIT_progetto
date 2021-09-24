@@ -16,15 +16,20 @@ then
                   echo "Syntax error!\nPassed file does not exists.\n Usage: ./install.bash <certs_zip_file_path>"
                   exit 1
 
+            fi
+
       else
 
             echo "Syntax error!\nPassed file must be .zip a file.\n Usage: ./install.bash <certs_zip_file_path>"
             exit 1
 
+      fi
+
 else
 
      echo "Syntax error!\nYou must pass a file .zip containing aws certificates.\n Usage: ./install.bash <certs_zip_file_path>"
      exit 1
+
 fi
 
 
