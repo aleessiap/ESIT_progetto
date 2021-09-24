@@ -9,7 +9,7 @@ then
             if [[ -f $1 ]];
             then
 
-                  let certs_file_path="$1"
+                  certs_file_path="$1"
 
             else
 
