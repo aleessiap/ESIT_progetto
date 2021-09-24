@@ -198,7 +198,7 @@ function listen_devices(server, bot) {
                           } else {
 
                             sendUpdate(aws_thing_name, 2, 5)
-                            res.send("Door " + doc['name'] + " unlocked!");
+                            res.send("La porta " + doc['name'] + " è stata aperta!");
 
                           }
 
