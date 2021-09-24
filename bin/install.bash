@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-if [[ -z $1 ]]
+if [[ -z $1 ]];
 then
 
-      if [[$1 == *.zip]]
+      if [[$1 == *.zip]];
       then
 
-            if [[ -f $1 ]]
+            if [[ -f $1 ]];
             then
 
                   let certs_file_path = $1
