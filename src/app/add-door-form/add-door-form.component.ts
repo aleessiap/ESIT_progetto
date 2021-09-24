@@ -61,7 +61,7 @@ export class AddDoorFormComponent implements OnInit {
 
     this.api.insertDoor(newDoor)
       .subscribe(() => {
-
+          this.error= false;
           this.submitted = false;
           this.created = true;
           this.registerDoor.reset();
@@ -83,8 +83,6 @@ export class AddDoorFormComponent implements OnInit {
         }
 
       });
-
-
 
 
   }

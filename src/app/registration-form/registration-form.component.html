@@ -16,7 +16,7 @@
 
             <div class="form-group  mx-sm-3 input">
               <label for="name">Nome</label>
-              <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.name.errors }" />
+              <input type="text" id="name" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.name.errors }" />
               <div *ngIf="submitted && registrationForm.controls.name.errors" class="invalid-feedback">
                 <div *ngIf="registrationForm.controls.name.errors.required">Il nome è obbligatorio.</div>
               </div>
@@ -24,7 +24,7 @@
 
             <div class="form-group  mx-sm-3 input">
               <label for="surname">Cognome</label>
-              <input type="text" formControlName="surname" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.surname.errors }" />
+              <input type="text" id="surname" formControlName="surname" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.surname.errors }" />
               <div *ngIf="submitted && registrationForm.controls.surname.errors" class="invalid-feedback">
                   <div *ngIf="registrationForm.controls.surname.errors.required">Il cognome è obbligatorio.</div>
                 </div>
@@ -32,7 +32,7 @@
 
             <div class="form-group  mx-sm-3 input">
               <label for="email">Email </label>
-              <input type="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.email.errors }" />
+              <input type="email" id="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.email.errors }" />
               <div *ngIf="submitted && registrationForm.controls.email.errors" class="invalid-feedback">
                   <div *ngIf="registrationForm.controls.email.errors.email">Il testo inserito non è in un formato email valido.</div>
                   <div *ngIf="registrationForm.controls.email.errors.required">L'email è obbligatoria.</div>
@@ -41,7 +41,7 @@
 
             <div class="form-group  mx-sm-3 input">
               <label for="username">Username Telegram</label>
-              <input type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.username.errors }" />
+              <input type="text" id="username" formControlName="username" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.username.errors }" />
               <div *ngIf="submitted && registrationForm.controls.username.errors" class="invalid-feedback">
                 <div *ngIf="registrationForm.controls.username.errors.required">Lo username Telegram è obbligatorio.</div>
               </div>
@@ -49,7 +49,7 @@
 
             <div class="form-group  mx-sm-3 input">
               <label for="phone_num">Numero di telefono</label>
-              <input type="text" formControlName="phone_num" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.phone_num.errors }" />
+              <input type="text" id="phone_num" formControlName="phone_num" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.phone_num.errors }" />
               <div *ngIf="submitted && registrationForm.controls.phone_num.errors" class="invalid-feedback">
                   <div *ngIf="registrationForm.controls.phone_num.errors.required">Il numero di telefono è obbligatorio.</div>
                   <div *ngIf="registrationForm.controls.phone_num.errors.pattern">Il numero di telefono inserito non è valido.</div>
@@ -59,16 +59,16 @@
 
             <div class="form-group mx-sm-3 input">
               <label for="birthdate">Data di nascita</label>
-              <input type="date" formControlName="birthdate" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.birthdate.errors }" />
+              <input type="date" id="birthdate" formControlName="birthdate" class="form-control" [ngClass]="{'is-invalid': submitted && registrationForm.controls.birthdate.errors }" />
               <div *ngIf="submitted && registrationForm.controls.birthdate.errors" class="invalid-feedback">
                   <div *ngIf="registrationForm.controls.birthdate.errors.required">La data di nascita è obbligatoria.</div>
                 </div>
             </div>
 
-              <div class="form-group mx-sm-3  input">
+              <div class="form-group mx-sm-3 input">
                 <div class="d-inline-block">
                   <button class="btn btn-primary spacingButton" >
-                    Registra
+                    Salva
                   </button>
                   <a role="button" href="/manage_users" class="btn btn-link ">Indietro</a>
                 </div>

@@ -3,7 +3,7 @@
 
     <div *ngIf = "loggedIn == 'True' && admin == 'true'">
       <div *ngIf = "modified" class="alert alert-success" style="margin-top: 10px; margin-bottom: 10px;">
-        Door correctly updated!
+        Porta aggiornata correttamente!
       </div>
       <div *ngIf = "error" class="alert alert-danger" style="margin-top: 10px; margin-bottom: 10px;">
         {{errorMessage}}
@@ -16,7 +16,7 @@
 
             <div class="form-group mx-sm-3 input">
               <label for="name">Nome</label>
-              <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted &&  modifyDoor.controls.name.errors }" />
+              <input id="name" type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted &&  modifyDoor.controls.name.errors }" />
               <div *ngIf="submitted &&  modifyDoor.controls.name.errors" class="invalid-feedback">
                 <div *ngIf="modifyDoor.controls.name.errors.required">Il nome è obbligatorio.</div>
               </div>
@@ -24,7 +24,7 @@
 
             <div class="form-group mx-sm-3 input">
               <label for="aws_thing_name">Nome della AWS thing</label>
-              <input type="text" formControlName="aws_thing_name" class="form-control" [ngClass]="{'is-invalid': submitted  && modifyDoor.controls.aws_thing_name.errors }" />
+              <input id="aws_thing_name" type="text" formControlName="aws_thing_name" class="form-control" [ngClass]="{'is-invalid': submitted  && modifyDoor.controls.aws_thing_name.errors }" />
               <div *ngIf="submitted &&  modifyDoor.controls.aws_thing_name.errors" class="invalid-feedback">
                 <div *ngIf="modifyDoor.controls.aws_thing_name.errors.required">Il nome della AWS thing è obbligatorio.</div>
               </div>
@@ -32,7 +32,7 @@
 
             <div class="form-group mx-sm-3 input">
               <label for="description">Descrizione </label>
-              <textarea formControlName="description" class="form-control" [ngClass]="{'is-invalid': submitted && modifyDoor.controls.description.errors }" >
+              <textarea id="description" formControlName="description" class="form-control" [ngClass]="{'is-invalid': submitted && modifyDoor.controls.description.errors }" >
 
               </textarea>
               <div *ngIf="submitted && modifyDoor.controls.description.errors" class="invalid-feedback">

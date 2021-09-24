@@ -10,7 +10,6 @@ import {UserService} from "../services/user.service";
 })
 export class RegistrationFormComponent implements OnInit {
   registrationForm: FormGroup;
-  loading = false;
   submitted = false;
   loggedIn : string | null;
   admin : string | null;
@@ -51,9 +50,12 @@ export class RegistrationFormComponent implements OnInit {
 
     this.api.addUser(this.registrationForm.value)
       .subscribe((response) => {
-
+          this.submitted = false;
           this.error = false;
           this.created = true;
+          this.registrationForm.reset();
+          this.registrationForm.markAsUntouched();
+          this.registrationForm.markAsPristine();
         },
         (err) => {
           console.log("User already registered")
@@ -72,6 +74,5 @@ export class RegistrationFormComponent implements OnInit {
         });
 
 
-    this.loading = true;
   }
 }

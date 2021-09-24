@@ -3,20 +3,32 @@
 
     <div *ngIf = "loggedIn=='True'">
       <div class="card">
-        <!--<h4 class="card-header">Gestione porte</h4> -->
+
         <div class="container-fluid">
           <nav class="navbar-light" style="margin-top: 20px">
-            <div>
+            <div  *ngIf="admin === 'true'">
               <div class="form-inline ">
                 <form class="d-inline-block col-md-5 button" >
                   <input type="text"  placeholder="Ricerca porte..." [(ngModel)]="search_value" name="svalue" (change)="search_door(search_value)"/>
                   <button class="btn btn-default" (click)="search_door(search_value)" type="submit"><i class="fa fa-search"></i></button>
                 </form>
-                <div class="d-inline-block" style=" float: right;" >
-                  <a  class="btn btn-outline-primary button"  href="/authorization" role="button">Gestione permessi</a>
-                  <a  class="btn btn-outline-primary button"  href="/manage_doors" role="button">Gestione porte</a>
-                  <a  class="btn btn-outline-primary button"  href="/manage_users" role="button">Gestione utenti</a>
-                </div>
+
+                  <div class="d-inline-block" style=" float: right;" >
+                    <a  class="btn btn-outline-primary button"  href="/authorization" role="button">Gestione permessi</a>
+                    <a  class="btn btn-outline-primary button"  href="/manage_doors" role="button">Gestione porte</a>
+                    <a  class="btn btn-outline-primary button"  href="/manage_users" role="button">Gestione utenti</a>
+                  </div>
+
+              </div>
+            </div>
+            <div  *ngIf="admin !== 'true'">
+              <div class="form-inline ">
+                <form class="d-inline-block col-md-5 button" >
+                  <input type="text"  placeholder="Ricerca porte..." [(ngModel)]="search_value" name="svalue" (change)="search_door(search_value)"/>
+                  <button class="btn btn-default" (click)="search_door(search_value)" type="submit"><i class="fa fa-search"></i></button>
+                </form>
+
+
               </div>
             </div>
           </nav>

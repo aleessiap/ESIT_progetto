@@ -7,7 +7,7 @@
 
           <div class="row px-3 form-group input">
             <label for="username" class="mb-1">Username:</label>
-            <input type="text" formControlName="username" class="form-control" placeholder="Inserisci il tuo username o la tua email"   [ngClass]="{ 'is-invalid': submitted && loginForm.controls.username.errors}" />
+            <input type="text" formControlName="username" id="username" class="form-control" placeholder="Inserisci il tuo username o la tua email"   [ngClass]="{ 'is-invalid': submitted && loginForm.controls.username.errors}" />
             <div *ngIf="submitted && loginForm.controls.username.errors" class="invalid-feedback">
               <div  *ngIf="loginForm.controls.username.errors.required">
                 Username o email obbligatori.
@@ -18,7 +18,7 @@
 
           <div class="row px-3 form-group input">
             <label for="password" class="mb-1">Password: </label>
-            <input type="password" formControlName="password" class="form-control" placeholder="Inserisci la tua password" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors}" />
+            <input type="password" formControlName="password" id="password" class="form-control" placeholder="Inserisci la tua password" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors}" />
             <div *ngIf="submitted && loginForm.controls.password.errors" class="invalid-feedback">
               <div *ngIf="loginForm.controls.password.errors.required" >
                 La password è obbligatoria.
