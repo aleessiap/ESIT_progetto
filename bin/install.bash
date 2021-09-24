@@ -24,7 +24,7 @@ echo "Syntax error!
 
 echo "Syntax error!
       Passed file must be .zip a file.
-       Usage: ./install.bash <certs_zip_file_path>"
+      Usage: ./install.bash <certs_zip_file_path>"
             exit 1
 
       fi
