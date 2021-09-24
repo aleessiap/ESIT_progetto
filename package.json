@@ -12,9 +12,17 @@
     "client": "ng serve --proxy-config proxy.conf.json",
     "server": "nodemon server/index.js",
 
-    "aws_server_start": "sudo bash run.sh",
-    "aws_server_stop": "sudo pm2 stop server/index.js",
-    "aws_client_restart": "sudo systemctl restart nginx"
+    "prod_backend_start": "sudo bash bin/prod_backend_start.bash",
+    "prod_backend_stop": "sudo pm2 stop server/index.js",
+    "prod_backend_restart": "sudo pm2 restart server/index.js",
+
+    "prod_frontend_start": "sudo systemctl start nginx",
+    "prod_frontend_stop": "sudo systemctl stop nginx",
+    "prod_frontend_restart": "sudo systemctl restart nginx",
+
+    "mongod_start": "sudo systemctl start mongod",
+    "mongod_stop": "sudo systemctl stop mongod",
+    "mongod_restart": "sudo systemctl restart mongod"
 
   },
   "resolutions": {
