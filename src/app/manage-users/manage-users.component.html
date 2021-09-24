@@ -31,7 +31,7 @@
                 <div class="col align-self-center col-md-11" *ngFor="let user of users">
                   <li class="list-group-item">
                     {{user.name}} {{user.surname}}
-                    <q *ngIf="user.admin" class="text-danger">(admin)</q>
+                    <i *ngIf="user.admin" class="text-danger">(admin)</i>
                     <div class="d-flex flex-row-reverse">
                       <button
                         type="button"
