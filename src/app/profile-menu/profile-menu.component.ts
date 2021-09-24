@@ -42,14 +42,17 @@ export class ProfileMenuComponent implements OnInit {
   logout() {
     console.log("logout pressed");
     this.auth_api.logout().subscribe(
-
     );
     this.router.navigateByUrl('login').then(r => window.location.reload());
   }
 
-  name(){
-    localStorage.clear();
-    this.router.navigateByUrl('login').then(r => window.location.reload());
+  home(){
+    if(this.loggedIn){
+      this.router.navigateByUrl('dashboard').then(r => window.location.reload());
+    }else{
+      this.router.navigateByUrl('login').then(r => window.location.reload());
+    }
+
   }
 
   modify() {

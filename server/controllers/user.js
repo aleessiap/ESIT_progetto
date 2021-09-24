@@ -359,6 +359,7 @@ module.exports.register = async function (req, res) {
       newUser.email = req.body.email;
       newUser.admin = false;
       newUser.username = req.body.username;
+      newUser.password = ' ';
 
       console.log(newUser.toString());
       newUser.save(); //salvo il nuovo utente nel db
