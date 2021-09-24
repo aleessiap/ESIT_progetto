@@ -160,13 +160,9 @@ module.exports.insertAuthorization = function (req, res) {
     User.findById(mongoose.Types.ObjectId(req.body.user_id), (err, doc) => {
 
       if( (doc.chat_id) !== undefined ){
-        //console.log(doc.chat_id)
+
         user = doc
 
-        /**res.status(400).json({
-          type: "Not Found",
-          msg: "The user need to perform the first access procedure."
-        })**/
         Door.findById(mongoose.Types.ObjectId(req.body.door_id), (err, doc) => {
 
           if(err) {
@@ -278,7 +274,7 @@ module.exports.deleteAuthorization = function (req, res) {
   Door.findById(mongoose.Types.ObjectId(req.params["door_id"]), function (err, doc) {
 
     if (err) {
-      res.send(err)
+      res.status(403).json(err)
     }
     else {
 
@@ -286,7 +282,7 @@ module.exports.deleteAuthorization = function (req, res) {
 
         if(err1) {
 
-          res.send(err1)
+          res.status(403).json(err1)
 
         } else {
 
@@ -308,7 +304,7 @@ module.exports.deleteAuthorization = function (req, res) {
 
             if (err2) {
 
-              res.send(err2)
+              res.status(403).json(err2)
 
             } else {
 
@@ -318,12 +314,12 @@ module.exports.deleteAuthorization = function (req, res) {
 
                 if(err3){
 
-                  res.send(err3)
+                  res.status(403).json(err3)
 
                 } else {
 
                   bot.sendMessage(doc1.chat_id, "Non puoi piu\' accedere alla porta \"" + doc.name + "\".").then()
-                  res.send(doc3)
+                  res.status(200).json(doc3)
 
                 }
 
