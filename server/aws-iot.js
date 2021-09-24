@@ -3,6 +3,7 @@ const Door = require('./models/door');
 const Access = require('./models/access')
 const User = require('./models/user')
 const mongoose = require("mongoose");
+const conf = require('config');
 const {createHash} = require('./passwd');
 const path = require("path");
 
@@ -175,8 +176,8 @@ function listen_devices(server, bot) {
                     let expired = false
                     let user = doc1
 
-                    link_string = createHash('sha256').update(user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
-                    bot.sendMessage(user.chat_id, 'Click this link to unlock:\n' + doc['name'] + '\nhttp://192.168.1.26:8080/verify/' + link_string).then()
+                    let link_string = createHash('sha256').update(user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
+                    bot.sendMessage(user.chat_id, 'Click this link to unlock:\n' + doc['name'] + '\nhttp://' + conf["HOST_IP"] + ':' + conf["PORT"] + '/verify/' + link_string).then()
 
                     server.get("/verify/" + link_string, ((req, res) => {
 
