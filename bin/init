@@ -45,6 +45,7 @@ echo "
 ----------------------
 "
 
+sudo chmod 755 $NVM_DIR/nvm.sh
 (cd $NVM_DIR && ./nvm.sh install --lts)
 
 echo "
