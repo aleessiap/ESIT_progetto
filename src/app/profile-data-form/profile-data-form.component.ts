@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -135,7 +134,7 @@ export class ProfileDataFormComponent implements OnInit {
       if (result === 'yes') {
         this.save();
       }
-    }, (closed) => {});
+    }, () => {});
   }
 
 }

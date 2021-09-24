@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../../server/models/user";
 import {UserService} from "../services/user.service";
-import {HttpErrorResponse} from "@angular/common/http";
-
-
-
 
 @Component({
   selector: 'app-registration-form',
@@ -23,8 +18,7 @@ export class RegistrationFormComponent implements OnInit {
   error : boolean;
   constructor(
     private  fb : FormBuilder,
-    public api: UserService,
-    private router: Router
+    public api: UserService
   ) {
 
   }

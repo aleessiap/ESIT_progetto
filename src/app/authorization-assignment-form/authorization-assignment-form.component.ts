@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AuthorizationService } from "../services/authorization.service";
 import { DoorService } from "../services/door.service";
 import { Door } from "../../../server/models/door";
@@ -19,9 +19,6 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   authorized: User[] = []
   not_authorized: User[] = []
   selected: string = ''
-
-  not_authorized_filter: string = '';
-  authorized_filter: string = '';
   loggedIn : string | null;
   admin : string | null;
   unable: boolean;
@@ -42,17 +39,17 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
 
     this.api_door.getAllDoors().subscribe((data: Door[]) => {
       this.doors = data
-    }),
+    },
       (err: HttpErrorResponse) => {
         console.log("Error in getting the doors");
         console.log(err);
-      }
+      })
 
   }
 
   removeAuth(door_id:string, user_id:string, index:number): void {
     this.unable = false;
-    this.api_auth.deleteAuthorizations(door_id, user_id).subscribe((data) => {
+    this.api_auth.deleteAuthorizations(door_id, user_id).subscribe(() => {
       let user = this.authorized.splice(index, 1)[0]
       this.not_authorized.push(user)
     },
@@ -66,7 +63,7 @@ export class AuthorizationAssignmentFormComponent implements OnInit {
   addAuth(door_id:string, user_id:string, index:number) {
     this.unable = false;
     this.api_auth.insertAuthorization(door_id, user_id).subscribe(
-      (data ) => {
+      () => {
 
       let user = this.not_authorized.splice(index, 1)[0]
       this.authorized.push(user);

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
-import { User } from '../../../server/models/user';
-import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-profile-menu',

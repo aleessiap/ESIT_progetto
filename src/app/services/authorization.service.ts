@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from "../../../server/models/user";
-import { Door } from "../../../server/models/door"
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
-import {convertDirectiveMetadataToExpression} from "@angular/core/schematics/migrations/undecorated-classes-with-di/decorator_rewrite/convert_directive_metadata";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from "rxjs";
 
 
 @Injectable({

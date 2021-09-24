@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { User } from '../../../server/models/user';
-
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
-import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-login-form',
@@ -60,9 +57,9 @@ export class LoginFormComponent implements OnInit {
         },
         (err) => {
           console.log("Error in the login");
+          console.log(err);
           this.wrongCredentials= true;
           this.loginForm.invalid;
-          //alert("Error in the login");
         }
       );
 

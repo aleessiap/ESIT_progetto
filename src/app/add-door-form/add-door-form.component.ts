@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Door} from "../../../server/models/door";
 import {DoorService} from "../services/door.service";
-import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 
 

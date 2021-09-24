@@ -14,6 +14,7 @@ const bot = require('./bot-telegram')
 const device = require('./aws-iot')
 const app = express();
 const port = process.env.PORT || 8080;
+
 app.use(session({
   secret: generateRandomPassword(128, ALL_CHARS), // random unique string key used to authenticate a session
   cookie: { }
