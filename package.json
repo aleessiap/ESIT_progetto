@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
 
-    "preinstall": "npx npm-force-resolutions",
+    "preinstall": "sudo npx npm-force-resolutions",
     "ng": "ng",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
