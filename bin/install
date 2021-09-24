@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+
+if [[ -n $1 ]];
+then
+
+      if [[ $1 == *.zip ]];
+      then
+
+            if [[ -f $1 ]];
+            then
+
+                  certs_file_path="$1"
+
+            else
+
+echo "Error!
+      Passed file does not exists.
+      Usage: ./install.bash <certs_zip_file_path>"
+                  exit 1
+
+            fi
+
+      else
+
+echo "Error!
+      Passed file must be .zip a file.
+      Usage: ./install.bash <certs_zip_file_path>"
+            exit 1
+
+      fi
+
+else
+
+echo "Syntax error!
+      You must pass a file .zip containing aws certificates.
+      Usage: ./install.bash <certs_zip_file_path>"
+     exit 1
+
+fi
+
+
+echo "
+----------------------
+  NODE & NPM
+----------------------
+"
+
+sudo apt-get update
+sudo apt-get install -y build-essential libssl-dev
+sudo curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
+source ~/.profile
+source ~/.bashrc
+sudo nvm install 14.17.6
+sudo nvm use 14
+
+
+echo "
+----------------------
+  MONGODB
+----------------------
+"
+
+# import mongodb 5.0 gpg key + repo
+
+sudo apt-get install gnupg
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+
+sudo apt-get update
+
+# install the latest version of mongodb
+sudo apt-get install -y mongodb-org
+
+# start mongodb
+sudo systemctl start mongod
+sudo systemctl enable mongod
+
+
+echo "
+----------------------
+  PM2
+----------------------
+"
+
+# install pm2 with npm
+sudo npm install -g pm2
+
+# set pm2 to start automatically on system startup
+sudo pm2 startup systemd
+
+
+echo "
+----------------------
+  NGINX
+----------------------
+"
+
+# install nginx
+sudo apt-get install -y nginx
+
+
+echo "
+----------------------
+  UFW (FIREWALL)
+----------------------
+"
+
+# allow ssh connections through firewall
+sudo ufw allow OpenSSH
+
+# allow http & https through firewall
+sudo ufw allow 'Nginx Full'
+
+# enable firewall
+sudo ufw --force enable
+
+
+echo "
+----------------------
+  APP CONFIG
+----------------------
+"
+sudo apt-get update
+sudo apt-get install unzip
+
+(cd .. && sudo chmod 755 ./*/*/*)
+(cd .. && sudo chmod 755 ./*/*)
+(cd .. && sudo chmod 755 ./*)
+sudo npm install
+
+(cd .. && echo A | sudo unzip dist.zip)
+(cd ../server && echo A | sudo unzip ${certs_file_path})
+
+sudo cp "./webapp" /usr/local/bin
+
+project_dir=`pwd`
+project_dir=${project_dir::-4}
+echo "export WEBAPP_DIR=${project_dir}">~/.profile
+source ~/.profile
+
+sudo chmod 755 /etc/nginx/sites-available/default
+
+echo "server {
+  charset utf-8;
+  listen 80 default_server;
+  server_name _;
+
+  # angular app & front-end files
+  location / {
+    root ${WEBAPP_DIR}/dist/angular8project;
+    try_files $uri /index.html;
+  }
+
+  # node api reverse proxy
+  location /api {
+    proxy_pass http://localhost:8080;
+  }
+}" | sudo tee /etc/nginx/sites-available/default
+sudo chmod 644 /etc/nginx/sites-available/default
+
+sudo systemctl restart nginx
+
+exit 0

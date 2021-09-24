@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+command=$(wc -l < $1)
+
+case command in
+
+  "start")
+    sudo npm run prod_backend_start
+    sudo npm run prod_frontend_start
+    sudo npm run mongod_start
+    ;;
+
+  "stop")
+    sudo npm run prod_backend_stop
+    sudo npm run prod_frontend_stop
+    sudo npm run mongod_stop
+    ;;
+
+  "restart")
+    sudo npm run prod_backend_restart
+    sudo npm run prod_frontend_restart
+    sudo npm run mongod_restart
+    ;;
+
+  *)
+    echo "Syntax error!\nYou must select an operation.\nUsage: webapp <operation>\nAvailable operations:\n- start\n- stop\n- restart"
+    ;;
+esac
