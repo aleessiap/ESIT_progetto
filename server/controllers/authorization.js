@@ -1,6 +1,5 @@
 const Door = require('../models/door');
 const User = require('../models/user')
-const Authorization = require('../models/authorization')
 const mongoose = require("mongoose");
 const bot = require('./../bot-telegram');
 const {generateRandomPassword} = require('./../passwd');
@@ -178,8 +177,6 @@ module.exports.insertAuthorization = function (req, res) {
           }
           else {
 
-            let update = {}
-            let value = {}
             let pin = ''
             let pinHash = ''
 
@@ -201,7 +198,7 @@ module.exports.insertAuthorization = function (req, res) {
               else {
 
                 user.door_list.push(mongoose.Types.ObjectId(doc._id))
-                User.findOneAndUpdate({_id: user._id}, {door_list: user.door_list}, {useFindAndModify: false, returnDocument: "after"}, (err2, doc2)=>{
+                User.findOneAndUpdate({_id: user._id}, {door_list: user.door_list}, {useFindAndModify: false, returnDocument: "after"}, (err2)=>{
 
                   if(err2){
 
@@ -213,7 +210,7 @@ module.exports.insertAuthorization = function (req, res) {
                   } else {
 
 
-                    bot.sendMessage(user.chat_id, "Ora puoi accedere alla porta \"" + doc.name + "\" con il pin: " + pin)
+                    bot.sendMessage(user.chat_id, "Ora puoi accedere alla porta \"" + doc.name + "\" con il pin: " + pin).then()
                     res.status(200).json(doc1)
 
                   }
@@ -293,8 +290,6 @@ module.exports.deleteAuthorization = function (req, res) {
 
         } else {
 
-          let update = {}
-          let value = {}
           let pins = Object.keys(doc['authorizations']['_doc'])
           let pin = undefined
 
@@ -309,7 +304,7 @@ module.exports.deleteAuthorization = function (req, res) {
 
           }
 
-          Door.collection.findOneAndUpdate({_id: doc._id}, {$unset: {['authorizations.'.concat(pin)]: 1}}, {useFindAndModify: false, returnDocument: "after"}, (err2, doc2) => {
+          Door.collection.findOneAndUpdate({_id: doc._id}, {$unset: {['authorizations.'.concat(pin)]: 1}}, {useFindAndModify: false, returnDocument: "after"}, (err2) => {
 
             if (err2) {
 
@@ -327,7 +322,7 @@ module.exports.deleteAuthorization = function (req, res) {
 
                 } else {
 
-                  bot.sendMessage(doc1.chat_id, "Non puoi piu\' accedere alla porta \"" + doc.name + "\".")
+                  bot.sendMessage(doc1.chat_id, "Non puoi piu\' accedere alla porta \"" + doc.name + "\".").then()
                   res.send(doc3)
 
                 }
