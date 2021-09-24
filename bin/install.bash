@@ -13,7 +13,7 @@ then
 
             else
 
-echo "Syntax error!
+echo "Error!
       Passed file does not exists.
       Usage: ./install.bash <certs_zip_file_path>"
                   exit 1
@@ -22,7 +22,7 @@ echo "Syntax error!
 
       else
 
-echo "Syntax error!
+echo "Error!
       Passed file must be .zip a file.
       Usage: ./install.bash <certs_zip_file_path>"
             exit 1
