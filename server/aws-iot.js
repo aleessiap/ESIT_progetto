@@ -177,13 +177,13 @@ function listen_devices(server, bot) {
                     let user = doc1
 
                     let link_string = createHash('sha256').update(user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
-                    bot.sendMessage(user.chat_id, 'Click this link to unlock:\n' + doc['name'] + '\nhttp://' + conf["HOST_IP"] + '/api/verify/' + link_string).then()
+                    bot.sendMessage(user.chat_id, 'Clicca questo link per sbloccare la porta:\n' + doc['name'] + '\nhttp://' + conf["HOST_IP"] + '/api/verify/' + link_string).then()
 
                     server.get("/api/verify/" + link_string, ((req, res) => {
 
                       if (expired) {
 
-                        res.send('Link expired!')
+                        res.send('Link scaduto!')
 
                       } else {
 
