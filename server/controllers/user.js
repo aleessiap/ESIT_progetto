@@ -400,6 +400,10 @@ module.exports.deleteUser = function (req, res) {
 
         res.status(403).json({success: false, msg: 'L\'utente non esiste'})
 
+      } else if (user.admin) {
+
+        res.status(403).json({success: false, msg: 'Un utente admin non può essere eliminato'})
+
       } else {
 
         res.status(200).json({
