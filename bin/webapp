@@ -23,6 +23,12 @@ case command in
     ;;
 
   *)
-    echo "Syntax error!\nYou must select an operation.\nUsage: webapp <operation>\nAvailable operations:\n- start\n- stop\n- restart"
+echo "Syntax error!
+      You must select an operation.
+      Usage: webapp <operation>
+      Available operations:
+        - start
+        - stop
+        - restart"
     ;;
 esac
