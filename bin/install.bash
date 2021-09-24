@@ -38,6 +38,8 @@ echo "Syntax error!
 
 fi
 
+echo pwd
+
 
 #echo "
 #----------------------
@@ -116,12 +118,16 @@ fi
 #  APP CONFIG
 #----------------------
 #"
+#sudo apt-get update
+#sudo apt-get install unzip
 #
 #(cd .. && sudo chmod 755 ./*/*/*)
+#(cd .. && sudo chmod 755 ./*/*)
+#(cd .. && sudo chmod 755 ./*)
 #sudo npm install
 #
-#(cd .. && sudo unzip ../dist.zip)
-#(cd ../server && sudo unzip ${certs_path})
+#(cd .. && echo A | sudo unzip dist.zip)
+#(cd ../server && echo A | sudo unzip ${certs_file_path})
 #
 #sudo cp "./webapp.sh" /usr/local/bin
 #
