@@ -31,16 +31,13 @@
                 <div class="col align-self-center col-md-11" *ngFor="let user of users">
                   <li class="list-group-item">
                     {{user.name}} {{user.surname}}
-                    <div *ngIf="user.admin" class="alert-danger">Admin</div>
+                    <q *ngIf="user.admin" class="text-danger">(admin)</q>
                     <div class="d-flex flex-row-reverse">
                       <button
                         type="button"
                         class="btn btn-outline-dark btn-rounded"
                         data-mdb-ripple-color="dark"
                         (click)="open(content,user)" [disabled]="user.admin" >
-                        <!--(click)="deleteUser(user)"-->
-
-
                         <i class="fa fa-trash-o"></i>
                       </button>
 
@@ -48,8 +45,7 @@
                         type="button"
                         class="btn btn-outline-dark btn-rounded"
                         data-mdb-ripple-color="dark"
-                        (click)="modifyUser(user)"
-                      >
+                        (click)="modifyUser(user)" >
                         <i class="fa fa-pencil"></i>
                       </button>
 
