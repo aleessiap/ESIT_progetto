@@ -38,7 +38,7 @@ echo "Syntax error!
 
 fi
 
-echo pwd
+pwd
 
 
 #echo "
