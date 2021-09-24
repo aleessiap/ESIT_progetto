@@ -1,14 +1,68 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+
+if [[ -n $1 ]];
+then
+
+      if [[ $1 == *.zip ]];
+      then
+
+            if [[ -f $1 ]];
+            then
+
+                  certs_file_path="$1"
+
+            else
+
+echo "Error!
+      Passed file does not exists.
+      Usage: ./init <certs_zip_file_path>"
+                  exit 1
+
+            fi
+
+      else
+
+echo "Error!
+      Passed file must be .zip a file.
+      Usage: ./init <certs_zip_file_path>"
+            exit 1
+
+      fi
+
+else
+
+echo "Syntax error!
+      You must pass a file .zip containing aws certificates.
+      Usage: ./init <certs_zip_file_path>"
+     exit 1
+
+fi
+
 
 echo "
 ----------------------
-  NVM
+  NODE AND NPM
 ----------------------
 "
 
 sudo apt-get update
-sudo apt-get install -y build-essential libssl-dev
-sudo curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
+curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+node -v
+npm -v
+
+echo "
+----------------------
+  PM2 CONFIG
+----------------------
+"
+
+# install pm2 with npm
+npm install -g pm2
+
+# set pm2 to start automatically on system startup
+pm2 startup systemd
 
 
 echo "
@@ -59,4 +113,46 @@ sudo ufw allow 'Nginx Full'
 sudo ufw --force enable
 
 echo "export WEBAPP_DIR=`pwd`">~/.profile
+
+echo "
+----------------------
+  APP CONFIG
+----------------------
+"
+sudo apt-get update
+sudo apt-get install unzip
+
+(cd .. && sudo chmod 755 ./*/*/*)
+(cd .. && sudo chmod 755 ./*/*)
+(cd .. && sudo chmod 755 ./*)
+sudo npm install
+
+(cd .. && echo A | sudo unzip dist.zip)
+(cd ../server && echo A | sudo unzip ${certs_file_path})
+
+sudo cp "./webapp" /usr/local/bin
+
+sudo chmod 755 /etc/nginx/sites-available/default
+
+echo "server {
+  charset utf-8;
+  listen 80 default_server;
+  server_name _;
+
+  # angular app & front-end files
+  location / {
+    root ${WEBAPP_DIR}/../dist/angular8project;
+    try_files $uri /index.html;
+  }
+
+  # node api reverse proxy
+  location /api {
+    proxy_pass http://localhost:8080;
+  }
+}" | sudo tee /etc/nginx/sites-available/default
+sudo chmod 644 /etc/nginx/sites-available/default
+
+sudo systemctl restart nginx
+
+exit 0
 
