@@ -13,7 +13,7 @@ const {ALL_CHARS} = require('./passwd');
 const bot = require('./bot-telegram')
 const device = require('./aws-iot')
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || conf.PORT;
 
 app.use(session({
   secret: generateRandomPassword(128, ALL_CHARS), // random unique string key used to authenticate a session
@@ -38,12 +38,8 @@ app.use("/api/auths", authorizationRoutes);
 
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to ESIT application." });
-});
-
 app.listen(port, function(){
-  console.log("Node Js Server is Running with ip: ", conf.HOST_IP);
+  console.log("Server is Running with ip: ", conf.HOST_IP, ":", port);
 })
 
 device.listen_device(app, bot)

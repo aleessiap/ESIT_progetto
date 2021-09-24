@@ -2,6 +2,7 @@
   "name": "angular8project",
   "version": "0.0.0",
   "scripts": {
+
     "preinstall": "npx npm-force-resolutions",
     "ng": "ng",
     "build": "ng build",
@@ -10,7 +11,11 @@
     "test": "ng test",
     "client": "ng serve --proxy-config proxy.conf.json",
     "server": "nodemon server/index.js",
-    "aws_server": "run"
+
+    "aws_server_start": "sudo bash run.sh",
+    "aws_server_stop": "sudo pm2 stop server/index.js",
+    "aws_client_restart": "sudo systemctl restart nginx"
+
   },
   "resolutions": {
     "glob-parent": "^5.1.2"
