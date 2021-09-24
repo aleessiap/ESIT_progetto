@@ -46,10 +46,12 @@ echo "
 "
 
 sudo apt-get update
-sudo apt-get install build-essential libssl-dev
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
+sudo apt-get install -y build-essential libssl-dev
+sudo curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
 source ~/.profile
-nvm install 14.17.6
+source ~/.bashrc
+sudo nvm install 14.17.6
+sudo nvm use 14
 
 
 echo "
@@ -60,8 +62,10 @@ echo "
 
 # import mongodb 5.0 gpg key + repo
 
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+sudo apt-get install gnupg
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+
 sudo apt-get update
 
 # install the latest version of mongodb
