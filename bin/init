@@ -89,7 +89,7 @@ echo "server {
 
   # angular app & front-end files
   location / {
-    root ${WEBAPP_DIR}/dist/angular8project;
+    root ${WEBAPP_DIR}/../dist/angular8project;
     try_files $uri /index.html;
   }
 
