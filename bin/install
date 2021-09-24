@@ -127,12 +127,14 @@ sudo npm install
 (cd .. && echo A | sudo unzip dist.zip)
 (cd ../server && echo A | sudo unzip ${certs_file_path})
 
-sudo cp "./webapp.sh" /usr/local/bin
+sudo cp "./webapp" /usr/local/bin
 
 project_dir=`pwd`
 project_dir=${project_dir::-4}
 echo "export WEBAPP_DIR=${project_dir}">~/.profile
 source ~/.profile
+
+sudo chmod 755 /etc/nginx/sites-available/default
 
 echo "server {
   charset utf-8;
@@ -149,7 +151,9 @@ echo "server {
   location /api {
     proxy_pass http://localhost:8080;
   }
-}">/etc/nginx/available-sites/default
+}" | sudo tee /etc/nginx/sites-available/default
+sudo chmod 644 /etc/nginx/sites-available/default
+
 sudo systemctl restart nginx
 
 exit 0
