@@ -30,11 +30,11 @@ bot.onText(/\/start/, (msg) => {
 
       if (doc) {
 
-        bot.sendMessage(chat_id, 'Benvenuto ' + username + ' nell\'app ESIT!\nSei gia registrato con username: ' + doc.username + '\nUse /help command for more info').then().catch();
+        bot.sendMessage(chat_id, 'Benvenuto ' + username + ' nell\'app ESIT!\nSei gia registrato con username: ' + doc.username + '\nUsa il comando /help per ulteriori informazioni').then().catch();
 
       } else {
 
-        bot.sendMessage(chat_id, 'Benvenuto ' + username + ' nell\'app ESIT!\nUsa il comando \/register per registrarti\nUsa il comando /help per info')
+        bot.sendMessage(chat_id, 'Benvenuto ' + username + ' nell\'app ESIT!\nUsa il comando \/register per registrarti\nUsa il comando /help per ulteriori informazioni')
 
       }
 
