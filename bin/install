@@ -47,9 +47,10 @@ echo "
 
 sudo apt-get update
 sudo apt-get install -y build-essential libssl-dev
-sudo curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
+sudo curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 source ~/.profile
 source ~/.bashrc
+sudo nvm ls-remote
 sudo nvm install 14.17.6
 sudo nvm use 14
 
