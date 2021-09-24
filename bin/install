@@ -50,7 +50,7 @@ sudo apt-get install -y build-essential libssl-dev
 sudo curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 source ~/.profile
 source ~/.bashrc
-sudo nvm ls-rem
+sudo nvm ls-remote
 sudo nvm install 14.17.6
 sudo nvm use 14
 
