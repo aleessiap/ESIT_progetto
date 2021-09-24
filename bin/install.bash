@@ -8,7 +8,7 @@ then
       then
           do
 
-            if [[ -f $1 ]];
+            if [[ -f $1 ]]
             then
                 do
 
