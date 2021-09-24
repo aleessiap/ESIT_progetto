@@ -100,8 +100,8 @@ module.exports.pinRequest = function (req, res) {
 
       } else {
 
-        pin = generateRandomPassword(5, NUMBERS)
-        bot.sendMessage(user.chat_id, "Recover pin: " + pin)
+        let pin = generateRandomPassword(5, NUMBERS)
+        bot.sendMessage(user.chat_id, "Recover pin: " + pin).then()
 
         req.session.req_user = {}
         req.session.req_user._id = user._id
@@ -163,7 +163,7 @@ module.exports.recoverPassword = function (req, res) {
 
           } else {
 
-            bot.sendMessage(req.session.req_user.chat_id, "La tua nuova password è: " + passwd)
+            bot.sendMessage(req.session.req_user.chat_id, "La tua nuova password è: " + passwd).then()
 
             req.session.destroy()
             res.status(200).json({
@@ -362,7 +362,7 @@ module.exports.register = async function (req, res) {
       newUser.password = ' ';
 
       console.log(newUser.toString());
-      newUser.save(); //salvo il nuovo utente nel db
+      await newUser.save(); //salvo il nuovo utente nel db
       res.status(200).json({
         success: true,
         msg: "L\'utente e\' stato creato",

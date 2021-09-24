@@ -194,7 +194,7 @@ module.exports.insertDoor = async function (req, res) {
 
     }, err => console.log(err));
     if(countAws === 0 && countName === 0){
-      Door.create(req.body, (err, door) => {
+      await Door.create(req.body, (err, door) => {
 
         if (err) {
           res.status(500).json({
@@ -231,7 +231,7 @@ module.exports.updateDoor = async function (req, res) {
   console.log('Update door controller')
   let countName = 0;
   let countAws = 0;
-  let name = false, aws = false;
+
   console.log("body update door : current door")
   console.log(req.body.currentDoor)
   console.log("data : form data ")
