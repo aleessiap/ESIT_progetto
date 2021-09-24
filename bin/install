@@ -15,7 +15,7 @@ then
 
 echo "Error!
       Passed file does not exists.
-      Usage: ./init <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path>"
                   exit 1
 
             fi
@@ -24,7 +24,7 @@ echo "Error!
 
 echo "Error!
       Passed file must be .zip a file.
-      Usage: ./init <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path>"
             exit 1
 
       fi
@@ -33,7 +33,7 @@ else
 
 echo "Syntax error!
       You must pass a file .zip containing aws certificates.
-      Usage: ./init <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path>"
      exit 1
 
 fi
@@ -83,7 +83,6 @@ sudo apt-get update
 sudo apt-get install -y mongodb-org
 
 # start mongodb
-sudo systemctl start mongod
 sudo systemctl enable mongod
 
 
@@ -95,6 +94,8 @@ echo "
 
 # install nginx
 sudo apt-get install -y nginx
+sudo systemctl stop nginx
+sudo systemctl enable nginx
 
 
 echo "
@@ -125,7 +126,8 @@ sudo apt-get install unzip
 (cd .. && sudo chmod 755 ./*/*/*)
 (cd .. && sudo chmod 755 ./*/*)
 (cd .. && sudo chmod 755 ./*)
-sudo npm install
+
+npm install
 
 (cd .. && echo A | sudo unzip dist.zip)
 (cd ../server && echo A | sudo unzip ${certs_file_path})
@@ -151,8 +153,6 @@ echo "server {
   }
 }" | sudo tee /etc/nginx/sites-available/default
 sudo chmod 644 /etc/nginx/sites-available/default
-
-sudo systemctl restart nginx
 
 exit 0
 
