@@ -127,7 +127,7 @@ sudo apt-get install unzip
 (cd .. && sudo chmod 755 ./*/*)
 (cd .. && sudo chmod 755 ./*)
 
-npm install
+(cd .. && sudo npm install)
 
 (cd .. && echo A | sudo unzip dist.zip)
 (cd ../server && echo A | sudo unzip ${certs_file_path})
