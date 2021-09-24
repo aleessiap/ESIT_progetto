@@ -2,32 +2,26 @@
 
 if [[ -z $1 ]]
 then
-    do
 
       if [[$1 == *.zip]]
       then
-          do
 
             if [[ -f $1 ]]
             then
-                do
 
                   let certs_file_path = $1
 
             else
-                do
 
                   echo "Syntax error!\nPassed file does not exists.\n Usage: ./install.bash <certs_zip_file_path>"
                   exit 1
 
       else
-          do
 
             echo "Syntax error!\nPassed file must be .zip a file.\n Usage: ./install.bash <certs_zip_file_path>"
             exit 1
 
 else
-   do
 
      echo "Syntax error!\nYou must pass a file .zip containing aws certificates.\n Usage: ./install.bash <certs_zip_file_path>"
      exit 1
