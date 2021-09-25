@@ -5,21 +5,21 @@ command=$1
 case $command in
 
   "start")
-    sudo npm run mongod_start
-    sudo npm run prod_backend_start
-    sudo npm run prod_frontend_start
+    (cd $WEBAPP_DIR && sudo npm run mongod_start)
+    (cd $WEBAPP_DIR && sudo npm run prod_backend_start)
+    (cd $WEBAPP_DIR && sudo npm run prod_frontend_start)
     ;;
 
   "stop")
-    sudo npm run mongod_stop
-    sudo npm run prod_backend_stop
-    sudo npm run prod_frontend_stop
+    (cd $WEBAPP_DIR && sudo npm run mongod_stop)
+    (cd $WEBAPP_DIR && sudo npm run prod_backend_stop)
+    (cd $WEBAPP_DIR && sudo npm run prod_frontend_stop)
     ;;
 
   "restart")
-    sudo npm run mongod_restart
-    sudo npm run prod_backend_restart
-    sudo npm run prod_frontend_restart
+    (cd $WEBAPP_DIR && sudo npm run mongod_restart)
+    (cd $WEBAPP_DIR && sudo npm run prod_backend_restart)
+    (cd $WEBAPP_DIR && sudo npm run prod_frontend_restart)
     ;;
 
   *)

@@ -133,7 +133,7 @@ sudo apt-get install unzip
 
 (cd ../server && echo A | sudo unzip ${certs_file_path})
 
-sudo cp "./webapp" /usr/local/bin
+sudo ln -s "./webapp" /usr/local/bin/webapp
 
 sudo chmod 755 /etc/nginx/sites-available/default
 
