@@ -133,8 +133,6 @@ sudo apt-get install unzip
 
 (cd ../server && echo A | sudo unzip ${certs_file_path})
 
-sudo ln -s "./webapp" /usr/local/bin/webapp
-
 sudo chmod 755 /etc/nginx/sites-available/default
 
 echo "server {
@@ -159,6 +157,11 @@ echo "Done!"
 echo "Now you can install dependencies:
       1. cd ..
       2. npm install"
+
+echo ""
+echo "Run webapp with:
+      1. cd \$WEBAPP_DIR
+      2. ./webapp start"
 
 
 exit 0
