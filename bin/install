@@ -95,6 +95,8 @@ echo "
 
 
 sudo apt-get install -y nginx
+sudo systemctl stop nginx
+sudo systemctl enable nginx
 
 
 echo "
@@ -142,7 +144,7 @@ echo "server {
   # angular app & front-end files
   location / {
     root ${WEBAPP_DIR::-4}/dist/angular8project;
-    try_files $uri /index.html;
+    try_files \$uri /index.html;
   }
 
   # node api reverse proxy
