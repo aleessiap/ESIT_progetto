@@ -114,6 +114,7 @@ sudo ufw allow 'Nginx Full'
 # enable firewall
 sudo ufw --force enable
 
+WEBAPP_DIR=`pwd`
 echo "export WEBAPP_DIR=`pwd`">~/.profile
 
 echo "
