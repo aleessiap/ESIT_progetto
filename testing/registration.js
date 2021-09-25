@@ -3,14 +3,14 @@ const assert = require("assert");
 
 let server;
 beforeEach(function () {
-  server = require('../server/index').server;
+  server = require('../server/index-testing').server;
 });
-it ('3 - register a user', function(done) {
+it ('23 - register a user', function(done) {
 
   request(server)
     .post('/api/users/add-user')
 
-    .send({_id:'0', name: 'user', surname: 'user', username: 'username', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user@gmail.it'})
+    .send({_id:'111111111111111111111118', name: 'register_user', surname: 'register_user', username: 'register_user', phone_num: '3425581000', birthdate: '2021-07-25T00:00:00.000+00:00', email:'register_user@gmail.it'})
     .expect(200)
     .end(function(err, res) {
 
@@ -23,11 +23,11 @@ it ('3 - register a user', function(done) {
 });
 
 
-it ('4 - cannot register a user with an email already registered', function(done) {
+it ('24 - cannot register a user with an email already registered', function(done) {
   request(server)
     .post('/api/users/add-user')
 
-    .send({ name: 'email', surname: 'email', username: 'email', phone_num: '3425581426', birthdate: '2021-07-25T00:00:00.000+00:00', email:'user@gmail.it' })
+    .send({ name: 'name', surname: 'surname', username: 'username', phone_num: '3425000000', birthdate: '2021-07-25T00:00:00.000+00:00', email:'admin@gmail.it' })
     .expect(403)
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
@@ -39,11 +39,11 @@ it ('4 - cannot register a user with an email already registered', function(done
 
 });
 
-it ('5 - cannot register a user with an username already used', function(done) {
+it ('25 - cannot register a user with an username already used', function(done) {
   request(server)
     .post('/api/users/add-user')
 
-    .send({ name: 'username', surname: 'username', username: 'username', phone_num: '3489987147', birthdate: '2021-07-25T00:00:00.000+00:00', email:'username@gmail.it' })
+    .send({ name: 'name', surname: 'surname', username: 'admin', phone_num: '3425000000', birthdate: '2021-07-25T00:00:00.000+00:00', email:'email@gmail.com' })
     .expect(403)
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
@@ -55,11 +55,11 @@ it ('5 - cannot register a user with an username already used', function(done) {
 
 });
 
-it ('6 - cannot register a user with a phone number already registered', function(done) {
+it ('26 - cannot register a user with a phone number already registered', function(done) {
   request(server)
     .post('/api/users/add-user')
 
-    .send({ name: 'phone', surname: 'phone', username: 'phone', phone_num: '3425581425', birthdate: '2021-07-25T00:00:00.000+00:00', email:'phone@gmail.it' })
+    .send({ name: 'name', surname: 'surname', username: 'username', phone_num: '0000000000', birthdate: '2021-07-25T00:00:00.000+00:00', email:'email@gmail.com' })
     .expect(403)
     .end(function(err, res) {
       if (err) console.log('error' + err.message);

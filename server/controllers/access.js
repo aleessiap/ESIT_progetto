@@ -97,7 +97,6 @@ module.exports.getAccess = function (req, res) {
 
 }
 
-
 module.exports.insertAccess = function (req, res) {
 
   try {

@@ -11,7 +11,7 @@ module.exports.logout = function(req, res) {
   req.session.destroy();
   //console.log("Session: " + req.session+ " " + req.session) ;
 
-  res.json({msg: "Logout effettutato"});
+  res.json({msg: "Logout effettuato"});
 }
 
 module.exports.login = function(req, res){
@@ -43,6 +43,7 @@ module.exports.login = function(req, res){
       } else{
         //console.log(createHash('sha256').update(credential.password).digest('base64'));
         if(createHash('sha256').update(credential.password).digest('base64') === user.password){
+
           console.log("User found");
           req.session.userid = user._id;
           req.session.admin = user.admin;
@@ -134,7 +135,7 @@ module.exports.pinRequest = function (req, res) {
 }
 
 module.exports.recoverPassword = function (req, res) {
-
+  console.log(req.session)
   if(req.session.hasOwnProperty('req_user')) {
 
     if (createHash('sha256').update(req.body.pin).digest('base64') === req.session.req_user.pin) {
@@ -460,7 +461,6 @@ module.exports.getUser = function (req, res) {
   }
 
 }
-
 
 module.exports.searchUser = function (req, res) {
   console.log("Search suggestion user " + req.param("name"))

@@ -4,37 +4,34 @@ const assert = require("assert");
 
 let server;
 beforeEach(function () {
-  server = require('../server/index').server;
+  server = require('../server/index-testing').server;
 });
 
 
-it ('20 - add access', function(done) {
+it ('1 - add access', function(done) {
   request(server)
     .post('/api/access')
-    .send({ _id: '0', user_id: '0', door_id: '0'})
+    .send({ _id: '111111111111111111111111', user_id: '111111111111111111111111', door_id: '111111111111111111111111'})
     .expect(200)
     .end(function(err, res) {
 
       if (err) console.log('error ' + err.message);
-      console.log("register sux: ")
       console.log(res.body)
-      assert.strictEqual(res.body.success, true);
 
     });
   done();
 });
 
-it ('21 - delete access', function(done) {
+it ('2 - delete access', function(done) {
   request(server)
-    .delete('/api/access/0')
+    .delete('/api/access/111111111111111111111112')
     .send()
     .expect(200)
     .end(function(err, res) {
 
       if (err) console.log('error ' + err.message);
-      console.log("register sux: ")
       console.log(res.body)
-      assert.strictEqual(res.body.success, true);
+
 
     });
   done();
