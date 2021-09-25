@@ -159,7 +159,7 @@ echo "Now you can install dependencies:
       2. npm install"
 
 echo ""
-echo "Run webapp with:
+echo "After installing dependencies, run webapp with:
       1. cd \$WEBAPP_DIR
       2. ./webapp start"
 
