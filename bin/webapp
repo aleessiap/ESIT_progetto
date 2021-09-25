@@ -2,7 +2,7 @@
 
 command=$1
 
-case command in
+case $command in
 
   "start")
     sudo npm run prod_backend_start
