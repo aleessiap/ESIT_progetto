@@ -15,7 +15,7 @@ then
 
 echo "Error!
       Passed file does not exists.
-      Usage: ./install.bash <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path>"
                   exit 1
 
             fi
@@ -24,7 +24,7 @@ echo "Error!
 
 echo "Error!
       Passed file must be .zip a file.
-      Usage: ./install.bash <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path>"
             exit 1
 
       fi
@@ -33,7 +33,7 @@ else
 
 echo "Syntax error!
       You must pass a file .zip containing aws certificates.
-      Usage: ./install.bash <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path>"
      exit 1
 
 fi
@@ -41,17 +41,16 @@ fi
 
 echo "
 ----------------------
-  NODE & NPM
+  NODE AND NPM
 ----------------------
 "
 
 sudo apt-get update
-sudo apt-get install -y build-essential libssl-dev
-sudo curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
-source ~/.profile
-source ~/.bashrc
-sudo nvm install 14.17.6
-sudo nvm use 14
+curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+node -v
+npm -v
 
 
 echo "
@@ -72,13 +71,12 @@ sudo apt-get update
 sudo apt-get install -y mongodb-org
 
 # start mongodb
-sudo systemctl start mongod
 sudo systemctl enable mongod
 
 
 echo "
 ----------------------
-  PM2
+  PM2 CONFIG
 ----------------------
 "
 
@@ -95,8 +93,10 @@ echo "
 ----------------------
 "
 
-# install nginx
+
 sudo apt-get install -y nginx
+sudo systemctl stop nginx
+sudo systemctl enable nginx
 
 
 echo "
@@ -114,6 +114,8 @@ sudo ufw allow 'Nginx Full'
 # enable firewall
 sudo ufw --force enable
 
+WEBAPP_DIR=`pwd`
+echo "export WEBAPP_DIR=`pwd`">~/.profile
 
 echo "
 ----------------------
@@ -123,20 +125,13 @@ echo "
 sudo apt-get update
 sudo apt-get install unzip
 
+(cd .. && echo A | sudo unzip dist.zip)
+
 (cd .. && sudo chmod 755 ./*/*/*)
 (cd .. && sudo chmod 755 ./*/*)
 (cd .. && sudo chmod 755 ./*)
-sudo npm install
 
-(cd .. && echo A | sudo unzip dist.zip)
 (cd ../server && echo A | sudo unzip ${certs_file_path})
-
-sudo cp "./webapp" /usr/local/bin
-
-project_dir=`pwd`
-project_dir=${project_dir::-4}
-echo "export WEBAPP_DIR=${project_dir}">~/.profile
-source ~/.profile
 
 sudo chmod 755 /etc/nginx/sites-available/default
 
@@ -147,8 +142,8 @@ echo "server {
 
   # angular app & front-end files
   location / {
-    root ${WEBAPP_DIR}/dist/angular8project;
-    try_files $uri /index.html;
+    root ${WEBAPP_DIR::-4}/dist/angular8project;
+    try_files \$uri /index.html;
   }
 
   # node api reverse proxy
@@ -158,6 +153,31 @@ echo "server {
 }" | sudo tee /etc/nginx/sites-available/default
 sudo chmod 644 /etc/nginx/sites-available/default
 
-sudo systemctl restart nginx
+
+echo "
+----------------------
+  DONE!
+----------------------
+"
+
+echo ""
+echo "Now you can install dependencies:
+      1. cd ..
+      2. npm install"
+
+echo ""
+echo "After installing dependencies, run webapp with:
+      1. cd \$WEBAPP_DIR
+      2. ./webapp start
+
+stop webapp with:
+      1. cd \$WEBAPP_DIR
+      2. ./webapp stop
+
+restart webapp with:
+      1. cd \$WEBAPP_DIR
+      2. ./webapp restart
+
 
 exit 0
+
