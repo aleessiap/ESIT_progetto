@@ -153,7 +153,14 @@ echo "server {
 }" | sudo tee /etc/nginx/sites-available/default
 sudo chmod 644 /etc/nginx/sites-available/default
 
-echo "Done!"
+
+echo "
+----------------------
+  DONE!
+----------------------
+"
+
+echo ""
 echo "Now you can install dependencies:
       1. cd ..
       2. npm install"
@@ -161,7 +168,15 @@ echo "Now you can install dependencies:
 echo ""
 echo "After installing dependencies, run webapp with:
       1. cd \$WEBAPP_DIR
-      2. ./webapp start"
+      2. ./webapp start
+
+stop webapp with:
+      1. cd \$WEBAPP_DIR
+      2. ./webapp stop
+
+restart webapp with:
+      1. cd \$WEBAPP_DIR
+      2. ./webapp restart
 
 
 exit 0
