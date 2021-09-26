@@ -16,7 +16,7 @@ const userSchema = new Schema(
     email: {  unique: true, type: String, required: true},
     password: { default: '', type: String, required: true },
     admin: { type: Boolean, required: true },
-    door_list: { type: [{type: mongoose.SchemaTypes.ObjectId}], required: true }
+    door_list: {default:[], type: [{type: mongoose.SchemaTypes.ObjectId}], required: true }
 
   }
 
