@@ -30,27 +30,27 @@ module.exports.getAllAuthorizations = function (req, res) {
 
 }
 
-// get all users not authorized (method not used)
-// module.exports.getAllNotAuthorized = function (req, res) {
-//
-//   try {
-//     Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
-//
-//
-//       res.status(200).json(docs);
-//
-//     })
-//   } catch (err) {
-//
-//     console.log(err)
-//     res.status(500).json({
-//       type: "Si e\' verificato un errore",
-//       msg: err
-//     })
-//
-//   }
-//
-// }
+//get all users not authorized (method not used)
+module.exports.getAllNotAuthorized = function (req, res) {
+
+  try {
+    Door.find({}, {authorizations: 1, _id: 0}, (err, docs) => {
+
+
+      res.status(200).json(docs);
+
+    })
+  } catch (err) {
+
+    console.log(err)
+    res.status(500).json({
+      type: "Si e\' verificato un errore",
+      msg: err
+    })
+
+  }
+
+}
 
 // Get all users authorized to access a door (old method not used)
 /*module.exports.getAuthorizations = function (req, res) {
@@ -273,26 +273,26 @@ module.exports.insertAuthorization = function (req, res) {
 }
 
 // Update the authorization
-// module.exports.updateAuthorization = function (req, res) {
-//
-//   Door.findById(mongoose.Types.ObjectId(req.body._id), function (err, doc) {
-//
-//     if (err) {
-//       res.send(err);
-//     }
-//     else {
-//
-//       let user = doc['authorization']['_doc'][req.body.old_pin];
-//       doc['authorization']['_doc'][req.body.old_pin] = undefined;
-//       doc['authorization']['_doc'][req.body.new_pin] = user;
-//       Door.findByIdAndUpdate(doc._id, doc);
-//       res.send(doc);
-//
-//     }
-//
-//   })
-//
-// }
+module.exports.updateAuthorization = function (req, res) {
+
+  Door.findById(mongoose.Types.ObjectId(req.body._id), function (err, doc) {
+
+    if (err) {
+      res.send(err);
+    }
+    else {
+
+      let user = doc['authorization']['_doc'][req.body.old_pin];
+      doc['authorization']['_doc'][req.body.old_pin] = undefined;
+      doc['authorization']['_doc'][req.body.new_pin] = user;
+      Door.findByIdAndUpdate(doc._id, doc);
+      res.send(doc);
+
+    }
+
+  })
+
+}
 
 
 // Delete authorization
