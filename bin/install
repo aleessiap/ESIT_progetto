@@ -188,17 +188,17 @@ sudo chmod 644 /etc/nginx/sites-available/default
 # Configure backend start script
 echo "#!/usr/bin/env bash
 
-# Backend configuration ===============================================================================
-echo mongodb://localhost:27017/ESIT>server_conf.txt                        # | Mongodb uri           |
-curl http://169.254.169.254/latest/meta-data/public-ipv4>>server_conf.txt  # | Own IPv4 public DNS   |
-echo '8080'>>server_conf.txt                                                 # | Port                  |
-echo '${bot_telegram_api_token}'>>server_conf.txt                            # | Bot telegram api token|
-echo '${private_key_path}'>>server_conf.txt                                  # | Private key thing     |
-echo '${thing_cert_path}'>>server_conf.txt                                   # | Certificate thing     |
-echo '${amazon_root_ca_path}'>>server_conf.txt                               # | Certificate CA amazon |
-echo 'APP'>>server_conf.txt                                                # | AWS thing name webapp |
+# Backend configuration =====================================================================================
+echo mongodb://localhost:27017/ESIT>server_conf.txt                               # | Mongodb uri           |
+echo `curl http://169.254.169.254/latest/meta-data/public-ipv4`>>server_conf.txt  # | Own IPv4 public DNS   |
+echo '8080'>>server_conf.txt                                                      # | Port                  |
+echo '${bot_telegram_api_token}'>>server_conf.txt                                 # | Bot telegram api token|
+echo '${private_key_path}'>>server_conf.txt                                       # | Private key thing     |
+echo '${thing_cert_path}'>>server_conf.txt                                        # | Certificate thing     |
+echo '${amazon_root_ca_path}'>>server_conf.txt                                    # | Certificate CA amazon |
+echo 'APP'>>server_conf.txt                                                       # | AWS thing name webapp |
 
-# Start backend =======================================================================================
+# Start backend =============================================================================================
 sudo pm2 start server/index.js
 " | sudo tee prod_backend_start
 
