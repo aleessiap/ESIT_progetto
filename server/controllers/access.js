@@ -175,7 +175,7 @@ module.exports.updateAccess = function (req, res) {
 
 }
 
-// Delete an access
+// Delete an access by its id
 module.exports.deleteAccess = function (req, res) {
 
   try {
