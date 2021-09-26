@@ -1,6 +1,8 @@
 const Access = require('../models/access');
 const mongoose = require("mongoose");
 const User = require("../models/user")
+
+// Search all access
 module.exports.getAllAccess = function (req, res) {
 
   try {
@@ -23,6 +25,7 @@ module.exports.getAllAccess = function (req, res) {
 
 }
 
+// Get all access of a door
 module.exports.getAccessByDoorId = function (req, res) {
 
   try {
@@ -45,6 +48,7 @@ module.exports.getAccessByDoorId = function (req, res) {
 
 }
 
+// Get all access of a door by a user
 module.exports.getAccessByDoorIdAndUserId = function (req, res) {
 
   try {
@@ -67,6 +71,7 @@ module.exports.getAccessByDoorIdAndUserId = function (req, res) {
 
 }
 
+// Get a single access by its id
 module.exports.getAccess = function (req, res) {
 
   try{
@@ -97,6 +102,7 @@ module.exports.getAccess = function (req, res) {
 
 }
 
+// Insert a new access
 module.exports.insertAccess = function (req, res) {
   console.log('User '+ req.body.user_id)
   console.log('Door '+ req.body.door_id)
@@ -138,6 +144,7 @@ module.exports.insertAccess = function (req, res) {
 
 }
 
+// Update a single access by its id
 module.exports.updateAccess = function (req, res) {
 
   try {
@@ -168,6 +175,7 @@ module.exports.updateAccess = function (req, res) {
 
 }
 
+// Delete an access
 module.exports.deleteAccess = function (req, res) {
 
   try {
