@@ -7,14 +7,26 @@ const conf = require('../config');
 const {createHash} = require('./passwd');
 const path = require("path");
 
-THING_NAME = 'APP'
+THING_NAME = conf.WEBAPP_THING_NAME
+
+// Connection to aws IoT platform using released certs
+// device = AwsIot.device({
+//
+//   keyPath: path.join(__dirname, 'certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-private.pem.key'),
+//   certPath: path.join(__dirname, 'certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-certificate.pem.crt'),
+//   caPath: path.join(__dirname, 'certs/AmazonRootCA1.pem'),
+//   clientId: THING_NAME,
+//   host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com',
+//   keepalive: 60
+//
+// });
 
 // Connection to aws IoT platform using released certs
 device = AwsIot.device({
 
-  keyPath: path.join(__dirname, 'certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-private.pem.key'),
-  certPath: path.join(__dirname, 'certs/aef2eeadc93f477becfd1ee3b7589fff665bfeae89d39e90754f7e51ff047d4c-certificate.pem.crt'),
-  caPath: path.join(__dirname, 'certs/AmazonRootCA1.pem'),
+  keyPath: conf.PRIVATE_KEY_THING_PATH,
+  certPath: conf.CERTIFICATE_THING_PATH,
+  caPath: conf.AMAZON_ROOT_CA_PATH,
   clientId: THING_NAME,
   host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com',
   keepalive: 60
