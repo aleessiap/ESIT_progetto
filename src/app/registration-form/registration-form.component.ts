@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css']
 })
+
 export class RegistrationFormComponent implements OnInit {
+
   registrationForm: FormGroup;
+
   submitted = false;
   loggedIn : string | null;
+
   admin : string | null;
+
   created : boolean;
   error : boolean;
+
   constructor(
     private  fb : FormBuilder,
     public api: UserService
@@ -23,11 +29,12 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.created = false;
 
     this.loggedIn = localStorage.getItem('loggedIn');
     this.admin = localStorage.getItem('admin');
-    this.created = false;
-    this.error = false;
+
+
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -39,40 +46,51 @@ export class RegistrationFormComponent implements OnInit {
 
   }
 
-
+  /**This method is used to create a user with the input form data.**/
   onSubmit() {
+    //Initialization of variables
+    this.error = false;
     this.submitted = true;
     this.created = false;
-    this.error = false;
+
+    //If the form is invalid, nothing is done
     if (this.registrationForm.invalid) {
       return;
     }
 
     this.api.addUser(this.registrationForm.value)
       .subscribe((response) => {
+
+          //The user is successfully created and the admin is notified of its creation
           this.submitted = false;
           this.error = false;
           this.created = true;
+
           this.registrationForm.reset();
           this.registrationForm.markAsUntouched();
           this.registrationForm.markAsPristine();
         },
-        (err) => {
-          console.log("User already registered")
+
+        (err: HttpErrorResponse) => {
+          //If there is an error it is showed in the form and in the page
+          console.log("Error creating the user");
+          console.log(err.error);
 
           this.error = true;
 
           if(err.error.email > 0){
             this.registrationForm.controls['email'].setErrors({'incorrect': true});
           }
+
           if(err.error.phone > 0){
             this.registrationForm.controls['phone_num'].setErrors({'incorrect': true});
           }
+
           if(err.error.username >0){
             this.registrationForm.controls['username'].setErrors({'incorrect': true});
           }
-        });
 
+        });
 
   }
 }
