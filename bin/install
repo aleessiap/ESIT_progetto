@@ -49,6 +49,7 @@ else
 echo "Error!
       You must pass a string containing the telegram bot API token.
       Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
+    exit 1
 
 fi
 
