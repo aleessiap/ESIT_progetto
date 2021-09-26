@@ -188,7 +188,9 @@ function listen_devices(server, bot) {
                       } else {
 
                         expired = true
-                        Access.create({door_id: door_id, user_id: user_id}, (err2, doc2) => {
+                        if(user.door_list.find(d => d.equals(door_id))){
+
+                          Access.create({door_id: door_id, user_id: user_id}, (err2, doc2) => {
 
                           if (err2) {
 
@@ -204,9 +206,13 @@ function listen_devices(server, bot) {
 
                         });
 
+                      }else{
+                        res.send("L'utente non e\' autorizzato all'accesso");
+                        }
                       }
 
-                    }))
+                    }
+                      ))
 
                     setTimeout(() => {
 
