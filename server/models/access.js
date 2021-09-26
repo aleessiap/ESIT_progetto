@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Access schema
 const accessSchema = new Schema(
 
   {

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const authorizationSchema = require('./authorization');
 
+
+// Door Schema
 const doorSchema = new Schema(
 
   {

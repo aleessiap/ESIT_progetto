@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const accessController = require('../controllers/access')
 
+// Access routes
 router.get('/', accessController.getAllAccess);
 router.get('/:_id', accessController.getAccess);
 router.get('/door/:_id', accessController.getAccessByDoorId);

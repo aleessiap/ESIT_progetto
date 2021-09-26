@@ -8,6 +8,8 @@ const SYMBOLS = ',./<>?;\'":[]\\|}{=-_+`~!@#$%^&*()'; // 32 chars
 const ALPHANUMERIC_CHARS = LOWERCASE_ALPHABET + UPPERCASE_ALPHABET + NUMBERS; // 62 chars
 const ALL_CHARS = ALPHANUMERIC_CHARS + SYMBOLS; // 94 chars
 
+
+// Generate a random password
 function generateRandomPassword(length, alphabet) {
 
   let rb = randomBytes(length);
@@ -24,6 +26,8 @@ function generateRandomPassword(length, alphabet) {
 
 }
 
+
+// Exports
 module.exports.createHash = createHash
 module.exports.generateRandomPassword = generateRandomPassword
 module.exports.LOWERCASE_ALPHABET = 'abcdefghijklmnopqrstuvwxyz'; // 26 chars

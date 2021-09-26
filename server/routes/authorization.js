@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const authorizationController = require('../controllers/authorization')
 
+// Authorization routes
 router.get('/', authorizationController.getAllAuthorizations);
 router.get('/denied', authorizationController.getAllNotAuthorized);
 router.get('/:_id', authorizationController.getAuthorizations);

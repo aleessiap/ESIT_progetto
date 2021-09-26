@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const doorController = require('../controllers/door')
 
-
+// Door routes
 router.delete('/:_id', doorController.deleteDoor);
 router.get('/', doorController.getAllDoors);
 router.get('/user/:_id', doorController.getDoorsByUserId);
