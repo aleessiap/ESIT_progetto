@@ -3,6 +3,7 @@ const User = require('./models/user');
 const {generateRandomPassword} = require('./passwd')
 const {createHash} = require('./passwd')
 const {ALL_CHARS} = require('./passwd')
+
 const conf = require('../config')
 
 const TELEGRAM_TOKEN = conf['BOT_TELEGRAM_API_TOKEN'];
