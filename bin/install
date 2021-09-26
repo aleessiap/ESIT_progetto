@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-
+# Check arguments
 if [[ -n $1 ]];
 then
 
@@ -52,7 +52,7 @@ echo "Error!
 
 fi
 
-
+# Install node and npm
 echo "
 ----------------------
   NODE AND NPM
@@ -66,7 +66,7 @@ sudo apt-get install -y nodejs
 node -v
 npm -v
 
-
+# Install mongodb
 echo "
 ----------------------
   MONGODB
@@ -87,7 +87,7 @@ sudo apt-get install -y mongodb-org
 # start mongodb
 sudo systemctl enable mongod
 
-
+# Install pm2
 echo "
 ----------------------
   PM2 CONFIG
@@ -100,7 +100,7 @@ sudo npm install -g pm2
 # set pm2 to start automatically on system startup
 sudo pm2 startup systemd
 
-
+# Install nginx
 echo "
 ----------------------
   NGINX
@@ -112,7 +112,7 @@ sudo apt-get install -y nginx
 sudo systemctl stop nginx
 sudo systemctl enable nginx
 
-
+# Config firewall settings
 echo "
 ----------------------
   UFW (FIREWALL)
@@ -128,9 +128,11 @@ sudo ufw allow 'Nginx Full'
 # enable firewall
 sudo ufw --force enable
 
+# Configure environment variable
 WEBAPP_DIR=`pwd`
 echo "export WEBAPP_DIR=`pwd`">~/.profile
 
+# Configure app
 echo "
 ----------------------
   APP CONFIG
@@ -139,14 +141,18 @@ echo "
 sudo apt-get update
 sudo apt-get install unzip
 
+# Install angular build
 (cd .. && echo A | sudo unzip dist.zip)
 
+# Change app's file permissions
 (cd .. && sudo chmod 755 ./*/*/*)
 (cd .. && sudo chmod 755 ./*/*)
 (cd .. && sudo chmod 755 ./*)
 
+# Install certificates
 (cd ../server && echo A | sudo unzip ${certs_file_path})
 
+# Configure nginx (proxy and root build)
 sudo chmod 755 /etc/nginx/sites-available/default
 
 echo "server {
@@ -168,17 +174,18 @@ echo "server {
 
 sudo chmod 644 /etc/nginx/sites-available/default
 
-
+# Configure backend start script
 echo "#!/usr/bin/env bash
 
-# Backend configuration =============================================================================
-echo mongodb://localhost:27017/ESIT>server_conf.txt                        # | Mongodb uri
-curl http://169.254.169.254/latest/meta-data/public-ipv4>>server_conf.txt  # | Own IPv4 public DNS
-echo 8080>>server_conf.txt                                                 # | Port
-echo ${bot_telegram_api_token}>>server_conf.txt                            # | Bot telegram api token
+# Backend configuration ===============================================================================
+echo mongodb://localhost:27017/ESIT>server_conf.txt                        # | Mongodb uri           |
+curl http://169.254.169.254/latest/meta-data/public-ipv4>>server_conf.txt  # | Own IPv4 public DNS   |
+echo 8080>>server_conf.txt                                                 # | Port                  |
+echo ${bot_telegram_api_token}>>server_conf.txt                            # | Bot telegram api token|
 
-# Start backend =====================================================================================
-sudo pm2 start server/index.js" | sudo tee prod_backend_start
+# Start backend =======================================================================================
+sudo pm2 start server/index.js
+" | sudo tee prod_backend_start
 
 
 echo "
@@ -187,6 +194,7 @@ echo "
 ----------------------
 "
 
+# Show instructions
 echo ""
 echo "Now you can install dependencies:
       1. cd ..
