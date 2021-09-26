@@ -1,6 +1,6 @@
 const Access = require('../models/access');
 const mongoose = require("mongoose");
-
+const User = require("../models/user")
 module.exports.getAllAccess = function (req, res) {
 
   try {
@@ -98,14 +98,33 @@ module.exports.getAccess = function (req, res) {
 }
 
 module.exports.insertAccess = function (req, res) {
-
+  console.log('User '+ req.body.user_id)
+  console.log('Door '+ req.body.door_id)
   try {
+    User.findOne({_id: mongoose.Types.ObjectId(req.body.user_id)}, (err, user) => {
+      if (!user) {
+        res.status(403).json({
+          success: false,
+          msg: "User not found"});
+      }else{
+        if(user.door_list.find(el => el.equals(req.body.door_id))){
+          Access.create(req.body, (err, doc) => {
 
-    Access.create(req.body, (err, doc) => {
+            res.status(200).json({
+              success:true,
+              msg: "Door authorized"
+            });
 
-      res.status(200).json(doc);
-
+          })
+        }else{
+          res.status(403).json({
+            success:false,
+            msg: 'Door not authorized'
+          })
+        }
+      }
     })
+
 
   } catch (err) {
 

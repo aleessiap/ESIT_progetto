@@ -480,4 +480,3 @@ module.exports.searchUser = function (req, res) {
       }
     })
 }
-
