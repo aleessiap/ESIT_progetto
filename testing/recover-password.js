@@ -5,16 +5,19 @@ beforeEach(function () {
   server = require('../server/index-testing').server;
 });
 
-it ('18 - recover password not first access', function(done) {
+/**This script contains all the tests concerning the procedure to recover the password.**/
+
+
+it ('18 - This test checks that the password cannot be recovered if the user has not completed the first login procedure', function(done) {
 
   request(server)
     .post('/api/users/recover-pin')
     .send({ email: 'not_authorized@gmail.it'})
     .expect(403)
     .end(function(err, res) {
+
       if (err) console.log('error ' + err.message);
-      console.log("18: ")
-      console.log(res.body)
+      //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
     });
@@ -22,16 +25,16 @@ it ('18 - recover password not first access', function(done) {
 
 });
 
-it ('19 - recover password ', function(done) {
+it ('19 - This test checks that the password can be recovered', function(done) {
 
   request(server)
     .post('/api/users/recover-pin')
     .send({ email: 'another_user@gmail.it'})
     .expect(200)
     .end(function(err, res) {
+
       if (err) console.log('error ' + err.message);
-      console.log("19: ")
-      console.log(res.body)
+      //console.log(res.body)
       assert.strictEqual(res.body.success, true);
 
     });
@@ -39,15 +42,15 @@ it ('19 - recover password ', function(done) {
 
 });
 
-it ('20 - recover password wrong email', function(done) {
+it ('20 - This test checks that you cannot recover your password if you insert an email address that is not registered in the system', function(done) {
   request(server)
     .post('/api/users/recover-pin')
     .send({ email: 'bruce@wayne.inc'})
     .expect(403)
     .end(function(err, res) {
+
       if (err) console.log('error ' + err.message);
-      console.log("20: User not found")
-      console.log(res.body)
+      //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
     });
@@ -55,15 +58,15 @@ it ('20 - recover password wrong email', function(done) {
 
 });
 
-it ('21 - send pin without sending email first', function(done) {
+it ('21 - This test checks that the password cannot be recovered if the PIN is entered first', function(done) {
   request(server)
     .post('/api/users/recover-password')
     .send({ pin: '232324'})
     .expect(403)
     .end(function(err, res) {
+
       if (err) console.log('error ' + err.message);
-      console.log("21: No pin requested")
-      console.log(res.body)
+      //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
     });
@@ -71,7 +74,7 @@ it ('21 - send pin without sending email first', function(done) {
 
 });
 
-it ('22 - send email and wrong pin', function(done) {
+it ('22 - This test checks that you cannot recover your password if you enter the wrong PIN', function(done) {
   request(server)
 
   request(server)
@@ -79,8 +82,9 @@ it ('22 - send email and wrong pin', function(done) {
     .send({email: 'admin@gmail.it'})
     .expect(200)
     .end(function(err, res) {
+
       if (err) console.log('error' + err.message);
-      console.log(res.body)
+      //console.log(res.body)
       assert.strictEqual(res.body.success, true);
 
     });
@@ -90,17 +94,18 @@ it ('22 - send email and wrong pin', function(done) {
     .send({ pin: '23232488'})
     .expect(403)
     .end(function(err, res) {
+
       if (err) console.log('error ' + err.message);
-      console.log("22: Wrong pin")
-      console.log(res.body)
+      //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
     });
   done();
 
 });
+
 /***
-it ('23 - send email and pin after 60 seconds', function(done) {
+it ('23 - This test checks that you cannot recover your password if you enter your PIN after 60 seconds', function(done) {
   request(server)
 
   request(server)

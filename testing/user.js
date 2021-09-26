@@ -5,7 +5,10 @@ let server;
 beforeEach(function () {
   server = require('../server/index-testing').server;
 });
-it ('23 - register a user', function(done) {
+
+/**This script contains all the tests concerning to the creation of users and their deletion.**/
+
+it ('29 - This test checks that a new user can be correctly registered in the system', function(done) {
 
   request(server)
     .post('/api/users/add-user')
@@ -15,7 +18,6 @@ it ('23 - register a user', function(done) {
     .end(function(err, res) {
 
       if (err) console.log('error' + err.message);
-
       assert.strictEqual(res.body.success, true);
 
     });
@@ -23,23 +25,26 @@ it ('23 - register a user', function(done) {
 });
 
 
-it ('24 - cannot register a user with an email already registered', function(done) {
+it ('30 - This test checks that it is not possible to register a new user with an email address already present in the system.', function(done) {
+
   request(server)
     .post('/api/users/add-user')
 
     .send({ name: 'name', surname: 'surname', username: 'username', phone_num: '3425000000', birthdate: '2021-07-25T00:00:00.000+00:00', email:'admin@gmail.it' })
     .expect(403)
     .end(function(err, res) {
-      if (err) console.log('error' + err.message);
 
+      if (err) console.log('error' + err.message);
       assert.strictEqual(res.body.success, false);
       assert.strictEqual(res.body.email, 1);
+
     });
   done();
 
 });
 
-it ('25 - cannot register a user with an username already used', function(done) {
+it ('31 - This test checks that it is not possible to register a new user with a username already present in the system.', function(done) {
+
   request(server)
     .post('/api/users/add-user')
 
@@ -47,15 +52,16 @@ it ('25 - cannot register a user with an username already used', function(done) 
     .expect(403)
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
-
       assert.strictEqual(res.body.success, false);
       assert.strictEqual(res.body.username, 1);
+
     });
   done();
 
 });
 
-it ('26 - cannot register a user with a phone number already registered', function(done) {
+it ('32 - This test checks that a new user cannot be registered with a phone number already present in the system', function(done) {
+
   request(server)
     .post('/api/users/add-user')
 
@@ -63,10 +69,24 @@ it ('26 - cannot register a user with a phone number already registered', functi
     .expect(403)
     .end(function(err, res) {
       if (err) console.log('error' + err.message);
-
       assert.strictEqual(res.body.success, false);
       assert.strictEqual(res.body.phone, 1);
+
     });
   done();
 
+});
+
+it ('33 - This test checks that a user can be correctly deleted from the system', function(done) {
+
+  request(server)
+    .delete('/api/users/111111111111111111111115')
+    .end(function(err, res) {
+
+      if (err) console.log('error' + err.message);
+      //console.log(res.body)
+      assert.strictEqual(res.body.success, true);
+
+    });
+  done();
 });

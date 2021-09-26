@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -10,31 +10,39 @@ import {HttpErrorResponse} from "@angular/common/http";
   templateUrl: './change-password-form.component.html',
   styleUrls: ['./change-password-form.component.css']
 })
+
 export class ChangePasswordFormComponent implements OnInit {
+
   changePassword: FormGroup;
 
-  submitted = false;
   loggedIn : string | null;
   currentUser : string | null;
+
   id : string;
   user : User;
+
+  submitted = false;
   modified: boolean;
   wrongPassword: boolean;
   mismatch: boolean;
 
-  constructor(    private  fb : FormBuilder,
-                  public api: UserService,
-                  private router: Router,
-                  private activatedRoute: ActivatedRoute
-  ) {
+  constructor(
+    private  fb : FormBuilder,
+    public api: UserService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  )
+  {
+
     this.activatedRoute.params.subscribe(params => {
       this.id = params['_id'];
     })
-  }
 
+  }
 
   ngOnInit(): void {
 
+    //Initializations of variables
     this.modified = false;
     this.mismatch = false;
     this.wrongPassword = false;
@@ -49,28 +57,39 @@ export class ChangePasswordFormComponent implements OnInit {
     })
 
     this.api.getUser(this.id).subscribe(data => {
+
       this.user = data;
+
     },
     (err: HttpErrorResponse) => {
+
       console.log("Error in getting the user");
       console.log(err);
+
     })
   }
 
-
+  /**This method is used to save correctly the new password**/
   save() {
+
     this.submitted = true;
 
+    //If the form is invalid, nothing is done
     if (this.changePassword.invalid) {
       return;
     }
 
+    //The old password must be right
     if(this.changePassword.value.oldPassword == this.user.password) {
+      //If the confirmation of the new password is different from the new password, there is an error
       if (this.changePassword.value.password != this.changePassword.value.confirmation) {
+
         this.mismatch = true;
         return;
+
       }
       else {
+        //If the confirmation matches the new password, the procedure can be done
         const doc = {
           id: this.id,
           password: this.changePassword.value.password
@@ -79,21 +98,26 @@ export class ChangePasswordFormComponent implements OnInit {
         this.api.modifyPassword(doc)
           .subscribe(() => {},
           (err: HttpErrorResponse) => {
+
             console.log("Error in modifying the password");
             console.log(err.error.msg);
+
           });
 
         this.modified=true;
         this.router.navigateByUrl('/modify_profile/'+this.id).then();
+
       }
     }
     else{
+
       this.wrongPassword = true;
       return;
-    }
 
+    }
   }
 
+  /**This method is used to go back to the previous page**/
   cancel(){
     this.router.navigateByUrl('/modify_profile/'+this.id);
   }
