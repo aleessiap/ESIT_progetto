@@ -72,7 +72,7 @@ echo "Error!
 fi
 
 echo 'db.createCollection("User")' | sudo mongo localhost:27017/ESIT
-echo "db.insertCollection({name:${name}, surname:${surname}, username:${telegram_username}, phone_number:${phone_number}, email:${email}, admin:true})"
+echo "db.insertCollection({name:${name}, surname:${surname}, username:${telegram_username}, phone_number:${phone_number}, email:${email}, admin:true})" | sudo mongo localhost:27017/ESIT
 
 echo "Done!"
 echo "Connect to your bot using telegram app and send command /register."
