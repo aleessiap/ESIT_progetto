@@ -1,9 +1,11 @@
-const TELEGRAM_TOKEN = '1843846040:AAFzUIY65WOfHObppTFAfBz4gaNVQ1MyOC8';
 const TelegramBot = require('node-telegram-bot-api');
 const User = require('./models/user');
 const {generateRandomPassword} = require('./passwd')
 const {createHash} = require('./passwd')
 const {ALL_CHARS} = require('./passwd')
+const conf = require('../config')
+
+const TELEGRAM_TOKEN = conf['BOT_TELEGRAM_API_TOKEN'];
 
 bot = new TelegramBot(TELEGRAM_TOKEN, {polling:true});
 

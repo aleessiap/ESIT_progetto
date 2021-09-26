@@ -7,7 +7,8 @@ let server_conf = {
 
   DB: confs[0],
   HOST_IP: confs[1],
-  PORT: 8080
+  PORT: confs[2],
+  BOT_TELEGRAM_API_TOKEN: confs[3]
 
 }
 

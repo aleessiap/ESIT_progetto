@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 if [[ -n $1 ]];
 then
 
@@ -15,7 +16,7 @@ then
 
 echo "Error!
       Passed file does not exists.
-      Usage: ./install <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
                   exit 1
 
             fi
@@ -24,7 +25,7 @@ echo "Error!
 
 echo "Error!
       Passed file must be .zip a file.
-      Usage: ./install <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
             exit 1
 
       fi
@@ -33,8 +34,21 @@ else
 
 echo "Syntax error!
       You must pass a file .zip containing aws certificates.
-      Usage: ./install <certs_zip_file_path>"
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
      exit 1
+
+fi
+
+if [[ -n $2 ]];
+then
+
+  bot_telegram_api_token="$2"
+
+else
+
+echo "Error!
+      You must pass a string containing the telegram bot API token.
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
 
 fi
 
@@ -151,7 +165,20 @@ echo "server {
     proxy_pass http://localhost:8080;
   }
 }" | sudo tee /etc/nginx/sites-available/default
+
 sudo chmod 644 /etc/nginx/sites-available/default
+
+
+echo "#!/usr/bin/env bash
+
+# Backend configuration =============================================================================
+echo mongodb://localhost:27017/ESIT>server_conf.txt                        # | Mongodb uri
+curl http://169.254.169.254/latest/meta-data/public-ipv4>>server_conf.txt  # | Own IPv4 public DNS
+echo 8080>>server_conf.txt                                                 # | Port
+echo ${bot_telegram_api_token}>>server_conf.txt                            # | Bot telegram api token
+
+# Start backend =====================================================================================
+sudo pm2 start server/index.js" | sudo tee prod_backend_start
 
 
 echo "
