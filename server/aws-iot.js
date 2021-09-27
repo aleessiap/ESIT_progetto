@@ -27,8 +27,8 @@ device = AwsIot.device({
   keyPath: conf.PRIVATE_KEY_THING_PATH,
   certPath: conf.CERTIFICATE_THING_PATH,
   caPath: conf.AMAZON_ROOT_CA_PATH,
-  clientId: THING_NAME,
-  host: 'a19up4beoeskf3-ats.iot.us-east-1.amazonaws.com',
+  clientId: conf.WEBAPP_THING_NAME,
+  host: conf.AWS_MQTT_HOST,
   keepalive: 60
 
 });

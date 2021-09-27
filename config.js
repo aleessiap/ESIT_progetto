@@ -13,7 +13,8 @@ let server_conf = {
   PRIVATE_KEY_THING_PATH: confs[4], // Fifth line represents private key thing cert
   CERTIFICATE_THING_PATH: confs[5], // Sixth line represents thing cert
   AMAZON_ROOT_CA_PATH: confs[6], // Seventh line represents Amazon CA cert
-  WEBAPP_THING_NAME: confs[7] // Eight line represents the web app_thing name
+  WEBAPP_THING_NAME: confs[7], // Eight line represents the web app_thing name
+  AWS_MQTT_HOST: confs[8] //last line represents the aws mqtt host
 
 }
 

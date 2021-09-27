@@ -16,7 +16,7 @@ then
 
 echo "Error!
       Passed file does not exists.
-      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token> <aws_mqtt_host> <webapp_thing_name>"
                   exit 1
 
             fi
@@ -25,7 +25,7 @@ echo "Error!
 
 echo "Error!
       Passed file must be .zip a file.
-      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token> <aws_mqtt_host> <webapp_thing_name>"
             exit 1
 
       fi
@@ -34,7 +34,7 @@ else
 
 echo "Syntax error!
       You must pass a file .zip containing aws certificates.
-      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token> <aws_mqtt_host> <webapp_thing_name>"
      exit 1
 
 fi
@@ -48,7 +48,35 @@ else
 
 echo "Error!
       You must pass a string containing the telegram bot API token.
-      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token>"
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token> <aws_mqtt_host> <webapp_thing_name>"
+    exit 1
+
+fi
+
+if [[ -n $3 ]];
+then
+
+  aws_mqtt_host="$3"
+
+else
+
+echo "Error!
+      You must pass a string containing the aws mqtt host.
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token> <aws_mqtt_host> <webapp_thing_name>"
+    exit 1
+
+fi
+
+if [[ -n $4 ]];
+then
+
+  webapp_thing_name="$4"
+
+else
+
+echo "Error!
+      You must pass a string containing the webapp thing name.
+      Usage: ./install <certs_zip_file_path> <bot_telegram_api_token> <aws_mqtt_host> <webapp_thing_name>"
     exit 1
 
 fi
@@ -196,7 +224,8 @@ echo '${bot_telegram_api_token}'>>server_conf.txt                               
 echo '${private_key_path}'>>server_conf.txt                                       # | Private key thing     |
 echo '${thing_cert_path}'>>server_conf.txt                                        # | Certificate thing     |
 echo '${amazon_root_ca_path}'>>server_conf.txt                                    # | Certificate CA amazon |
-echo 'APP'>>server_conf.txt                                                       # | AWS thing name webapp |
+echo '${webapp_thing_name}'>>server_conf.txt                                      # | AWS thing name webapp |
+echo '${aws_mqtt_host}'>>server_conf.txt                                          # | AWS thing name webapp |
 
 # Start backend =============================================================================================
 sudo pm2 start server/index.js
