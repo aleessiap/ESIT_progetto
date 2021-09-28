@@ -216,21 +216,43 @@ sudo chmod 644 /etc/nginx/sites-available/default
 # Configure backend start script
 echo "#!/usr/bin/env bash
 
-# Backend configuration =====================================================================================
-echo mongodb://localhost:27017/ESIT>server_conf.txt                               # | Mongodb uri           |
-echo `curl http://169.254.169.254/latest/meta-data/public-ipv4`>>server_conf.txt  # | Own IPv4 public DNS   |
-echo '8080'>>server_conf.txt                                                      # | Port                  |
-echo '${bot_telegram_api_token}'>>server_conf.txt                                 # | Bot telegram api token|
-echo '${private_key_path}'>>server_conf.txt                                       # | Private key thing     |
-echo '${thing_cert_path}'>>server_conf.txt                                        # | Certificate thing     |
-echo '${amazon_root_ca_path}'>>server_conf.txt                                    # | Certificate CA amazon |
-echo '${webapp_thing_name}'>>server_conf.txt                                      # | AWS thing name webapp |
-echo '${aws_mqtt_host}'>>server_conf.txt                                          # | AWS thing name webapp |
+# Backend configuration ======================================================================================
+echo mongodb://localhost:27017/ESIT>server_conf.txt                               # | Mongodb uri            |
+echo `curl http://169.254.169.254/latest/meta-data/public-ipv4`>>server_conf.txt  # | Own IPv4 public DNS    |
+echo '8080'>>server_conf.txt                                                      # | Port                   |
+echo '${bot_telegram_api_token}'>>server_conf.txt                                 # | Bot telegram api token |
+echo '${private_key_path}'>>server_conf.txt                                       # | Private key thing      |
+echo '${thing_cert_path}'>>server_conf.txt                                        # | Certificate thing      |
+echo '${amazon_root_ca_path}'>>server_conf.txt                                    # | Certificate CA amazon  |
+echo '${webapp_thing_name}'>>server_conf.txt                                      # | AWS thing name webapp  |
+echo '${aws_mqtt_host}'>>server_conf.txt                                          # | AWS thing name webapp  |
 
-# Start backend =============================================================================================
+# Start backend ==============================================================================================
 sudo pm2 start server/index.js
 " | sudo tee prod_backend_start
 
+# DB creation and configs
+echo "
+----------------------
+  CONFIGURING DB
+----------------------
+"
+
+echo 'db.createCollection("User")' | sudo mongosh localhost:27017/ESIT
+echo 'db.createCollection("Door")' | sudo mongosh localhost:27017/ESIT
+echo 'db.createCollection("Access")' | sudo mongosh localhost:27017/ESIT
+
+echo 'db.createCollection("User")' | sudo mongosh localhost:27017/ESIT-Testing
+echo 'db.createCollection("Door")' | sudo mongosh localhost:27017/ESIT-Testing
+echo 'db.createCollection("Access")' | sudo mongosh localhost:27017/ESIT-Testing
+
+users_test=$(cat ../testing/ESIT-Testing/User.json)
+doors_test=$(cat ../testing/ESIT-Testing/Door.json)
+access_test=$(cat ../testing/ESIT-Testing/Access.json)
+
+echo "db.User.insertMany(${users_test})" | sudo mongosh localhost:27017/ESIT-Testing
+echo "db.Door.insertMany(${doors_test})" | sudo mongosh localhost:27017/ESIT-Testing
+echo "db.Access.insertMany(${access_test})" | sudo mongosh localhost:27017/ESIT-Testing
 
 echo "
 ----------------------
