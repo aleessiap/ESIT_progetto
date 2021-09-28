@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require("path");
 
 // Read "server_conf.txt lines and split them"
-let confs = fs.readFileSync(path.join(__dirname, 'server_conf.txt')).toString().split("\n");
+let confs = fs.readFileSync(path.join(__dirname, 'server_conf.txt')).toString().split("\r\n");
 
 let server_conf = {
 
@@ -17,6 +17,8 @@ let server_conf = {
   AWS_MQTT_HOST: confs[8] //last line represents the aws mqtt host
 
 }
+
+console.log(server_conf)
 
 // Debug prints
 console.log('*'+server_conf.DB+'*')

@@ -8,8 +8,8 @@
     "build:prod": "ng build --configuration production",
     "build:dev": "ng build --configuration development",
 
-    "serve_backend_dev": "ng serve --proxy-config proxy.conf.json",
-    "serve_frontend_dev": "nodemon server/index.js",
+    "serve_backend_dev": "nodemon server/index.js",
+    "serve_frontend_dev": "ng serve --proxy-config proxy.conf.json",
 
     "prod_backend_start": "sudo bash bin/prod_backend_start",
     "prod_backend_stop": "sudo pm2 stop server/index.js",
