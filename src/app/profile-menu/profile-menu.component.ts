@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
+import {UserService} from "../services/user.service";
+import {User} from "../../../server/models/user"
 
 @Component({
   selector: 'app-profile-menu',
@@ -13,9 +15,11 @@ export class ProfileMenuComponent implements OnInit {
   public loggedIn: boolean;
   public isAdmin: boolean;
   public logged: string | null;
+  public full_name:string = '';
 
   constructor(
     public auth_api: AuthenticationService,
+    public user_api: UserService,
     public router: Router
   ) {
 
@@ -40,6 +44,17 @@ export class ProfileMenuComponent implements OnInit {
     }
 
     this.logged = localStorage.getItem('currentUser');
+
+    if (this.logged) {
+
+      this.user_api.getUser(this.logged).subscribe((data:User) => {
+
+          this.full_name=data.name + ' ' + data.surname
+
+
+      })
+
+    }
 
   }
 

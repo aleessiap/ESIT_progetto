@@ -18,8 +18,6 @@ let server_conf = {
 
 }
 
-console.log(server_conf)
-
 // Debug prints
 console.log('*'+server_conf.DB+'*')
 console.log('*'+server_conf.HOST_IP+'*')

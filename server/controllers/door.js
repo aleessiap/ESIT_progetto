@@ -310,6 +310,7 @@ module.exports.deleteDoor = function (req, res) {
 
       } else {
 
+        let thing_name = door.aws_thing_name
         device.unsubscribe('$aws/things/' + thing_name + '/shadow/update/accepted');
         device.unsubscribe('$aws/events/presence/connected/' + thing_name);
         device.unsubscribe('$aws/events/presence/disconnected/' + thing_name);
