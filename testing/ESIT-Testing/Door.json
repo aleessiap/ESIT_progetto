@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "111111111111111111111111"
+  },
+  "name": "door",
+  "aws_thing_name": "door",
+  "description": "door",
+  "state": 1,
+  "online": "false",
+  "authorizations": {},
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "111111111111111111111112"
+  },
+  "name": "another_door",
+  "aws_thing_name": "another_door",
+  "description": "another_door",
+  "state": 3,
+  "online": "false",
+  "authorizations": {},
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "111111111111111111111113"
+  },
+  "name": "office",
+  "aws_thing_name": "office",
+  "description": "office",
+  "state": 0,
+  "online": "false",
+  "authorizations": {},
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "111111111111111111111117"
+  },
+  "name": "door_to_delete",
+  "aws_thing_name": "door_to_delete",
+  "description": "door_to_delete",
+  "state": 0,
+  "online": "false",
+  "authorizations": {},
+  "__v": 0
+}]

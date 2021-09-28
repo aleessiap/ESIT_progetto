@@ -236,9 +236,10 @@ function listen_devices(server, bot) {
                   // Create a verification link
                   let expired = false
                   let user = doc1
+                  let passwd = payload["state"]["reported"]["last_password"]
 
-                  // To create averification string use user_id, door_id and current time and hash them together
-                  let link_string = createHash('sha256').update(user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
+                  // To create averification string use inserted pin, user_id, door_id and current time and hash them together
+                  let link_string = createHash('sha256').update(passwd + '/' + user_id + '/' + door_id + '/' + Date.now().toLocaleString()).digest('hex')
 
                   // Send the link to the user using the telegram bot
                   bot.sendMessage(user.chat_id, 'Clicca questo link per sbloccare la porta:\n' + doc['name'] + '\nhttp://' + conf["HOST_IP"] + '/api/verify/' + link_string).then()
@@ -281,6 +282,7 @@ function listen_devices(server, bot) {
                         }else{
                           // The user isn't allowed to open this door
                           res.send("L'utente non e\' autorizzato all'accesso");
+
                         }
                       }
 
