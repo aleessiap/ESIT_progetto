@@ -2,7 +2,14 @@ const fs = require('fs')
 const path = require("path");
 
 // Read "server_conf.txt lines and split them"
-let confs = fs.readFileSync(path.join(__dirname, 'server_conf.txt')).toString().split("\r\n");
+
+let confs = '';
+
+if (process.platform === 'win32') {
+  confs = fs.readFileSync(path.join(__dirname, 'server_conf.txt')).toString().split("\r\n");
+} else {
+  confs = fs.readFileSync(path.join(__dirname, 'server_conf.txt')).toString().split("\n");
+}
 
 let server_conf = {
 

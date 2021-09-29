@@ -238,6 +238,8 @@ echo "
 ----------------------
 "
 
+sudo systemctl start mongod
+
 echo 'db.createCollection("User")' | sudo mongosh localhost:27017/ESIT
 echo 'db.createCollection("Door")' | sudo mongosh localhost:27017/ESIT
 echo 'db.createCollection("Access")' | sudo mongosh localhost:27017/ESIT
@@ -253,6 +255,8 @@ access_test=$(cat ../testing/ESIT-Testing/Access.json)
 echo "db.User.insertMany(${users_test})" | sudo mongosh localhost:27017/ESIT-Testing
 echo "db.Door.insertMany(${doors_test})" | sudo mongosh localhost:27017/ESIT-Testing
 echo "db.Access.insertMany(${access_test})" | sudo mongosh localhost:27017/ESIT-Testing
+
+sudo systemctl stop mongod
 
 echo "
 ----------------------
