@@ -74,9 +74,9 @@ fi
 echo "db.User.insertOne({'name':'${name}', 'surname':'${surname}', 'username':'${telegram_username}', 'phone_num':'${phone_number}', 'email':'${email}', 'admin':true})" | sudo mongosh localhost:27017/ESIT
 
 echo "=================================================================="
-echo ""
+echo " "
 echo "Done!"
 echo "Connect to your bot using telegram app and send command /register."
-echo ""
+echo " "
 echo "=================================================================="
 
