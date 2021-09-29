@@ -71,7 +71,7 @@ echo "Error!
 
 fi
 
-echo "db.User.insertOne({'name':'${name}', 'surname':'${surname}', 'username':'${telegram_username}', 'phone_number':'${phone_number}', 'email':'${email}', 'admin':true})" | sudo mongosh localhost:27017/ESIT
+echo "db.User.insertOne({'name':'${name}', 'surname':'${surname}', 'username':'${telegram_username}', 'phone_num':'${phone_number}', 'email':'${email}', 'admin':true})" | sudo mongosh localhost:27017/ESIT
 
 echo "=================================================================="
 echo ""
