@@ -17,6 +17,7 @@ export class RecoverPasswordFormComponent implements OnInit {
   submittedPinRequest = false;
   submittedPinRequestSuccess = false;
   submittedPin = false;
+  received = false;
   wrongPin: boolean;
 
   currentUser: string;
@@ -84,7 +85,7 @@ export class RecoverPasswordFormComponent implements OnInit {
 
     } else {
 
-      this.api.recover_password(this.recoverPasswordFrom.controls.pin.value).subscribe(()=>{}, (err: HttpErrorResponse) => {
+      this.api.recover_password(this.recoverPasswordFrom.controls.pin.value).subscribe(()=>{this.received=true}, (err: HttpErrorResponse) => {
         //If there is an error it is showed in the form
         this.errorMsg = err.error.msg
 
