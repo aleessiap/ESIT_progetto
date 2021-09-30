@@ -142,8 +142,8 @@ module.exports.pinRequest = function (req, res) {
 module.exports.recoverPassword = function (req, res) {
   console.log(req.session)
 
-  clearTimeout(timeout[req.session.req_user.chat_id])
   if(req.session.hasOwnProperty('req_user')) {
+    clearTimeout(timeout[req.session.req_user.chat_id])
 
     if (createHash('sha256').update(req.body.pin).digest('base64') === req.session.req_user.pin) {
 
