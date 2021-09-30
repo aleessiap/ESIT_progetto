@@ -44,7 +44,7 @@ export class UserService {
   }
 
   getUser(id : string): Observable<User> {
-    let API_URL = '/api/users/' +id;
+    let API_URL = '/api/users/' + id;
     console.log(API_URL)
     return this.http.get<User>(API_URL)
       .pipe(

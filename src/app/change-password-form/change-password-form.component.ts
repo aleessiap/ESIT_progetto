@@ -95,7 +95,10 @@ export class ChangePasswordFormComponent implements OnInit {
       }
 
       this.api.modifyPassword(doc)
-        .subscribe(() => {},
+        .subscribe(() => {
+            this.modified=true;
+            this.router.navigateByUrl('/modify_profile/'+this.id).then();
+          },
           (err: HttpErrorResponse) => {
 
             if(err.error.msg === 'La vecchia password è scorretta') {
@@ -108,9 +111,6 @@ export class ChangePasswordFormComponent implements OnInit {
             console.log(err.error.msg);
 
           });
-
-      this.modified=true;
-      this.router.navigateByUrl('/modify_profile/'+this.id).then();
 
     }
   }

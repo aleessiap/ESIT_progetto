@@ -21,7 +21,7 @@ module.exports.logout = function(req, res) {
 }
 
 module.exports.login = function(req, res){
-
+  console.log("LOGIN")
   const credential = {
     username: req.body.username,
     password: req.body.password
@@ -47,6 +47,7 @@ module.exports.login = function(req, res){
         })
 
       } else{
+        console.log(user)
         //console.log(createHash('sha256').update(credential.password).digest('base64'));
         if(createHash('sha256').update(credential.password).digest('base64') === user.password){
 
@@ -479,8 +480,8 @@ module.exports.deleteUser = function (req, res) {
 }
 
 module.exports.getUser = function (req, res) {
-  console.log('Get user controller parameter ' + req.param("_id"));
-  let id = mongoose.Types.ObjectId(req.param("_id"));
+  console.log('Get user controller parameter ' + req.params["_id"]);
+  let id = mongoose.Types.ObjectId(req.params["_id"]);
 
   try {
 

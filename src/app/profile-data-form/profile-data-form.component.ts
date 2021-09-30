@@ -36,9 +36,6 @@ export class ProfileDataFormComponent implements OnInit {
   )
   {
 
-    this.activatedRoute.params.subscribe(params => {
-      this.idUser = params['_id'];
-    })
 
   }
 
@@ -69,6 +66,9 @@ export class ProfileDataFormComponent implements OnInit {
       phone_num:['', [Validators.required, Validators.pattern("[0-9]{10}" )]],
       birthdate:['', [Validators.required]],
       username: ['', Validators.required]
+    })
+    this.activatedRoute.params.subscribe(params => {
+      this.idUser = params['_id'];
     })
 
     this.api.getUser(this.idUser).subscribe(data => {

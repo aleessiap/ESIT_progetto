@@ -45,16 +45,6 @@ export class ProfileMenuComponent implements OnInit {
 
     this.logged = localStorage.getItem('currentUser');
 
-    if (this.logged) {
-
-      this.user_api.getUser(this.logged).subscribe((data:User) => {
-
-          this.full_name=data.name + ' ' + data.surname
-
-
-      })
-
-    }
 
   }
 
