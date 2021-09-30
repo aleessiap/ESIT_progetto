@@ -6,7 +6,10 @@ const {generateRandomPassword} = require("../passwd")
 const {NUMBERS} = require("../passwd")
 const {ALL_CHARS} = require("../passwd")
 
-let timeout = undefined;
+let timeout = {
+
+
+};
 
 
 module.exports.logout = function(req, res) {
@@ -111,7 +114,7 @@ module.exports.pinRequest = function (req, res) {
         req.session.req_user._id = user._id
         req.session.req_user.chat_id = user.chat_id
         req.session.req_user.pin = createHash('sha256').update(pin).digest('base64')
-        timeout = setTimeout(() => { if (req.session && req.session.hasOwnProperty('req_user')) {req.session.destroy(); bot.sendMessage(user.chat_id, "Il tuo PIN di recupero e' scaduto. Devi ripetere la procedura da capo.").then()} }, 60 * 1000)
+        timeout[req.session.req_user.chat_id] = setTimeout(() => { if (req.session && req.session.hasOwnProperty('req_user')) {req.session.destroy(); bot.sendMessage(user.chat_id, "Il tuo PIN di recupero e' scaduto. Devi ripetere la procedura da capo.").then()} }, 60 * 1000)
         res.status(200).json({
 
           success: true,
@@ -139,7 +142,7 @@ module.exports.pinRequest = function (req, res) {
 module.exports.recoverPassword = function (req, res) {
   console.log(req.session)
 
-  clearTimeout(timeout)
+  clearTimeout(timeout[req.session.req_user.chat_id])
   if(req.session.hasOwnProperty('req_user')) {
 
     if (createHash('sha256').update(req.body.pin).digest('base64') === req.session.req_user.pin) {
