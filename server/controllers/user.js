@@ -102,13 +102,13 @@ module.exports.pinRequest = function (req, res) {
       } else {
 
         let pin = generateRandomPassword(5, NUMBERS)
-        bot.sendMessage(user.chat_id, "Recover pin: " + pin).then()
+        bot.sendMessage(user.chat_id, "Pin di recupero: " + pin + "\nQuesto pin di recupero scade tra 60 secondi.").then()
 
         req.session.req_user = {}
         req.session.req_user._id = user._id
         req.session.req_user.chat_id = user.chat_id
         req.session.req_user.pin = createHash('sha256').update(pin).digest('base64')
-        setInterval(() => { if (req.session && req.session.hasOwnProperty('req_user')) {req.session.destroy()} }, 60 * 1000)
+        setInterval(() => { if (req.session && req.session.hasOwnProperty('req_user')) {req.session.destroy(); bot.sendMessage(user.chat_id, "Il tuo PIN di recupero e' scaduto. Devi ripetere la procedura da capo.").then()} }, 60 * 1000)
 
         res.status(200).json({
 
