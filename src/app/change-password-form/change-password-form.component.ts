@@ -82,7 +82,7 @@ export class ChangePasswordFormComponent implements OnInit {
     //If the confirmation of the new password is different from the new password, there is an error
     if (this.changePassword.value.password != this.changePassword.value.confirmation) {
 
-      this.mismatch = true;
+      this.mismatch = tru;
       return;
 
     }
