@@ -307,19 +307,62 @@ module.exports.modifyProfile = async function (req, res) {
 }
 
 module.exports.modifyPassword = function (req, res) {
-  const update = {password: createHash('sha256').update(req.body.password).digest('base64')};
+  const update = {password: createHash('sha256').update(req.body.form.password).digest('base64')};
 
   try {
 
-    User.findOneAndUpdate({_id: req.body.id}, update, function (err, user) {
+    User.findById(req.body.id, function (err, user) {
 
-      if (!user) {
+      if(err) {
 
-        res.status(403).json({success: false, msg: 'L\'utente non esiste'})
+        console.log(err)
+        res.status(500).json({
+          type: "Si e\' verificato un errore",
+          msg: err
+        })
 
       } else {
 
-        res.status(200).json({success: true, user: user});
+        if (user) {
+
+          if (user.password === createHash('sha256').update(req.body.form.oldPassword).digest('base64')) {
+
+            User.findByIdAndUpdate(req.body.id, update, function (err1, user) {
+
+              if (err1) {
+
+                console.log(err)
+                res.status(500).json({
+                  type: "Si e\' verificato un errore",
+                  msg: err
+                })
+
+              } else {
+
+                if (!user) {
+
+                  res.status(403).json({success: false, msg: 'L\'utente non esiste'})
+
+                } else {
+
+                  res.status(200).json({success: true, user: user});
+
+                }
+              }
+
+            })
+
+          } else {
+
+            res.status(403).json({success: false, msg: 'La vecchia password è scorretta'})
+
+          }
+
+        } else {
+
+          res.status(403).json({success: false, msg: 'L\'utente non esiste'})
+
+        }
 
       }
 
