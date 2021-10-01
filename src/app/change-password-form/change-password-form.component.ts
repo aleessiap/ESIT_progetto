@@ -71,7 +71,9 @@ export class ChangePasswordFormComponent implements OnInit {
 
   /**This method is used to save correctly the new password**/
   save() {
-
+    this.mismatch = false;
+    this.wrongPassword = false;
+    this.modified = false;
     this.submitted = true;
 
     //If the form is invalid, nothing is done
