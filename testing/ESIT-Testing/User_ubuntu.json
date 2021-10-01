@@ -1,0 +1,54 @@
+[{
+  "_id": new ObjectId("111111111111111111111111"),
+  "chat_id": "admin",
+  "password": "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=",
+  "door_list": [
+    "111111111111111111111111"
+  ],
+  "birthdate": new Date("2021-07-25T00:00:00Z"),
+  "name": "admin",
+  "surname": "admin",
+  "phone_num": "0000000000",
+  "email": "admin@gmail.it",
+  "admin": true,
+  "username": "admin",
+  "__v": 0
+},{
+  "_id": new ObjectId("111111111111111111111112"),
+  "password": "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=",
+  "door_list": [],
+  "birthdate": new Date("2021-07-25T00:00:00Z"),
+  "name": "not_authorized",
+  "surname": "not_authorized",
+  "phone_num": "0000000011",
+  "email": "not_authorized@gmail.it",
+  "admin": false,
+  "username": "not_authorized",
+  "__v": 0
+},{
+  "_id": new ObjectId("111111111111111111111113"),
+  "password": "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=",
+  "door_list": [],
+  "birthdate": new Date("2021-07-25T00:00:00Z"),
+  "name": "another_user",
+  "surname": "another_user",
+  "phone_num": "0000000012",
+  "email": "another_user@gmail.it",
+  "admin": false,
+  "username": "another_user",
+  "__v": 0,
+  "chat_id": "another_user"
+},{
+  "_id": new ObjectId("111111111111111111111115"),
+  "chat_id": "user_to_delete",
+  "password": "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=",
+  "door_list": [],
+  "birthdate": new Date("2021-07-25T00:00:00Z"),
+  "name": "user_to_delete",
+  "surname": "user_to_delete",
+  "phone_num": "0000100000",
+  "email": "user_to_delete@gmail.it",
+  "admin": false,
+  "username": "user_to_delete",
+  "__v": 0
+}]

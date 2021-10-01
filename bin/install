@@ -248,9 +248,9 @@ echo 'db.createCollection("User")' | sudo mongosh localhost:27017/ESIT-Testing
 echo 'db.createCollection("Door")' | sudo mongosh localhost:27017/ESIT-Testing
 echo 'db.createCollection("Access")' | sudo mongosh localhost:27017/ESIT-Testing
 
-users_test=$(cat ../testing/ESIT-Testing/User.json)
-doors_test=$(cat ../testing/ESIT-Testing/Door.json)
-access_test=$(cat ../testing/ESIT-Testing/Access.json)
+users_test=$(cat ../testing/ESIT-Testing/User_ubuntu.json)
+doors_test=$(cat ../testing/ESIT-Testing/Door_ubuntu.json)
+access_test=$(cat ../testing/ESIT-Testing/Access_ubuntu.json)
 
 echo "db.User.insertMany(${users_test})" | sudo mongosh localhost:27017/ESIT-Testing
 echo "db.Door.insertMany(${doors_test})" | sudo mongosh localhost:27017/ESIT-Testing
