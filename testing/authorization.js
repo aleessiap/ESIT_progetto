@@ -16,7 +16,7 @@ it ('4 - This test checks that an authorization can be correctly added', functio
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 4 ' + err.message);
       //console.log(res.body)
 
     });
@@ -32,7 +32,7 @@ it ('5 - This test checks that an authorization cannot be added if the user has 
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 5 ' + err.message);
       //console.log(res.body)
 
     });
@@ -46,7 +46,7 @@ it ('6 - This test checks that you can delete an authorization ', function(done)
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 6 ' + err.message);
       //console.log(res.body)
 
     });

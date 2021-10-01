@@ -17,7 +17,7 @@ it ('7 - This test checks that a door can be correctly locked', function(done) {
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 7 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, true);
 
@@ -33,7 +33,7 @@ it ('8 - This test checks that a port cannot be locked if it is already locked',
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 8 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
@@ -49,7 +49,7 @@ it ('9 - This test checks that an already locked door can be unlocked', function
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 9 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, true);
 
@@ -65,7 +65,7 @@ it ('10 - This test checks that a door cannot be unlocked if it is not locked.',
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 10 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 

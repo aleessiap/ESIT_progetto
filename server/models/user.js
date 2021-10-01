@@ -11,9 +11,9 @@ const userSchema = new Schema(
     birthdate: { type: Date,  default: Date.now, required: true },
 
     chat_id: { type: String },
-    username: { unique: true, type: String, required: true },
-    phone_num: { unique: true,  type: String, required: true },
-    email: {  unique: true, type: String, required: true},
+    username: { type: String, required: true },
+    phone_num: {  type: String, required: true },
+    email: {  type: String, required: true},
     password: { default: '', type: String, required: true },
     admin: { type: Boolean, required: true },
     door_list: {default:[], type: [{type: mongoose.SchemaTypes.ObjectId}], required: true }

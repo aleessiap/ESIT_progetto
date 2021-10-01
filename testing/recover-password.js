@@ -16,7 +16,7 @@ it ('18 - This test checks that the password cannot be recovered if the user has
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 18 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
@@ -33,7 +33,7 @@ it ('19 - This test checks that the password can be recovered', function(done) {
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 19 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, true);
 
@@ -49,7 +49,7 @@ it ('20 - This test checks that you cannot recover your password if you insert a
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 20 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
@@ -65,7 +65,7 @@ it ('21 - This test checks that the password cannot be recovered if the PIN is e
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 21 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
@@ -83,7 +83,7 @@ it ('22 - This test checks that you cannot recover your password if you enter th
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error' + err.message);
+      if (err) console.log('error 22-a  ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, true);
 
@@ -95,7 +95,7 @@ it ('22 - This test checks that you cannot recover your password if you enter th
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 22-b ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, false);
 
@@ -103,38 +103,5 @@ it ('22 - This test checks that you cannot recover your password if you enter th
   done();
 
 });
-
-/***
-it ('23 - This test checks that you cannot recover your password if you enter your PIN after 60 seconds', function(done) {
-  request(server)
-
-  request(server)
-    .post('/api/users/recover-pin')
-    .send({ email: 'admin@gmail.it'})
-    .expect(200)
-    .end(function(err, res) {
-      if (err) console.log('error ' + err.message);
-      console.log("User found:")
-      console.log(res.body)
-      assert.strictEqual(res.body.success, true);
-
-    });
-
-
-    setTimeout(()=>{
-      request(server)
-        .post('/api/users/recover-password')
-        .send({ pin: '232324'})
-        .expect(403)
-        .end(function(err, res) {
-          if (err) console.log('error ' + err.message);
-          console.log("23 Requested pin expired: ")
-          console.log(res.body)
-          assert.strictEqual(res.body, false);
-          done();
-        });
-      }, 60*1000)
-  done();
-});***/
 
 

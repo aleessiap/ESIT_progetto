@@ -263,7 +263,7 @@ module.exports.modifyProfile = async function (req, res) {
         countUsername = count;
       }, err => console.log(err));
     }
-    console.log(req.body.name + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
+    console.log(req.body.profile.name + ' ' + req.body.profile.surname + ' us ' + countUsername + ' ph ' + countPhone + ' em ' + countEmail)
     if (countUsername === 0 && countPhone === 0 && countEmail === 0) {
       const update = {
         surname: req.body.profile.surname,
@@ -442,7 +442,7 @@ module.exports.register = async function (req, res) {
 
 module.exports.deleteUser = function (req, res) {
   console.log('deleting user');
-  let id = mongoose.Types.ObjectId(req.param("_id"));
+  let id = mongoose.Types.ObjectId(req.params["_id"]);
 
   try {
 

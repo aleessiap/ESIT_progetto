@@ -17,7 +17,7 @@ it ('1 - This test checks that an access can be correctly added to the database'
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 1 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, true)
 
@@ -33,7 +33,7 @@ it ('2 - This test checks that an access cannot be registered if the user is not
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 2 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, false)
 
@@ -49,7 +49,7 @@ it ('3 - This test checks that you can correctly delete an access from the datab
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 3 ' + err.message);
       //console.log(res.body)
 
     });

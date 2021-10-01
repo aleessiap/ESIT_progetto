@@ -18,7 +18,7 @@ it ('11 - This test checks that a door can be registered correctly', function(do
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 11 ' + err.message);
       //console.log(res.body)
 
     });
@@ -33,7 +33,7 @@ it ('12 - This test checks that a door cannot be registered under a name already
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 12 ' + err.message);
       //console.log(res.body)
 
     });
@@ -48,8 +48,10 @@ it ('13 - This test checks that you cannot register a door with an aws_thing_nam
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+
+      if (err) console.log('error 13 ' + err.message);
       //console.log(res.body)
+      assert.strictEqual(res.body.success, false)
 
     });
   done();
@@ -63,7 +65,7 @@ it ('14 - This test checks that a door can be deleted from the system', function
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 14 ' + err.message);
       //console.log(res.body)
 
     });

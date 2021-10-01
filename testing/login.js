@@ -15,7 +15,7 @@ it ('15 - This test checks that a user who is not registered in the system canno
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error' + err.message);
+      if (err) console.log('error 15 ' + err.message);
 
       //console.log(res.body)
       assert.strictEqual(res.body.success, false);
@@ -33,7 +33,7 @@ it ('16 - This test checks that a user registered in the system can log in', fun
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error' + err.message);
+      if (err) console.log('error 16 ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.success, true);
 
@@ -49,7 +49,7 @@ it ('17 - This test checks that a user can logout', function(done) {
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error' + err.message);
+      if (err) console.log('error 17-a ' + err.message);
 
     });
 
@@ -57,7 +57,7 @@ it ('17 - This test checks that a user can logout', function(done) {
     .get('/api/users/logout')
     .end(function(err, res) {
 
-      if (err) console.log('error' + err.message);
+      if (err) console.log('error 17-b ' + err.message);
       //console.log(res.body)
       assert.strictEqual(res.body.msg, "Logout effettuato");
 

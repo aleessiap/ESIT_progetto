@@ -17,7 +17,7 @@ it ('26 - This test checks that a door can be updated correctly', function(done)
     .expect(200)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 26 ' + err.message);
       //console.log(res.body)
 
     });
@@ -29,13 +29,13 @@ it ('27 - This test checks that it is not possible to update a door with a name 
 
   request(server)
     .put('/api/doors/')
-    .send({currentDoor: { _id: mongoose.Types.ObjectId('111111111111111111111113'), name: 'new_name', description: 'desc', aws_thing_name: 'aws_thing_name', state: 0, online: false, authorizations:{}}, data:{name: 'door', description: 'another_desc', aws_thing_name: 'another_aws_thing_name'}})
+    .send({currentDoor: { _id: mongoose.Types.ObjectId('111111111111111111111113'), name: 'new_name', description: 'desc', aws_thing_name: 'aws_thing_name', state: 0, online: false, authorizations:{}}, data:{name: 'door', description: 'another_desc', aws_thing_name: 'another_aws_thing_name'}, name: true, aws: true})
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 27 ' + err.message);
       //console.log(res.body)
-
+      assert.strictEqual(res.body.success, false)
     });
   done();
 });
@@ -44,13 +44,13 @@ it ('28 - This test checks that it is not possible to update a door with a aws_t
 
   request(server)
     .put('/api/doors/')
-    .send({currentDoor: { _id: mongoose.Types.ObjectId('111111111111111111111113'), name: 'new_name', description: 'desc', aws_thing_name: 'aws_thing_name', state: 0, online: false, authorizations:{}}, data:{name: 'another_name', description: 'another_desc', aws_thing_name: 'door'}})
+    .send({currentDoor: { _id: mongoose.Types.ObjectId('111111111111111111111113'), name: 'new_name', description: 'desc', aws_thing_name: 'aws_thing_name', state: 0, online: false, authorizations:{}}, data:{name: 'another_name', description: 'another_desc', aws_thing_name: 'door'}, name: true, aws: true})
     .expect(403)
     .end(function(err, res) {
 
-      if (err) console.log('error ' + err.message);
+      if (err) console.log('error 28 ' + err.message);
       //console.log(res.body)
-
+      assert.strictEqual(res.body.success, false)
     });
   done();
 });

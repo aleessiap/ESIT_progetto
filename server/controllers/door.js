@@ -183,7 +183,7 @@ module.exports.insertDoor = async function (req, res) {
   let countName = 0;
   let countAws = 0;
   console.log("req create door")
-  console.log(req.body)
+  //console.log(req.body)
   try {
     await Door.count({name: req.body.name}, function (err, count) {
       countName = count;
@@ -193,6 +193,7 @@ module.exports.insertDoor = async function (req, res) {
       countAws = count;
 
     }, err => console.log(err));
+    console.log('AWS ' + countAws + ' Name ' + countName);
     if(countAws === 0 && countName === 0){
       await Door.create(req.body, (err, door) => {
 
@@ -232,10 +233,10 @@ module.exports.updateDoor = async function (req, res) {
   let countName = 0;
   let countAws = 0;
 
-  console.log("body update door : current door")
-  console.log(req.body.currentDoor)
-  console.log("data : form data ")
-  console.log(req.body.data)
+  //console.log("body update door : current door")
+  //console.log(req.body.currentDoor)
+  //console.log("data : form data ")
+  //console.log(req.body.data)
   try {
 
     if(req.body.name) {
@@ -249,6 +250,8 @@ module.exports.updateDoor = async function (req, res) {
 
       }, err => console.log(err));
     }
+    console.log('AWS ' + countAws + ' Name ' + countName);
+
     if(countAws === 0 && countName === 0){
       Door.findByIdAndUpdate(req.body.currentDoor._id, req.body.data, {
         useFindAndModify: false,
@@ -267,14 +270,15 @@ module.exports.updateDoor = async function (req, res) {
             res.status(403).json({success: false, msg: 'La porta non esiste'})
 
           } else {
-
+            console.log(door)
             res.status(200).json(door);
 
           }
 
         }
 
-      })}else{
+      })
+    }else{
       res.status(403).json({
         success: false,
         msg: 'I dati inseriti non sono accettabili',
