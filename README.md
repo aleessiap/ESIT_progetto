@@ -1,27 +1,23 @@
-# Angular8project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
+This project was developed as part of the Embedded Systems for the Internet of Things course at the University of Cagliari.
 
-## Development server
+The aim of the project is to develop a device that controls a lock and enables its opening through a two-factor verification procedure.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The project is developed using the MEAN stack.
 
-## Code scaffolding
+#Project organization 
+It contains five main folders:
+- bin: 
+  this folder contains the scripts to configure and install the project in an EC2 instance 
+-door_controller
+  this folder contains the source code to be loaded into the board in order to simulate the port control. 
+  It contains the 'libreries' folder, which contains the non-standard libraries used in code development.
+-server
+  this folder contains the code for the backend of the webapp. It contains the controllers, templates and routes used by the backend.
+-src
+  this directory contains the code for the frontend. Inside the subfolder 'app' it contains all components and services.
+-testing
+  this folder contains all the code for testing the functionality of the system. 
+  Inside there is a folder 'ESIT-Testing' which contains the collections to populate the testing database with.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
